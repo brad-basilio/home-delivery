@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LandingHome;
 use App\Models\Service;
+use App\Models\Specialty;
 use Illuminate\Http\Request;
 
 class ServiceController extends BasicController
@@ -18,13 +19,18 @@ class ServiceController extends BasicController
         $landing = LandingHome::where('correlative', 'like', 'page_services%')->where('lang_id', $langId)->get();
 
         $services = Service::where('status', true)->where('visible', true)->where('lang_id', $langId)->orderBy('updated_at', 'DESC')->get();
-
+        $specialities = Specialty::where('visible', true)
+        ->where('status', true)
+        ->where('lang_id', $langId)
+        ->get();
         return [
 
 
             'landing' => $landing,
 
             'services' => $services,
+
+           'specialities' => $specialities,
 
         ];
     }
