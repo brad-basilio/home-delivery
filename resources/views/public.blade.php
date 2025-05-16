@@ -1,5 +1,5 @@
 @php
-    $component = Route::currentRouteName();
+$component = Route::currentRouteName();
 @endphp
 
 
@@ -7,6 +7,30 @@
 <html lang="es">
 
 <head>
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KQBC4B69');
+    </script>
+    <!-- End Google Tag Manager -->
+
+
+
+
+
+
     @viteReactRefresh
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,13 +38,13 @@
     <title>{{ env('APP_NAME', 'NoPain') }}</title>
 
     @isset($seoTitle)
-        <meta name="title" content="{{ $seoTitle }}" />
+    <meta name="title" content="{{ $seoTitle }}" />
     @endisset
     @isset($seoDescription)
-        <meta name="description" content="{{ $seoDescription }}" />
+    <meta name="description" content="{{ $seoDescription }}" />
     @endisset
     @isset($seoKeywords)
-        <meta name="keywords" content="{{ $seoKeywords }}" />
+    <meta name="keywords" content="{{ $seoKeywords }}" />
     @endisset
     <meta name="csrf_token" content="{{ csrf_token() }}">
     <link rel="manifest" href="/manifest.webmanifest">
@@ -62,12 +86,12 @@
     </style>
 
     @if ($component == 'Checkout.jsx')
-        <script type="application/javascript" src="https://checkout.culqi.com/js/v4"></script>
+    <script type="application/javascript" src="https://checkout.culqi.com/js/v4"></script>
     @elseif ($component == 'MyAccount.jsx')
-        <link href="/lte/assets/libs/dxdatagrid/css/dx.light.compact.css?v=06d3ebc8-645c-4d80-a600-c9652743c425"
-            rel="stylesheet" type="text/css" id="dg-default-stylesheet" />
-        <link href="/lte/assets/libs/dxdatagrid/css/dx.dark.compact.css?v=06d3ebc8-645c-4d80-a600-c9652743c425"
-            rel="stylesheet" type="text/css" id="dg-dark-stylesheet" disabled="disabled" />
+    <link href="/lte/assets/libs/dxdatagrid/css/dx.light.compact.css?v=06d3ebc8-645c-4d80-a600-c9652743c425"
+        rel="stylesheet" type="text/css" id="dg-default-stylesheet" />
+    <link href="/lte/assets/libs/dxdatagrid/css/dx.dark.compact.css?v=06d3ebc8-645c-4d80-a600-c9652743c425"
+        rel="stylesheet" type="text/css" id="dg-dark-stylesheet" disabled="disabled" />
     @endif
 
     @vite(['resources/css/app.css', 'resources/js/' . Route::currentRouteName()])
@@ -134,6 +158,10 @@
 </style>
 
 <body class="font-poppins">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQBC4B69"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     @inertia
 
     <script src="/lte/assets/js/vendor.min.js"></script>
@@ -144,9 +172,9 @@
     <script src="/lte/assets/libs/quill/quill.min.js"></script>
 
     @if ($component == 'MyAccount.jsx')
-        <script src="/lte/assets/libs/dxdatagrid/js/dx.all.js"></script>
-        <script src="/lte/assets/libs/dxdatagrid/js/localization/dx.messages.es.js"></script>
-        <script src="/lte/assets/libs/dxdatagrid/js/localization/dx.messages.en.js"></script>
+    <script src="/lte/assets/libs/dxdatagrid/js/dx.all.js"></script>
+    <script src="/lte/assets/libs/dxdatagrid/js/localization/dx.messages.es.js"></script>
+    <script src="/lte/assets/libs/dxdatagrid/js/localization/dx.messages.en.js"></script>
     @endif
 
     <script src="/lte/assets/libs/tippy.js/tippy.all.min.js"></script>
