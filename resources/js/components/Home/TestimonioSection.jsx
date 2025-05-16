@@ -14,7 +14,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 export default function TestimonioSection({ testimonies }) {
     const [activeIndex, setActiveIndex] = useState(0);
     return (
-        <div className=" mt-0  font-poppins">
+        <div className="mt-0 font-poppins">
             <div className="max-w-md mx-auto px-4 py-4 lg:max-w-3xl lg:mt-4 relative">
                 <Swiper
                     navigation={{
@@ -34,12 +34,12 @@ export default function TestimonioSection({ testimonies }) {
                 >
                     {testimonies.map((testimonio, index) => (
                         <SwiperSlide key={index}>
-                            <div className=" gap-4 w-full my-6 relative h-[400px] lg:h-max cursor-pointer">
+                            <div className="gap-4 w-full my-6 relative min-h-[400px] cursor-pointer">
                                 <img
                                     className="absolute -z-10 mt-10 lg:left-1/2 lg:-translate-x-1/2"
                                     src="/assets/img/testimonioSection/Ellipse.png"
                                 />
-                                <div className=" flex items-center justify-center flex-col">
+                                <div className="flex items-center justify-center flex-col">
                                     <img
                                         className="w-20 h-20 rounded-full"
                                         src={`/api/testimony/media/${testimonio.image}`}
@@ -47,10 +47,10 @@ export default function TestimonioSection({ testimonies }) {
                                     <p className="text-xl mt-6 text-center lg:text-[22px]">
                                         {testimonio.description}
                                     </p>
-                                    <p className="text-center text-2xl text-[#224483] mt-10 font-semibold lg:hidden">
+                                    <p className="text-center text-2xl text-[#224483] mt-10 font-semibold">
                                         {testimonio.name}
                                     </p>
-                                    <p className="text-[#242424A3]  text-center lg:hidden">
+                                    <p className="text-[#242424A3] text-center">
                                         {testimonio.correlative}
                                     </p>
                                 </div>
@@ -63,15 +63,15 @@ export default function TestimonioSection({ testimonies }) {
                     <ChevronLeft
                         size={40}
                         strokeWidth={3}
-                        className="text-[#224483] "
+                        className="text-[#224483]"
                     />
                 </div>
 
-                <div className="hidden lg:block  absolute top-1/2 right-[-40px]  transform -translate-y-1/2 custom-next cursor-pointer">
+                <div className="hidden lg:block absolute top-1/2 right-[-40px] transform -translate-y-1/2 custom-next cursor-pointer">
                     <ChevronRight
                         size={40}
                         strokeWidth={3}
-                        className="text-[#224483] "
+                        className="text-[#224483]"
                     />
                 </div>
                 {/* Paginacion personalizada */}
@@ -81,8 +81,8 @@ export default function TestimonioSection({ testimonies }) {
                             key={index}
                             className={`rounded-full transition-all duration-300 ${
                                 index === activeIndex
-                                    ? "bg-[#224483] w-[20px] h-[12px] "
-                                    : "bg-[#22448366] w-[12px] h-[12px] "
+                                    ? "bg-[#224483] w-[20px] h-[12px]"
+                                    : "bg-[#22448366] w-[12px] h-[12px]"
                             }`}
                         />
                     ))}
