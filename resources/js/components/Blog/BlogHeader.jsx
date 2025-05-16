@@ -7,6 +7,7 @@ import Global from "../../Utils/Global";
 import HtmlContent from "../../Utils/HtmlContent";
 import TextWithHighlight from "../../Utils/TextWithHighlight";
 
+
 const subscriptionsRest = new SubscriptionsRest();
 
 const BlogHeader = ({ categories, postRecent, landing }) => {
@@ -35,11 +36,16 @@ const BlogHeader = ({ categories, postRecent, landing }) => {
         emailRef.current.value = null;
     };
 
-    const landingHero = landing.find(
+    const landingHero = landing?.find(
         (item) => item.correlative === "page_blog_hero"
     );
 
-    // Animaciones
+    // Check if postRecent exists and has items
+    if (!postRecent || postRecent.length === 0) {
+        return <div>No posts available</div>;
+    }
+
+    // Animations
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -83,9 +89,126 @@ const BlogHeader = ({ categories, postRecent, landing }) => {
         },
     };
 
+    // Render main post
+    const renderMainPost = () => (
+        <motion.div
+            className="md:col-span-6"
+            variants={itemVariants}
+            whileHover="hover"
+        >
+            <motion.a
+                href={`/blog/${postRecent[0].slug}`}
+                className="overflow-hidden rounded-3xl"
+                variants={cardHoverVariants}
+            >
+                <motion.div
+                    className="relative h-64 md:h-80 rounded-3xl overflow-hidden"
+                    whileHover="hover"
+                >
+                    <motion.img
+                        src={postRecent[0].image ? `/api/posts/media/${postRecent[0].image}` : "/api/cover/thumbnail/null"}
+                        alt={postRecent[0].name}
+                        className="w-full h-full object-cover"
+                        variants={imageHoverVariants}
+                        onError={(e) => (e.target.src = "/api/cover/thumbnail/null")}
+                    />
+                </motion.div>
+                <motion.div
+                    className="p-4 bg-white"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                >
+                    <motion.div
+                        className="text-sm text-azul font-bold mb-1"
+                        whileHover={{ x: 3 }}
+                    >
+                        {postRecent[0].category?.name}
+                    </motion.div>
+                    <motion.h2
+                        className="text-xl font-bold mb-2"
+                        whileHover={{ color: "#224483" }}
+                    >
+                        <TextWithHighlight text={postRecent[0].name} />
+                    </motion.h2>
+                    <motion.p
+                        className="text-negro mb-3 line-clamp-2"
+                        whileHover={{ color: "#4b5563" }}
+                    >
+                        <HtmlContent html={postRecent[0].description} />
+                    </motion.p>
+                    <div className="flex items-center text-sm text-[#224483]">
+                        <span>{moment(postRecent[0].post_date).format("ll")}</span>
+                    </div>
+                </motion.div>
+            </motion.a>
+        </motion.div>
+    );
+
+    // Render secondary posts
+    const renderSecondaryPost = (post, index) => {
+        if (!post) return null;
+        
+        return (
+            <motion.div
+                key={post.id}
+                className="rounded-lg overflow-hidden"
+                variants={itemVariants}
+                whileHover="hover"
+            >
+                <motion.a
+                    href={`/blog/${post.slug}`}
+                    className="flex flex-col md:flex-row bg-white rounded-3xl overflow-hidden"
+                    variants={cardHoverVariants}
+                >
+                    <motion.div
+                        className="md:w-2/5 h-48 md:h-64 rounded-3xl overflow-hidden"
+                        whileHover="hover"
+                    >
+                        <motion.img
+                            src={post.image ? `/api/posts/media/${post.image}` : "/api/cover/thumbnail/null"}
+                            alt={post.name}
+                            className="w-full h-full object-cover"
+                            variants={imageHoverVariants}
+                            onError={(e) => (e.target.src = "/api/cover/thumbnail/null")}
+                        />
+                    </motion.div>
+                    <motion.div
+                        className="md:w-3/5 p-4"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5 + (index * 0.1) }}
+                    >
+                        <motion.div
+                            className="text-sm text-azul font-bold mb-1"
+                            whileHover={{ x: 3 }}
+                        >
+                            {post.category?.name}
+                        </motion.div>
+                        <motion.h2
+                            className="text-lg font-bold mb-2"
+                            whileHover={{ color: "#224483" }}
+                        >
+                            <TextWithHighlight text={post.name} />
+                        </motion.h2>
+                        <motion.p
+                            className="text-[#242424] mb-3 text-sm line-clamp-2"
+                            whileHover={{ color: "#4b5563" }}
+                        >
+                            <HtmlContent html={post.description} />
+                        </motion.p>
+                        <div className="flex items-center text-sm text-[#224483]">
+                            <span> {moment(post.post_date).format("ll")}</span>
+                        </div>
+                    </motion.div>
+                </motion.a>
+            </motion.div>
+        );
+    };
+
     return (
         <motion.div
-            className="lg:max-w-[82rem] 2xl:max-w-[92rem] mx-auto px-[5%] py-8 md:py-12  text-negro"
+            className="lg:max-w-[82rem] 2xl:max-w-[92rem] mx-auto px-[5%] py-8 md:py-12 text-negro"
             initial="hidden"
             animate="visible"
             variants={containerVariants}
@@ -93,7 +216,7 @@ const BlogHeader = ({ categories, postRecent, landing }) => {
             {/* Header Section */}
             <motion.div className="mb-10" variants={itemVariants}>
                 <motion.h2
-                    className="w-full text-[32px] mt-8 lg:mt-0 text-center  lg:text-start leading-[34px] lg:text-5xl lg:leading-[102%]"
+                    className="w-full text-[32px] mt-8 lg:mt-0 text-center lg:text-start leading-[34px] lg:text-5xl lg:leading-[102%]"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{
                         opacity: 1,
@@ -116,200 +239,16 @@ const BlogHeader = ({ categories, postRecent, landing }) => {
                 className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-16"
                 variants={containerVariants}
             >
-                {/* Main Featured Post */}
-                <motion.div
-                    className="md:col-span-6"
-                    variants={itemVariants}
-                    whileHover="hover"
-                >
-                    <motion.a
-                        href={`/blog/${postRecent[0].slug}`}
-                        className="overflow-hidden rounded-3xl"
-                        variants={cardHoverVariants}
-                    >
-                        <motion.div
-                            className="relative h-64 md:h-80 rounded-3xl overflow-hidden"
-                            whileHover="hover"
-                        >
-                            <motion.img
-                                src={`/api/posts/media/${postRecent[0].image}`}
-                                alt={postRecent[0].name}
-                                className="w-full h-full object-cover"
-                                variants={imageHoverVariants}
-                                onError={(e) =>
-                                    (e.target.src = "/api/cover/thumbnail/null")
-                                }
-                            />
-                        </motion.div>
-                        <motion.div
-                            className="p-4 bg-white"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.4 }}
-                        >
-                            <motion.div
-                                className="text-sm text-azul font-bold mb-1"
-                                whileHover={{ x: 3 }}
-                            >
-                                {postRecent[0].category.name}
-                            </motion.div>
-                            <motion.h2
-                                className="text-xl font-bold mb-2"
-                                whileHover={{ color: "#224483" }}
-                            >
-                                <TextWithHighlight text={postRecent[0].name} />
-                            </motion.h2>
-                            <motion.p
-                                className="text-negro mb-3 line-clamp-2"
-                                whileHover={{ color: "#4b5563" }}
-                            >
-                                <HtmlContent html={postRecent[0].description} />
-                            </motion.p>
-                            <div className="flex items-center text-sm text-[#224483]">
-                                <span>
-                                    {moment(postRecent[0].post_date).format(
-                                        "ll"
-                                    )}
-                                </span>
-                            </div>
-                        </motion.div>
-                    </motion.a>
-                </motion.div>
-
+                {renderMainPost()}
+                
                 {/* Secondary Featured Posts */}
                 <motion.div
                     className="md:col-span-6 space-y-6"
                     variants={containerVariants}
                 >
-                    {/* Secondary Post 1 */}
-                    <motion.div
-                        className="rounded-lg overflow-hidden"
-                        variants={itemVariants}
-                        whileHover="hover"
-                    >
-                        <motion.a
-                            href={`/blog/${postRecent[1].slug}`}
-                            className="flex flex-col md:flex-row bg-white rounded-3xl overflow-hidden"
-                            variants={cardHoverVariants}
-                        >
-                            <motion.div
-                                className="md:w-2/5 h-48 md:h-64 rounded-3xl overflow-hidden"
-                                whileHover="hover"
-                            >
-                                <motion.img
-                                    src={`/api/posts/media/${postRecent[1].image}`}
-                                    alt={postRecent[1].name}
-                                    className="w-full h-full object-cover"
-                                    variants={imageHoverVariants}
-                                    onError={(e) =>
-                                        (e.target.src =
-                                            "/api/cover/thumbnail/null")
-                                    }
-                                />
-                            </motion.div>
-                            <motion.div
-                                className="md:w-3/5 p-4"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.5 }}
-                            >
-                                <motion.div
-                                    className="text-sm text-azul font-bold mb-1"
-                                    whileHover={{ x: 3 }}
-                                >
-                                    {postRecent[1].category.name}
-                                </motion.div>
-                                <motion.h2
-                                    className="text-lg font-bold mb-2"
-                                    whileHover={{ color: "#224483" }}
-                                >
-                                    <TextWithHighlight
-                                        text={postRecent[1].name}
-                                    />
-                                </motion.h2>
-                                <motion.p
-                                    className="text-[#242424] mb-3 text-sm line-clamp-2"
-                                    whileHover={{ color: "#4b5563" }}
-                                >
-                                    <HtmlContent
-                                        html={postRecent[1].description}
-                                    />
-                                </motion.p>
-                                <div className="flex items-center text-sm text-[#224483]">
-                                    <span>
-                                        {moment(postRecent[1].post_date).format(
-                                            "ll"
-                                        )}
-                                    </span>
-                                </div>
-                            </motion.div>
-                        </motion.a>
-                    </motion.div>
-
-                    {/* Secondary Post 2 */}
-                    <motion.div
-                        className="rounded-lg overflow-hidden"
-                        variants={itemVariants}
-                        whileHover="hover"
-                    >
-                        <motion.a
-                            href={`/blog/${postRecent[2].slug}`}
-                            className="flex flex-col md:flex-row bg-white rounded-3xl overflow-hidden"
-                            variants={cardHoverVariants}
-                        >
-                            <motion.div
-                                className="md:w-2/5 h-48 md:h-64 rounded-3xl overflow-hidden"
-                                whileHover="hover"
-                            >
-                                <motion.img
-                                    src={`/api/posts/media/${postRecent[2].image}`}
-                                    alt={postRecent[2].name}
-                                    className="w-full h-full object-cover"
-                                    variants={imageHoverVariants}
-                                    onError={(e) =>
-                                        (e.target.src =
-                                            "/api/cover/thumbnail/null")
-                                    }
-                                />
-                            </motion.div>
-                            <motion.div
-                                className="md:w-3/5 p-4"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.6 }}
-                            >
-                                <motion.div
-                                    className="text-sm text-azul font-bold mb-1"
-                                    whileHover={{ x: 3 }}
-                                >
-                                    {postRecent[2].category.name}
-                                </motion.div>
-                                <motion.h2
-                                    className="text-lg font-bold mb-2"
-                                    whileHover={{ color: "#224483" }}
-                                >
-                                    <TextWithHighlight
-                                        text={postRecent[2].name}
-                                    />
-                                </motion.h2>
-                                <motion.p
-                                    className="text-[#242424] mb-3 text-sm line-clamp-2"
-                                    whileHover={{ color: "#4b5563" }}
-                                >
-                                    <HtmlContent
-                                        html={postRecent[2].description}
-                                    />
-                                </motion.p>
-                                <div className="flex items-center text-sm text-[#224483]">
-                                    <span>
-                                        {moment(postRecent[2].post_date).format(
-                                            "ll"
-                                        )}
-                                    </span>
-                                </div>
-                            </motion.div>
-                        </motion.a>
-                    </motion.div>
+                    {postRecent.slice(1, 3).map((post, index) => 
+                        renderSecondaryPost(post, index)
+                    )}
                 </motion.div>
             </motion.div>
         </motion.div>
