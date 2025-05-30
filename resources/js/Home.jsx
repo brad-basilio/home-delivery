@@ -125,7 +125,7 @@ const Home = ({
         (item) => item.correlative === "page_home_testimonies"
     );
     const videoRef = useRef(null);
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(true);
 
     const handlePlay = () => {
         if (videoRef.current) {
@@ -154,6 +154,8 @@ const Home = ({
                                     ref={videoRef}
                                     muted
                                     playsInline
+                                    autoPlay
+                                    loop
                                     className=" w-full object-cover object-left-top lg:object-contain lg:object-right-top h-[300px]  lg:h-[90vh] mt-4"
                                     onError={(e) =>
                                         (e.target.src =
