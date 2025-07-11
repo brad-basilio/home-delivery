@@ -1,289 +1,10 @@
-
-
-
-
 import { createRoot } from 'react-dom/client';
 import Base from './Components/Tailwind/Base';
 import CreateReactScript from './Utils/CreateReactScript';
 import { CarritoProvider } from './Context/CarritoContext.jsx';
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
     Scale,
     Shield,
@@ -293,7 +14,7 @@ import {
     Mail,
     MapPin,
     Star,
-    ChevronDown,
+    
     ChevronUp,
     MessageCircle,
     CheckCircle,
@@ -313,11 +34,14 @@ import {
     Instagram,
     Facebook,
     Languages,
-    Youtube
+    Youtube,
+    ChevronDown
 } from 'lucide-react';
 import { translations } from '../Data/translations.js';
 import GeneralRest from './actions/GeneralRest';
 import { LanguageContext } from './context/LanguageContext.jsx';
+import MessagesRest from './actions/MessagesRest';
+import Swal from 'sweetalert2';
 
 
 const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
@@ -333,8 +57,26 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
     const { currentLanguage, changeLanguage } = useContext(LanguageContext);
     const [selectLanguage, setSelectLanguage] = useState(currentLanguage || languagesSystem[0]);
     
+    // Form states
+    const [formData, setFormData] = useState({
+        phone: "",
+        selectedService: null
+    });
+    const [sending, setSending] = useState(false);
+    const [showServiceDropdown, setShowServiceDropdown] = useState(false);
+    const nameRef = useRef();
+    const lastNameRef = useRef();
+    const emailRef = useRef();
+    const phoneRef = useRef();
+    const descriptionRef = useRef();
+    const serviceDropdownRef = useRef();
+    const messagesRest = new MessagesRest();
+    
     // Translation system compatibility
-    const language = selectLanguage?.correlative || 'es';
+console.log("Current Language:", currentLanguage);
+    const [languageContext, setLanguageContext] = useState(currentLanguage?.description || 'es');
+    
+    const language= languageContext || 'es';
     const t = translations[language];
 
     // Cargar idiomas del sistema (desde Header)
@@ -470,6 +212,54 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
         }
     };
 
+    // Función para enviar el formulario de contacto
+    const onMessageSubmit = async (e) => {
+        e.preventDefault();
+        setSending(true);
+
+        const request = {
+            name: nameRef.current.value + " " + lastNameRef.current.value,
+            email: emailRef.current.value,
+            subject: formData.phone,
+            description: descriptionRef.current.value,
+            service_id: formData.selectedService?.id || null,
+        };
+
+        try {
+            const result = await messagesRest.save(request);
+            setSending(false);
+            
+            if (result) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Mensaje enviado",
+                    text: "Tu mensaje ha sido enviado correctamente. ¡Nos pondremos en contacto contigo pronto!",
+                    showConfirmButton: false,
+                    timer: 3000,
+                });
+
+                // Limpiar formulario
+                nameRef.current.value = "";
+                lastNameRef.current.value = "";
+                emailRef.current.value = "";
+                phoneRef.current.value = "";
+                descriptionRef.current.value = "";
+                setFormData({
+                    phone: "",
+                    selectedService: null
+                });
+            }
+        } catch (error) {
+            setSending(false);
+            console.error("Error enviando mensaje:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo.",
+            });
+        }
+    };
+
     const testimonialImages = [
         "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop",
         "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop",
@@ -501,6 +291,7 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
         setIsMenuOpen(false);
     };
 
+
     return (
         <div className="min-h-screen bg-white overflow-x-hidden">
             {/* Header */}
@@ -509,15 +300,16 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
                     <div className="flex items-center justify-between">
                         <div className={`flex items-center space-x-3 transform transition-all duration-700 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
                             <div className="relative">
-                                <FileText className="h-10 w-10 text-[#36C4E4] transform hover:rotate-12 transition-transform duration-300" />
-                                <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#36C4E4] rounded-full animate-pulse"></div>
-                            </div>
-                            <div>
-                                <div className="text-xl font-bold text-[#36C4E4] bg-gradient-to-r from-[#36C4E4] to-[#2BA3C4] bg-clip-text text-transparent">
-                                    Dokux
+                               
+                                  <a href="/">
+                                                               <img
+                                                                 
+                                                                   src="/assets/img/logo.png"
+                                                                   alt="Dokux Logo"
+                                                                   className="h-[40px] w-auto md:h-[50px] object-cover object-top"
+                                                               />
+                                                           </a>
                                 </div>
-                                <div className="text-sm text-gray-600">Asesoría y Gestión</div>
-                            </div>
                         </div>
 
                         <nav className="hidden md:flex space-x-8 items-center">
@@ -544,7 +336,9 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
                                         <React.Fragment key={language.id}>
                                             {index > 0 && <div className="w-px h-6 bg-gray-300"></div>}
                                             <button
-                                                onClick={() => onUseLanguage(language)}
+                                                onClick={() => {
+                                                    setLanguageContext(language?.description),
+                                                    onUseLanguage(language)}}
                                                 className={`flex items-center space-x-1 px-2 py-1 rounded transition-all duration-300 transform hover:scale-110 ${
                                                     selectLanguage?.id === language.id
                                                         ? 'bg-[#36C4E4] text-white shadow-md'
@@ -572,7 +366,10 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
                                         <React.Fragment key={language.id}>
                                             {index > 0 && <div className="w-px h-4 bg-gray-300"></div>}
                                             <button
-                                                onClick={() => onUseLanguage(language)}
+
+                                                onClick={() => {
+                                                    setLanguageContext(language?.description),
+                                                    onUseLanguage(language)}}
                                                 className={`flex items-center space-x-1 px-2 py-1 rounded transition-all duration-300 transform hover:scale-110 ${
                                                     selectLanguage?.id === language.id
                                                         ? 'bg-[#36C4E4] text-white shadow-md'
@@ -781,7 +578,7 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
                                 <div className="flex justify-center mb-6">
                                     <div className="relative">
                                         <img
-                                            src={testimonialImages[activeTestimonial]}
+                                            src={`/api/testimony/media/${testimonies[activeTestimonial]?.image}`}
                                             alt={testimonies[activeTestimonial]?.name}
                                             className="w-20 h-20 rounded-full object-cover border-4 border-[#36C4E4] shadow-lg"
                                         />
@@ -1024,60 +821,124 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
                             </div>
 
                             <div className="bg-gradient-to-br from-cyan-50 to-blue-100 rounded-3xl p-8 shadow-2xl">
-                                <form className="space-y-6">
+                                <form className="space-y-6" onSubmit={onMessageSubmit}>
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div>
                                             <label htmlFor="nombre" className="block text-sm font-bold text-gray-700 mb-3">
                                                 {t.contact.form.fullName}
                                             </label>
                                             <input
+                                                ref={nameRef}
                                                 type="text"
                                                 id="nombre"
+                                                required
                                                 className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#36C4E4] focus:border-transparent transition-all duration-300 bg-white/80 backdrop-blur-sm"
                                                 placeholder={t.contact.form.placeholders.fullName}
                                             />
                                         </div>
                                         <div>
-                                            <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-3">
-                                                {t.contact.form.email}
+                                            <label htmlFor="apellido" className="block text-sm font-bold text-gray-700 mb-3">
+                                                Apellidos
                                             </label>
                                             <input
-                                                type="email"
-                                                id="email"
+                                                ref={lastNameRef}
+                                                type="text"
+                                                id="apellido"
+                                                required
                                                 className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#36C4E4] focus:border-transparent transition-all duration-300 bg-white/80 backdrop-blur-sm"
-                                                placeholder={t.contact.form.placeholders.email}
+                                                placeholder="Apellidos"
                                             />
                                         </div>
                                     </div>
 
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div>
+                                            <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-3">
+                                                {t.contact.form.email}
+                                            </label>
+                                            <input
+                                                ref={emailRef}
+                                                type="email"
+                                                id="email"
+                                                required
+                                                className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#36C4E4] focus:border-transparent transition-all duration-300 bg-white/80 backdrop-blur-sm"
+                                                placeholder={t.contact.form.placeholders.email}
+                                            />
+                                        </div>
+                                        <div>
                                             <label htmlFor="telefono" className="block text-sm font-bold text-gray-700 mb-3">
                                                 {t.contact.form.phone}
                                             </label>
                                             <input
+                                                ref={phoneRef}
                                                 type="tel"
                                                 id="telefono"
+                                                required
+                                                onChange={(e) => setFormData({...formData, phone: e.target.value})}
                                                 className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#36C4E4] focus:border-transparent transition-all duration-300 bg-white/80 backdrop-blur-sm"
                                                 placeholder={t.contact.form.placeholders.phone}
                                             />
                                         </div>
-                                        <div>
-                                            <label htmlFor="caso" className="block text-sm font-bold text-gray-700 mb-3">
-                                                {t.contact.form.caseType}
-                                            </label>
-                                            <select
-                                                id="caso"
-                                                className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#36C4E4] focus:border-transparent transition-all duration-300 bg-white/80 backdrop-blur-sm"
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="servicio" className="block text-sm font-bold text-gray-700 mb-3">
+                                            Servicio de Interés
+                                        </label>
+                                        <div className="relative" ref={serviceDropdownRef}>
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowServiceDropdown(!showServiceDropdown)}
+                                                className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#36C4E4] focus:border-transparent transition-all duration-300 bg-white/80 backdrop-blur-sm text-left flex items-center justify-between"
                                             >
-                                                <option value="">{t.contact.form.caseTypes.select}</option>
-                                                <option value="visa">{t.contact.form.caseTypes.visa}</option>
-                                                <option value="laboral">{t.contact.form.caseTypes.labor}</option>
-                                                <option value="documentacion">{t.contact.form.caseTypes.documentation}</option>
-                                                <option value="accidente">{t.contact.form.caseTypes.accident}</option>
-                                                <option value="autoridades">{t.contact.form.caseTypes.authorities}</option>
-                                                <option value="otro">{t.contact.form.caseTypes.other}</option>
-                                            </select>
+                                                <div className="flex items-center">
+                                                    {formData.selectedService ? (
+                                                        <>
+                                                            <div 
+                                                                className="w-6 h-6 rounded-full mr-3 p-1" 
+                                                                style={{ backgroundColor: formData.selectedService?.color || '#36C4E4' }}
+                                                            >
+<img src={`/api/service/media/${formData.selectedService.icon}`} className='h-full w-full object-cover'/>
+
+                                                            </div>
+                                                            <span>{formData.selectedService.title}</span>
+                                                        </>
+                                                    ) : (
+                                                        <span className="text-gray-500">Selecciona un servicio</span>
+                                                    )}
+                                                </div>
+                                                <ChevronDown className={`h-5 w-5 transition-transform ${showServiceDropdown ? 'rotate-180' : ''}`} />
+                                            </button>
+                                            
+                                            {showServiceDropdown && (
+                                                <div className="absolute z-10 mt-2 w-full bg-white shadow-lg rounded-xl py-2 max-h-60 overflow-auto border border-gray-200">
+                                                    <div
+                                                        className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex items-center transition-colors"
+                                                        onClick={() => {
+                                                            setFormData({...formData, selectedService: null});
+                                                            setShowServiceDropdown(false);
+                                                        }}
+                                                    >
+                                                        <span className="text-gray-500">Consulta General</span>
+                                                    </div>
+                                                    {services.map((service) => (
+                                                        <div
+                                                            key={service.id}
+                                                            className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex items-center transition-colors"
+                                                            onClick={() => {
+                                                                setFormData({...formData, selectedService: service});
+                                                                setShowServiceDropdown(false);
+                                                            }}
+                                                        >
+                                                            <div 
+                                                                className="w-4 h-4 rounded-full mr-3" 
+                                                                style={{ backgroundColor: service.color }}
+                                                            ></div>
+                                                            <span>{service.title}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
 
@@ -1086,8 +947,10 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
                                             {t.contact.form.message}
                                         </label>
                                         <textarea
+                                            ref={descriptionRef}
                                             id="mensaje"
                                             rows={5}
+                                            required
                                             className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#36C4E4] focus:border-transparent transition-all duration-300 bg-white/80 backdrop-blur-sm resize-none"
                                             placeholder={t.contact.form.placeholders.message}
                                         ></textarea>
@@ -1095,10 +958,11 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
 
                                     <button
                                         type="submit"
-                                        className="w-full bg-gradient-to-r from-[#36C4E4] to-[#2BA3C4] text-white py-5 px-8 rounded-xl font-bold text-lg hover:from-[#2BA3C4] hover:to-[#1E8FA8] transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl flex items-center justify-center space-x-3"
+                                        disabled={sending}
+                                        className="w-full bg-gradient-to-r from-[#36C4E4] to-[#2BA3C4] text-white py-5 px-8 rounded-xl font-bold text-lg hover:from-[#2BA3C4] hover:to-[#1E8FA8] transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                                     >
-                                        <span>{t.contact.form.submit}</span>
-                                        <ArrowRight className="h-5 w-5" />
+                                        <span>{sending ? "Enviando..." : t.contact.form.submit}</span>
+                                        {!sending && <ArrowRight className="h-5 w-5" />}
                                     </button>
                                 </form>
                             </div>

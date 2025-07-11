@@ -12,6 +12,6 @@ class MessageController extends BasicController
 
    public function setPaginationInstance(string $model)
    {
-      return $model::where('status', true);
+      return $model::with('service')->where('status', true);
    }
 }

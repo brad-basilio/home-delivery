@@ -97,6 +97,20 @@ const Messages = () => {
                         caption: "Correo",
                     },
                     {
+                        dataField: "service.title",
+                        caption: "Servicio",
+                        cellTemplate: (container, { data }) => {
+                            ReactAppend(
+                                container,
+                                <span>
+                                    {data.service?.title || 
+                                        <i className="text-muted">- Consulta General -</i>
+                                    }
+                                </span>
+                            );
+                        },
+                    },
+                    {
                         dataField: "created_at",
                         caption: "Fecha",
                         dataType: "datetime",
@@ -172,6 +186,14 @@ const Messages = () => {
                 <p>
                     <b>Telefono</b>:
                     <span className="ms-1">{dataLoaded?.subject}</span>
+                </p>
+                <p>
+                    <b>Servicio</b>:
+                    <span className="ms-1">
+                        {dataLoaded?.service?.title || (
+                            <i className="text-muted">- Consulta General -</i>
+                        )}
+                    </span>
                 </p>
                 <p>
                     <b>Mensaje</b>:

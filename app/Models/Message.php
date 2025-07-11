@@ -18,7 +18,14 @@ class Message extends Model
         'email',
         'subject',
         'description',
+        'service_id',
         'seen',
         'status',
     ];
+
+    // Relación con el servicio
+    public function service()
+    {
+        return $this->belongsTo(\App\Models\Service::class);
+    }
 }

@@ -30,6 +30,7 @@ class MessageController extends BasicController
             'email' => 'nullable|email|max:320',
             'subject' => 'required|string',
             'description' => 'required|string',
+            'service_id' => 'nullable|exists:services,id',
         ], $messages);
 
         return $validatedData;
