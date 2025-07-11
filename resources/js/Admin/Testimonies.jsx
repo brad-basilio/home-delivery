@@ -22,6 +22,7 @@ const Testimonies = ({}) => {
     // Form elements ref
     const idRef = useRef();
     const nameRef = useRef();
+    const caseRef = useRef();
     const correlativeRef = useRef();
     const descriptionRef = useRef();
     const imageRef = useRef();
@@ -33,6 +34,7 @@ const Testimonies = ({}) => {
         console.log(data);
         idRef.current.value = data?.id ?? "";
         nameRef.current.value = data?.name ?? "";
+        caseRef.current.value = data?.case ?? "";
         correlativeRef.current.value = data?.correlative ?? "";
         descriptionRef.current.value = data?.description ?? "";
         imageRef.image.src = `/api/testimony/media/${data?.image}`;
@@ -47,6 +49,7 @@ const Testimonies = ({}) => {
         const request = {
             id: idRef.current.value || undefined,
             name: nameRef.current.value,
+            case: caseRef.current.value,
             correlative: correlativeRef.current.value,
             description: descriptionRef.current.value,
         };
@@ -244,6 +247,11 @@ const Testimonies = ({}) => {
                         <InputFormGroup
                             eRef={correlativeRef}
                             label="Ubicación"
+                            required
+                        />
+                          <InputFormGroup
+                            eRef={caseRef}
+                            label="Caso"
                             required
                         />
                     </div>

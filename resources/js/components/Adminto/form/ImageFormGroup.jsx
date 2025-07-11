@@ -18,12 +18,12 @@ const ImageFormGroup = ({ id, col, label, eRef, required = false, onChange = () 
     eRef.image = imageRef.current
   }, [null])
 
-  return <div className={`form-group ${col} mb-1`}>
+  return <div className={`form-group  ${col} mb-1`}>
     <label htmlFor={id} className="mb-1">
       {label} {required && <b className="text-danger">*</b>}
     </label>
     <label htmlFor={id} style={{width: '100%'}}>
-      <img ref={imageRef} className="d-block" src="" alt="aspect-video" onError={e => e.target.src = onError} style={{
+      <img ref={imageRef} className="d-block bg-secondary" src="" alt="aspect-video" onError={e => e.target.src = onError} style={{
         width: '100%',
         borderRadius: '4px',
         cursor: 'pointer',

@@ -21,6 +21,7 @@ class Testimony extends Model
         'status',
         'image',
         'lang_id',
+        'case'
 
     ];
     public function lang()

@@ -14,7 +14,7 @@ class ServiceController extends BasicController
 {
     public $model = Service::class;
     public $reactView = 'Admin/Services';
-    public $imageFields = ['image'];
+    public $imageFields = ['image','icon'];
 
     public function beforeSave(Request $request)
     {

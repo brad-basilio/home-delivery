@@ -194,7 +194,7 @@ const Generals = ({ generals }) => {
         <div className="card">
             <form className="card-body" onSubmit={handleSubmit}>
                 <ul className="nav nav-tabs" id="contactTabs" role="tablist">
-                    <li className="nav-item" role="presentation" hidden>
+                    <li className="nav-item" role="presentation" >
                         {" "}
                         {/* Quitar el hidden para que se muestren las opciones */}
                         <button

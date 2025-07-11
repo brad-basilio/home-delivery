@@ -25,10 +25,12 @@ const Services = ({ brands }) => {
     const titleRef = useRef();
     const descriptionRef = useRef();
     const imageRef = useRef();
+    const iconRef = useRef();
+    const colorRef = useRef();
     //const linkRef = useRef();
     // Estados para galería y características
     const [gallery, setGallery] = useState([]);
-    const galleryRef = useRef();
+    //const galleryRef = useRef();
     const [characteristics, setCharacteristics] = useState([{ value: "" }]);
     const [isEditing, setIsEditing] = useState(false);
 
@@ -76,8 +78,15 @@ const Services = ({ brands }) => {
         titleRef.current.value = data?.title || "";
         descriptionRef.current.value = data?.description || "";
         imageRef.current.value = null;
+        iconRef.current.value = null;
+        colorRef.current.value = data?.color || "#000000";
+        
         if (data?.image) {
             imageRef.image.src = `/api/service/media/${data.image}`;
+        }
+        
+        if (data?.icon) {
+            iconRef.image.src = `/api/service/media/${data.icon}`;
         }
 
         // Cargar galería existente
@@ -112,6 +121,7 @@ const Services = ({ brands }) => {
         const formData = new FormData();
         formData.append("title", titleRef.current.value);
         formData.append("description", descriptionRef.current.value);
+        formData.append("color", colorRef.current.value);
         // formData.append("link", linkRef.current.value);
 
         // Si estamos editando, agregar el ID
@@ -122,6 +132,11 @@ const Services = ({ brands }) => {
         // Agregar imagen principal si existe
         if (imageRef.current.files[0]) {
             formData.append("image", imageRef.current.files[0]);
+        }
+
+        // Agregar icono si existe
+        if (iconRef.current.files[0]) {
+            formData.append("icon", iconRef.current.files[0]);
         }
 
         // Agregar imágenes de galería nuevas
@@ -157,6 +172,10 @@ const Services = ({ brands }) => {
         $(modalRef.current).modal("hide");
         setGallery([]);
         setCharacteristics([{ value: "" }]);
+        
+        // Resetear campos adicionales
+        colorRef.current.value = "#000000";
+        iconRef.current.value = null;
     };
 
     // Resto de métodos (delete, boolean change, etc.)
@@ -314,6 +333,57 @@ const Services = ({ brands }) => {
                         },
                     },
                     {
+                        dataField: "icon",
+                        caption: "Icono",
+                        width: "80px",
+                        cellTemplate: (container, { data }) => {
+                            if (data.icon) {
+                                ReactAppend(
+                                    container,
+                                    <img
+                                        src={`/api/service/media/${data.icon}`}
+                                        style={{
+                                            width: "40px",
+                                            height: "40px",
+                                            objectFit: "cover",
+                                            borderRadius: "4px",
+                                        }}
+                                        onError={(e) =>
+                                            (e.target.src =
+                                                "/images/default-icon.png")
+                                        }
+                                        className="bg-secondary p-1"
+                                    />
+                                );
+                            } else {
+                                container.html('<span class="text-muted">Sin icono</span>');
+                            }
+                        },
+                    },
+                    {
+                        dataField: "color",
+                        caption: "Color",
+                        width: "80px",
+                        cellTemplate: (container, { data }) => {
+                            ReactAppend(
+                                container,
+                                <div className="d-flex align-items-center">
+                                    <div
+                                        style={{
+                                            width: "30px",
+                                            height: "20px",
+                                            backgroundColor: data.color || "#000000",
+                                            borderRadius: "3px",
+                                            border: "1px solid #ddd",
+                                            marginRight: "5px"
+                                        }}
+                                    ></div>
+                                    <small>{data.color || "#000000"}</small>
+                                </div>
+                            );
+                        },
+                    },
+                    {
                         dataField: "featured",
                         caption: "Destacado",
                         dataType: "boolean",
@@ -389,7 +459,7 @@ const Services = ({ brands }) => {
                 <input ref={idRef} type="hidden" />
 
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-8">
                         <InputFormGroup
                             eRef={titleRef}
                             label="Título del servicio"
@@ -403,6 +473,17 @@ const Services = ({ brands }) => {
                                 className="form-control"
                                 rows={4}
                                 required
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <label className="form-label">Color del servicio</label>
+                            <input
+                                ref={colorRef}
+                                type="color"
+                                className="form-control form-control-color"
+                                defaultValue="#000000"
+                                title="Selecciona un color"
                             />
                         </div>
 
@@ -452,14 +533,20 @@ const Services = ({ brands }) => {
                         />*/}
                     </div>
 
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <ImageFormGroup
                             eRef={imageRef}
                             label="Imagen principal"
-                            aspect={16 / 9}
+                            aspect={1 / 1}
                         />
 
-                        <div className="mb-3">
+                        <ImageFormGroup
+                            eRef={iconRef}
+                            label="Icono del servicio"
+                            aspect={1 / 1}
+                        />
+
+                 {/*       <div className="mb-3">
                             <label className="form-label">
                                 Galería de imágenes
                             </label>
@@ -499,7 +586,7 @@ const Services = ({ brands }) => {
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </Modal>

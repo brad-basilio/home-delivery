@@ -347,13 +347,13 @@ const Menu = ({
                                 >
                                     {t("admin.sidebar.posts", "Posts")}
                                 </MenuItem>
-                                {/*
+                                
                                 <MenuItem
                                     href="/admin/faqs"
                                     icon="mdi mdi-frequently-asked-questions"
                                 >
                                     FAQs
-                                </MenuItem>*/}
+                                </MenuItem>
                                 <MenuItem
                                     href="/admin/socials"
                                     icon="mdi mdi-web"

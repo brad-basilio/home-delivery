@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Aboutus;
 use App\Models\Ad;
+use App\Models\Faq;
+use App\Models\General;
 use App\Models\Indicator;
 use App\Models\InstagramPost;
 use App\Models\Item;
@@ -12,6 +14,7 @@ use App\Models\Lang;
 use App\Models\Post;
 use App\Models\Service;
 use App\Models\Slider;
+use App\Models\Social;
 use App\Models\Staff;
 use App\Models\Strength;
 use App\Models\Supply;
@@ -33,10 +36,12 @@ class HomeController extends BasicController
         $indicators = Indicator::where('status', true)->where('visible', true)->where('lang_id', $langId)->get();
         $landing = LandingHome::where('correlative', 'like', 'page_home%')->where('lang_id', $langId)->get();
         $benefits = Strength::where('status', true)->where('visible', true)->where('lang_id', $langId)->get();
-        $services = Service::where('featured', true)->where('status', true)->where('visible', true)->where('lang_id', $langId)->orderBy('updated_at', 'DESC')->get();
+        $services = Service::where('visible', true)->where('status', true)->where('lang_id', $langId)->orderBy('created_at', 'ASC')->get();
         $testimonies = Testimony::where('status', true)->where('visible', true)->where('lang_id', $langId)->get();
         $staff_boss = Staff::where('status', true)->where('visible', true)->where('job', 'LIKE', 'Director%')->where('lang_id', $langId)->first();
-
+        $faqs = Faq::where('status', true)->where('visible', true)->where('lang_id', $langId)->get();
+        $generlas = General::where('lang_id', $langId)->get();
+        $socials = Social::where('status', true)->where('visible', true)->get();
         return [
 
             'indicators' => $indicators,
@@ -45,6 +50,9 @@ class HomeController extends BasicController
             'services' => $services,
             'testimonies' => $testimonies,
             'staff_boss' => $staff_boss,
+            'faqs' => $faqs,
+            'generals' => $generlas,
+            'socials' => $socials,
             // 'languagesSystem' => Lang::where('status', true)->where('visible', true)->get(),
         ];
     }

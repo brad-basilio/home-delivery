@@ -18,5 +18,6 @@ class Faq extends Model
         'description',
         'visible',
         'status',
+        'lang_id',
     ];
 }
