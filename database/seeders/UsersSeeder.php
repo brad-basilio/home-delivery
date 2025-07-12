@@ -20,7 +20,15 @@ class UsersSeeder extends Seeder
             'lastname' => 'Admin',
             'password' => 'r00tme'
         ])->assignRole('Admin');
-        User::updateOrCreate([
+
+         User::updateOrCreate([
+            'email' => 'dokux@dokux.io'
+        ], [
+            'name' => 'Dokux',
+            'lastname' => 'IO',
+            'password' => 'adminDokux'
+        ])->assignRole('Admin');
+       {/* User::updateOrCreate([
             'email' => 'admin@wefem.pe'
         ], [
             'name' => 'Admin',
@@ -34,6 +42,6 @@ class UsersSeeder extends Seeder
             'name' => 'Usuario',
             'lastname' => 'Customer',
             'password' => 'abcd1234'
-        ])->assignRole('Customer');
+        ])->assignRole('Customer'); */}
     }
 }
