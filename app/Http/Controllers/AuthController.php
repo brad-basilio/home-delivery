@@ -25,7 +25,7 @@ class AuthController extends Controller
     if (Auth::check()) {
       switch (Auth::user()->getRole()) {
         case 'Admin':
-          return redirect('/admin/home');
+          return redirect('/admin/messages');
           break;
         case 'Customer':
           return redirect('/my-account');
