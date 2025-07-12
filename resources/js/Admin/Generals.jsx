@@ -11,14 +11,65 @@ import TextareaFormGroup from "../Components/Adminto/form/TextareaFormGroup";
 import Global from "../Utils/Global";
 import InputFormGroup from "../Components/Adminto/form/InputFormGroup";
 import SelectFormGroup from "../Components/Adminto/form/SelectFormGroup";
+import TinyMCEFormGroup from "../components/form/TinyMCEFormGroup";
+
 
 const generalsRest = new GeneralsRest();
 
 const Generals = ({ generals }) => {
     const location =
         generals.find((x) => x.correlative == "location")?.description ?? "0,0";
+    // Filtrar solo los generales que son plantillas de email (excluyendo correo de soporte)
+    const emailTemplates = generals.filter(g => g.correlative.endsWith('_email') && g.correlative !== 'support_email');
 
+    const [showPreview, setShowPreview] = useState(false);
+    const [selectedEmailCorrelative, setSelectedEmailCorrelative] = useState(emailTemplates[0]?.correlative || "");
+    const [templateVariables, setTemplateVariables] = useState({});
+    const [loadingVars, setLoadingVars] = useState(false);
+    const [varsError, setVarsError] = useState(null);
+    // Fetch variables for selected template
+    useEffect(() => {
+        if (!selectedEmailCorrelative) return;
+        // Map correlatives to API types
+        const correlativeToType = {
+            purchase_summary_email: "purchase_summary",
+            order_status_changed_email: "order_status_changed",
+            blog_published_email: "blog_published",
+            claim_email: "claim",
+            password_changed_email: "password_changed",
+            reset_password_email: "password_reset",
+            subscription_email: "subscription",
+            verify_account_email: "verify_account",
+            message_contact_email: "message_contact",
+            admin_contact_notification_email: "admin_contact_notification",
+        };
+        const type = correlativeToType[selectedEmailCorrelative];
+        if (!type) {
+            setTemplateVariables({});
+            return;
+        }
+        setLoadingVars(true);
+        setVarsError(null);
+        fetch(`/api/notification-variables/${type}`)
+            .then(res => res.json())
+            .then(data => {
+                setTemplateVariables(data.variables || {});
+                setLoadingVars(false);
+            })
+            .catch(err => {
+                setVarsError("No se pudieron cargar las variables.");
+                setLoadingVars(false);
+            });
+    }, [selectedEmailCorrelative]);
     const [formData, setFormData] = useState({
+
+        email_templates: Object.fromEntries(
+            emailTemplates.map(t => [t.correlative, t.description ?? ""])
+        ),
+        whatsapp_phone:
+            generals.find((x) => x.correlative == "whatsapp_phone")?.description ?? "",
+        whatsapp_message:
+            generals.find((x) => x.correlative == "whatsapp_message")?.description ?? "",
         phones: generals
             .find((x) => x.correlative == "phone_contact")
             ?.description?.split(",")
@@ -55,6 +106,15 @@ const Generals = ({ generals }) => {
                 ?.description ?? "",
         seoKeywords:
             generals.find((x) => x.correlative == "seo_keywords")
+                ?.description ?? "",
+        cintillo:
+            generals.find((x) => x.correlative == "cintillo")?.description ?? "",
+
+        copyright:
+            generals.find((x) => x.correlative == "copyright")?.description ?? 
+            "Cambia FX © 2019 - Marca registrada de Tu Cambio S.A.C. - RUC: 20603864957",
+        emailCoorporativo:
+            generals.find((x) => x.correlative == "email_coorporativo")
                 ?.description ?? "",
         location: {
             lat: Number(location.split(",").map((x) => x.trim())[0]),
@@ -104,6 +164,22 @@ const Generals = ({ generals }) => {
         e.preventDefault();
         try {
             await generalsRest.save([
+                // Guardar solo el template seleccionado
+                ...Object.keys(formData.email_templates).map(correlative => ({
+                    correlative,
+                    name: emailTemplates.find(t => t.correlative === correlative)?.name || correlative,
+                    description: formData.email_templates[correlative],
+                })),
+                {
+                    correlative: "whatsapp_phone",
+                    name: "Número de WhatsApp",
+                    description: formData.whatsapp_phone,
+                },
+                {
+                    correlative: "whatsapp_message",
+                    name: "Mensaje de WhatsApp",
+                    description: formData.whatsapp_message,
+                },
                 {
                     correlative: "phone_contact",
                     name: "Teléfono de contacto",
@@ -165,6 +241,16 @@ const Generals = ({ generals }) => {
                     description: formData.seoKeywords,
                 },
                 {
+                    correlative: "copyright",
+                    name: "Texto de Copyright",
+                    description: formData.copyright,
+                },
+                {
+                    correlative: "email_coorporativo",
+                    name: "Email Corporativo",
+                    description: formData.emailCoorporativo,
+                },
+                {
                     correlative: "location",
                     name: "Ubicación",
                     description: `${formData.location.lat},${formData.location.lng}`,
@@ -194,13 +280,12 @@ const Generals = ({ generals }) => {
         <div className="card">
             <form className="card-body" onSubmit={handleSubmit}>
                 <ul className="nav nav-tabs" id="contactTabs" role="tablist">
-                    <li className="nav-item" role="presentation" >
+                    <li className="nav-item" role="presentation">
                         {" "}
                         {/* Quitar el hidden para que se muestren las opciones */}
                         <button
-                            className={`nav-link ${
-                                activeTab === "contact" ? "active" : ""
-                            }`}
+                            className={`nav-link ${activeTab === "contact" ? "active" : ""
+                                }`}
                             onClick={() => setActiveTab("contact")}
                             type="button"
                             role="tab"
@@ -208,11 +293,10 @@ const Generals = ({ generals }) => {
                             Información de Contacto
                         </button>
                     </li>
-                    <li className="nav-item" role="presentation">
+                    <li className="nav-item" role="presentation" hidden>
                         <button
-                            className={`nav-link ${
-                                activeTab === "policies" ? "active" : ""
-                            }`}
+                            className={`nav-link ${activeTab === "policies" ? "active" : ""
+                                }`}
                             onClick={() => setActiveTab("policies")}
                             type="button"
                             role="tab"
@@ -222,9 +306,8 @@ const Generals = ({ generals }) => {
                     </li>
                     <li className="nav-item" role="presentation">
                         <button
-                            className={`nav-link ${
-                                activeTab === "seo" ? "active" : ""
-                            }`}
+                            className={`nav-link ${activeTab === "seo" ? "active" : ""
+                                }`}
                             onClick={() => setActiveTab("seo")}
                             type="button"
                             role="tab"
@@ -236,9 +319,8 @@ const Generals = ({ generals }) => {
                         {" "}
                         {/* Quitar el hidden para que se muestren las opciones */}
                         <button
-                            className={`nav-link ${
-                                activeTab === "location" ? "active" : ""
-                            }`}
+                            className={`nav-link ${activeTab === "location" ? "active" : ""
+                                }`}
                             onClick={() => setActiveTab("location")}
                             type="button"
                             role="tab"
@@ -246,13 +328,24 @@ const Generals = ({ generals }) => {
                             Ubicación
                         </button>
                     </li>
+                    {Global.APP_CORRELATIVE === "cambioDev" && (
+                        <li className="nav-item" role="presentation">
+                            <button
+                                className={`nav-link ${activeTab === "email" ? "active" : ""}`}
+                                onClick={() => setActiveTab("email")}
+                                type="button"
+                                role="tab"
+                            >
+                                Email
+                            </button>
+                        </li>
+                    )}
                 </ul>
 
                 <div className="tab-content" id="contactTabsContent">
                     <div
-                        className={`tab-pane fade ${
-                            activeTab === "contact" ? "show active" : ""
-                        }`}
+                        className={`tab-pane fade ${activeTab === "contact" ? "show active" : ""
+                            }`}
                         role="tabpanel"
                     >
                         <div className="row">
@@ -357,7 +450,7 @@ const Generals = ({ generals }) => {
                                 </button>
                             </div>
                         </div>
-                        <div className="mb-3">
+                        <div className="mb-3 mt-2">
                             <label htmlFor="address" className="form-label">
                                 Dirección
                             </label>
@@ -429,12 +522,127 @@ const Generals = ({ generals }) => {
                                 required
                             />
                         </div>
+                       {/* <div className="mb-3">
+                            <label
+                                htmlFor="whatsapp_phone"
+                                className="form-label"
+                            >
+                                Número de WhatsApp
+                            </label>
+                            <input
+                                type="tel"
+                                className="form-control"
+                                id="whatsapp_phone"
+                                value={formData.whatsapp_phone}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        whatsapp_phone: e.target.value,
+                                    })
+                                }
+                            />
+                            <small className="form-text text-muted">
+                                Este número se utilizará para recibir consultas a través de WhatsApp.
+                            </small>
+                        </div>
+                        <div className="mb-3">
+                            <label
+                                htmlFor="whatsapp_message"
+                                className="form-label"
+                            >
+                                Mensaje de WhatsApp
+                            </label>
+                            <textarea
+                                className="form-control"
+                                id="whatsapp_message"
+                                value={formData.whatsapp_message}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        whatsapp_message: e.target.value,
+                                    })
+                                }
+                            ></textarea>
+                            <small className="form-text text-muted">
+                                Este mensaje se enviará automáticamente al iniciar una conversación.
+                            </small>
+                        </div>
+                               <div className="mb-3">
+                            <label
+                                htmlFor="copyright"
+                                className="form-label"
+                            >
+                                Texto del Cintillo
+                            </label>
+                            <textarea
+                                className="form-control"
+                                id="cintillo"
+                                value={formData.cintillo}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        cintillo: e.target.value,
+                                    })
+                                }
+                                rows="3"
+                            ></textarea>
+                            <small className="form-text text-muted">
+                                Este texto aparecerá en el header del sitio web.
+                            </small>
+                        </div>
+                        <div className="mb-3">
+                            <label
+                                htmlFor="copyright"
+                                className="form-label"
+                            >
+                                Texto de Copyright
+                            </label>
+                            <textarea
+                                className="form-control"
+                                id="copyright"
+                                value={formData.copyright}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        copyright: e.target.value,
+                                    })
+                                }
+                                rows="3"
+                            ></textarea>
+                            <small className="form-text text-muted">
+                                Este texto aparecerá en el footer del sitio web.
+                            </small>
+                        </div> */}
+                        
+                        <div className="mb-3">
+                            <label
+                                htmlFor="emailCoorporativo"
+                                className="form-label"
+                            >
+                                Email Corporativo
+                            </label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="emailCoorporativo"
+                                value={formData.emailCoorporativo}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        emailCoorporativo: e.target.value,
+                                    })
+                                }
+                                placeholder="admin@cambiafx.com"
+                            />
+                            <small className="form-text text-muted">
+                                Email donde se enviarán las notificaciones de nuevos contactos.
+                            </small>
+                        </div>
                     </div>
 
                     <div
-                        className={`tab-pane fade ${
-                            activeTab === "policies" ? "show active" : ""
-                        }`}
+                        className={`tab-pane fade ${activeTab === "policies" ? "show active" : ""
+                            }`}
                         role="tabpanel"
                     >
                         <div className="mb-3">
@@ -473,12 +681,28 @@ const Generals = ({ generals }) => {
                                 }
                             />
                         </div>
+                        <div className="mb-3">
+                            <InputFormGroup
+                                label="Email Corporativo (para notificaciones)"
+                                type="email"
+                                value={formData.emailCoorporativo ?? ""}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        emailCoorporativo: e.target.value,
+                                    })
+                                }
+                                placeholder="admin@empresa.com"
+                            />
+                            <small className="form-text text-muted">
+                                Este email recibirá las notificaciones de nuevos mensajes de contacto.
+                            </small>
+                        </div>
                     </div>
 
                     <div
-                        className={`tab-pane fade ${
-                            activeTab === "seo" ? "show active" : ""
-                        }`}
+                        className={`tab-pane fade ${activeTab === "seo" ? "show active" : ""
+                            }`}
                         role="tabpanel"
                     >
                         <InputFormGroup
@@ -526,9 +750,8 @@ const Generals = ({ generals }) => {
                     </div>
 
                     <div
-                        className={`tab-pane fade ${
-                            activeTab === "location" ? "show active" : ""
-                        }`}
+                        className={`tab-pane fade ${activeTab === "location" ? "show active" : ""
+                            }`}
                         role="tabpanel"
                     >
                         <LoadScript googleMapsApiKey={Global.GMAPS_API_KEY}>
@@ -548,6 +771,80 @@ const Generals = ({ generals }) => {
                             Haz clic en el mapa para seleccionar la ubicación.
                         </small>
                     </div>
+
+
+                    <div
+                        className={`tab-pane fade ${activeTab === "email" ? "show active" : ""}`}
+                        role="tabpanel"
+                    >
+                        <div className="mb-3">
+                            <label htmlFor="email_correlative" className="form-label">
+                                Tipo de Email <span className="badge bg-info">{emailTemplates.length} disponibles</span>
+                            </label>
+
+                            {emailTemplates.length === 0 ? (
+                                <div className="alert alert-warning">
+                                    <strong>No se encontraron plantillas de email.</strong><br />
+                                    Asegúrate de que el seeder se haya ejecutado correctamente: <code>php artisan db:seed --class=EmailsGeneralSeeder</code>
+                                </div>
+                            ) : (
+                                <>
+                                    <select
+                                        id="email_correlative"
+                                        className="form-select mb-3"
+                                        value={selectedEmailCorrelative}
+                                        onChange={e => setSelectedEmailCorrelative(e.target.value)}
+                                    >
+                                        <option value="">Selecciona un template</option>
+                                        {emailTemplates.map(t => (
+                                            <option key={t.correlative} value={t.correlative}>
+                                                {t.name || t.correlative.replace(/_/g, ' ').replace(/email/g, '').trim()}
+                                            </option>
+                                        ))}
+                                    </select>
+
+                                    {selectedEmailCorrelative && (
+                                        <TinyMCEFormGroup
+                                            label={
+                                                <>
+                                                    Plantilla de Email (HTML seguro, variables: <code>{`{{variable}}`}</code>)
+                                                    <small className="d-block text-muted">
+                                                        No se permite código PHP ni Blade. Solo variables seguras.<br />
+                                                        {loadingVars && <span>Cargando variables...</span>}
+                                                        {varsError && <span className="text-danger">{varsError}</span>}
+                                                        {!loadingVars && !varsError && (
+                                                            <>
+                                                                <b>Variables disponibles:</b>{" "}
+                                                                {Object.keys(templateVariables).length === 0
+                                                                    ? <span>No hay variables para esta notificación.</span>
+                                                                    : Object.entries(templateVariables).map(([key, desc]) => (
+                                                                        <span key={key} style={{ display: 'inline-block', marginRight: 8 }}>
+                                                                            <code>{`{{${key}}}`}</code> <span className="text-muted">({desc})</span>{" "}
+                                                                        </span>
+                                                                    ))
+                                                                }
+                                                            </>
+                                                        )}
+                                                    </small>
+                                                </>
+                                            }
+                                            value={formData.email_templates[selectedEmailCorrelative] || ""}
+                                            onChange={content => setFormData({
+                                                ...formData,
+                                                email_templates: {
+                                                    ...formData.email_templates,
+                                                    [selectedEmailCorrelative]: content
+                                                }
+                                            })}
+                                        />
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    </div>
+
+
+
                 </div>
 
                 <button type="submit" className="btn btn-primary mt-3">

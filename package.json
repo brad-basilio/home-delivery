@@ -19,6 +19,7 @@
         "@inertiajs/react": "^1.1.0",
         "@react-google-maps/api": "^2.19.3",
         "@react-spring/web": "^9.7.5",
+        "@tinymce/tinymce-react": "^6.2.1",
         "@tippyjs/react": "^4.2.6",
         "aos": "^2.3.4",
         "chart.js": "^4.4.3",

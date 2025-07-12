@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\NotificationHelper;
 use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MessageController extends BasicController
 {
@@ -38,6 +40,25 @@ class MessageController extends BasicController
 
     public function afterSave(Request $request, object $jpa)
     {
-        MailingController::notifyContact($jpa);
+        try {
+            Log::info('MessageController - Iniciando envío de notificaciones', [
+                'message_id' => $jpa->id,
+                'client_email' => $jpa->email,
+                'contact_type' => $jpa->contact_type ?? 'unknown',
+                'name' => $jpa->name
+            ]);
+
+            // Enviar notificación al cliente y al administrador usando el helper
+            NotificationHelper::sendContactNotification($jpa);
+
+            Log::info('MessageController - Notificaciones enviadas exitosamente');
+
+        } catch (\Exception $e) {
+            Log::error('MessageController - Error al enviar notificaciones de contacto', [
+                'message_id' => $jpa->id ?? 'unknown',
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+        }
     }
 }
