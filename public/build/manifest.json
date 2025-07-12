@@ -359,6 +359,13 @@
       "_index-B80Lgev0.js"
     ]
   },
+  "_arrow-right-DCVYQWPU.js": {
+    "file": "assets/arrow-right-DCVYQWPU.js",
+    "name": "arrow-right",
+    "imports": [
+      "_createLucideIcon-Cx5eUsrb.js"
+    ]
+  },
   "_axios-B4uVmeYG.js": {
     "file": "assets/axios-B4uVmeYG.js",
     "name": "axios"
@@ -380,6 +387,13 @@
   "_chevron-up-FRL1uyYn.js": {
     "file": "assets/chevron-up-FRL1uyYn.js",
     "name": "chevron-up",
+    "imports": [
+      "_createLucideIcon-Cx5eUsrb.js"
+    ]
+  },
+  "_circle-check-big-BiFsVO0f.js": {
+    "file": "assets/circle-check-big-BiFsVO0f.js",
+    "name": "circle-check-big",
     "imports": [
       "_createLucideIcon-Cx5eUsrb.js"
     ]
@@ -468,8 +482,8 @@
       "_index-B80Lgev0.js"
     ]
   },
-  "_shield-Dxa3r1uX.js": {
-    "file": "assets/shield-Dxa3r1uX.js",
+  "_shield-CFy6kJbY.js": {
+    "file": "assets/shield-CFy6kJbY.js",
     "name": "shield",
     "imports": [
       "_createLucideIcon-Cx5eUsrb.js"
@@ -482,9 +496,9 @@
       "_index-B80Lgev0.js"
     ]
   },
-  "_swiper-!~{03p}~.js": {
+  "_swiper-!~{03q}~.js": {
     "file": "swiper.css",
-    "src": "_swiper-!~{03p}~.js"
+    "src": "_swiper-!~{03q}~.js"
   },
   "_swiper-react-D7a-iI6z.js": {
     "file": "assets/swiper-react-D7a-iI6z.js",
@@ -493,9 +507,9 @@
       "_index-B80Lgev0.js"
     ]
   },
-  "_tippy-!~{03h}~.js": {
+  "_tippy-!~{03i}~.js": {
     "file": "tippy.css",
-    "src": "_tippy-!~{03h}~.js"
+    "src": "_tippy-!~{03i}~.js"
   },
   "_tippy-react.esm-CHhA99mn.js": {
     "file": "assets/tippy-react.esm-CHhA99mn.js",
@@ -514,7 +528,7 @@
     ]
   },
   "node_modules/canvg/lib/index.es.js": {
-    "file": "assets/index.es-DQhCpiPl.js",
+    "file": "assets/index.es-DC4zoxXW.js",
     "name": "index.es",
     "src": "node_modules/canvg/lib/index.es.js",
     "isDynamicEntry": true,
@@ -543,7 +557,8 @@
       "_Header-BQz-0iOJ.js",
       "_proxy-E2Qj16TG.js",
       "_preload-helper-CZZ3Qsu7.js",
-      "_shield-Dxa3r1uX.js"
+      "_circle-check-big-BiFsVO0f.js",
+      "_shield-CFy6kJbY.js"
     ],
     "css": [
       "swiper.css",
@@ -2437,7 +2452,7 @@
     ]
   },
   "resources/js/Home.jsx": {
-    "file": "assets/Home-DKodXey1.js",
+    "file": "assets/Home-Cw9JRJqV.js",
     "name": "Home",
     "src": "resources/js/Home.jsx",
     "isEntry": true,
@@ -2452,9 +2467,11 @@
       "resources/js/components/Blog/Filter.jsx",
       "_MessagesRest-6a4rHQg0.js",
       "_sweetalert2.all-Dh0rZL5X.js",
+      "_arrow-right-DCVYQWPU.js",
       "_createLucideIcon-Cx5eUsrb.js",
-      "_shield-Dxa3r1uX.js",
+      "_circle-check-big-BiFsVO0f.js",
       "_phone-DwGZSiO4.js",
+      "_shield-CFy6kJbY.js",
       "_chevron-up-FRL1uyYn.js",
       "_chevron-down-CyYB_9vX.js",
       "_facebook-B8nVP7qw.js",
@@ -2554,7 +2571,7 @@
     ]
   },
   "resources/js/LibroDeReclamaciones.jsx": {
-    "file": "assets/LibroDeReclamaciones-SA-Hg5WP.js",
+    "file": "assets/LibroDeReclamaciones-C3UbkOoO.js",
     "name": "LibroDeReclamaciones",
     "src": "resources/js/LibroDeReclamaciones.jsx",
     "isEntry": true,
@@ -2570,8 +2587,9 @@
       "_main-Br9xqDfn.js",
       "_preload-helper-CZZ3Qsu7.js",
       "_HtmlContent-Ba03mVgE.js",
-      "_shield-Dxa3r1uX.js",
+      "_circle-check-big-BiFsVO0f.js",
       "_createLucideIcon-Cx5eUsrb.js",
+      "_shield-CFy6kJbY.js",
       "resources/js/components/Blog/Results.jsx",
       "resources/js/components/Blog/Filter.jsx",
       "_axios-B4uVmeYG.js",
@@ -2950,10 +2968,10 @@
       "tippy.css"
     ]
   },
-  "resources/js/Thanks.jsx": {
-    "file": "assets/Thanks-OrdxnUOv.js",
-    "name": "Thanks",
-    "src": "resources/js/Thanks.jsx",
+  "resources/js/Thanks copy.jsx": {
+    "file": "assets/Thanks copy-OrdxnUOv.js",
+    "name": "Thanks copy",
+    "src": "resources/js/Thanks copy.jsx",
     "isEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
@@ -2978,6 +2996,41 @@
       "_index-CqrOtH36.js",
       "_HtmlContent-Ba03mVgE.js",
       "_createLucideIcon-Cx5eUsrb.js"
+    ],
+    "css": [
+      "swiper.css",
+      "tippy.css"
+    ]
+  },
+  "resources/js/Thanks.jsx": {
+    "file": "assets/Thanks-IjYo3b1S.js",
+    "name": "Thanks",
+    "src": "resources/js/Thanks.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "_index-B80Lgev0.js",
+      "_CreateReactScript-Bj11ghWz.js",
+      "resources/js/Utils/ReactAppend.jsx",
+      "_Base-BjHd8sB_.js",
+      "_main-Br9xqDfn.js",
+      "resources/js/components/Tailwind/DetailProduct/Detail.jsx",
+      "resources/js/components/Blog/Results.jsx",
+      "_useTranslation-BvL_iu_4.js",
+      "resources/js/components/Blog/Filter.jsx",
+      "_Footer-DEd8eJKs.js",
+      "_proxy-E2Qj16TG.js",
+      "_circle-check-big-BiFsVO0f.js",
+      "_createLucideIcon-Cx5eUsrb.js",
+      "_arrow-right-DCVYQWPU.js",
+      "_index.esm-CTa_PdWD.js",
+      "_axios-B4uVmeYG.js",
+      "____vite-browser-external_commonjs-proxy-C9-083JZ.js",
+      "_index-DO3Aws4m.js",
+      "_index-B1nVdsa0.js",
+      "_index-CqrOtH36.js",
+      "_HtmlContent-Ba03mVgE.js",
+      "_GeneralRest-CvIEhB1j.js"
     ],
     "css": [
       "swiper.css",
@@ -3191,7 +3244,7 @@
     ]
   },
   "resources/js/components/Adminto/Dx/DxButton.jsx": {
-    "file": "assets/DxButton-DP2rzg_V.js",
+    "file": "assets/DxButton-l0sNRNKZ.js",
     "name": "DxButton",
     "src": "resources/js/components/Adminto/Dx/DxButton.jsx",
     "isEntry": true
@@ -3225,7 +3278,7 @@
     ]
   },
   "resources/js/components/Adminto/Modal.jsx": {
-    "file": "assets/Modal-Dr3wPUh9.js",
+    "file": "assets/Modal-IlEDNq44.js",
     "name": "Modal",
     "src": "resources/js/components/Adminto/Modal.jsx",
     "isEntry": true,
@@ -3836,7 +3889,7 @@
     ]
   },
   "resources/js/components/Modal.jsx": {
-    "file": "assets/Modal-IlEDNq44.js",
+    "file": "assets/Modal-Dr3wPUh9.js",
     "name": "Modal",
     "src": "resources/js/components/Modal.jsx",
     "isEntry": true,
@@ -4385,7 +4438,7 @@
     ]
   },
   "resources/js/components/dx/DxButton.jsx": {
-    "file": "assets/DxButton-l0sNRNKZ.js",
+    "file": "assets/DxButton-DP2rzg_V.js",
     "name": "DxButton",
     "src": "resources/js/components/dx/DxButton.jsx",
     "isEntry": true

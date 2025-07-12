@@ -230,24 +230,8 @@ console.log("Current Language:", currentLanguage);
             setSending(false);
             
             if (result) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Mensaje enviado",
-                    text: "Tu mensaje ha sido enviado correctamente. ¡Nos pondremos en contacto contigo pronto!",
-                    showConfirmButton: false,
-                    timer: 3000,
-                });
-
-                // Limpiar formulario
-                nameRef.current.value = "";
-                lastNameRef.current.value = "";
-                emailRef.current.value = "";
-                phoneRef.current.value = "";
-                descriptionRef.current.value = "";
-                setFormData({
-                    phone: "",
-                    selectedService: null
-                });
+                // Redirigir a página de agradecimiento
+                window.location.href = "/thanks";
             }
         } catch (error) {
             setSending(false);
@@ -959,10 +943,31 @@ console.log("Current Language:", currentLanguage);
                                     <button
                                         type="submit"
                                         disabled={sending}
-                                        className="w-full bg-gradient-to-r from-[#36C4E4] to-[#2BA3C4] text-white py-5 px-8 rounded-xl font-bold text-lg hover:from-[#2BA3C4] hover:to-[#1E8FA8] transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                                        className="w-full bg-gradient-to-r from-[#36C4E4] to-[#2BA3C4] text-white py-5 px-8 rounded-xl font-bold text-lg hover:from-[#2BA3C4] hover:to-[#1E8FA8] transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden"
                                     >
-                                        <span>{sending ? "Enviando..." : t.contact.form.submit}</span>
-                                        {!sending && <ArrowRight className="h-5 w-5" />}
+                                        {/* Loading background animation */}
+                                        {sending && (
+                                            <div className="absolute inset-0 bg-gradient-to-r from-[#2BA3C4] to-[#36C4E4] animate-pulse"></div>
+                                        )}
+                                        
+                                        {/* Loading spinner */}
+                                        {sending && (
+                                            <div className="absolute inset-0 flex items-center justify-center">
+                                                <div className="flex space-x-1">
+                                                    <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                                                    <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                                                    <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                                                </div>
+                                            </div>
+                                        )}
+                                        
+                                        {/* Content */}
+                                        <div className={`flex items-center space-x-3 transition-all duration-300 ${sending ? 'opacity-0' : 'opacity-100'}`}>
+                                            <span>{t.contact.form.submit}</span>
+                                            <ArrowRight className="h-5 w-5" />
+                                        </div>
+                                        
+                                       
                                     </button>
                                 </form>
                             </div>
