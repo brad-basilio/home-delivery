@@ -68,7 +68,7 @@ const Login = ({}) => {
             <div className=" w-full px-[5%] min-h-screen flex items-center mx-auto py-16 bg-[#F3E5FF]">
                 <div className="max-w-5xl mx-auto p-8 lg:grid lg:grid-cols-2 gap-8 bg-white rounded-xl">
                     <div className="hidden lg:block">
-                        <video
+                    {/*    <video
                             autoPlay
                             loop
                             muted
@@ -76,7 +76,9 @@ const Login = ({}) => {
                             className="h-[400px] w-full object-cover rounded-xl"
                         >
                             <source src="/assets/img/backgrounds/login.mp4" />
-                        </video>
+                        </video>*/}
+
+                        <img src="https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"  className="h-full object-cover rounded-xl"/>
                     </div>
                     <div className="flex items-center justify-center px-8">
                         <div className="mx-auto w-full max-w-md space-y-6">
@@ -84,7 +86,7 @@ const Login = ({}) => {
                                 <h1 className="text-3xl font-bold text-center">
                                     Bienvenido a {" "}
                                     <span className="text-azul">
-                                        NoPain
+                                       Dokux
                                     </span>
                                 </h1>
                             </div>
