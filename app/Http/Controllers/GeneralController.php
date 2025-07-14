@@ -37,7 +37,9 @@ class GeneralController extends BasicController
     {
         $response = new Response();
         try {
-            $data = Social::all();
+            $data = Social::where('status', true)
+                ->where('visible', true)
+                ->get();
             // dump($data);
             $response->data = $data;
             $response->status = 200;

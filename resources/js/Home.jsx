@@ -14,7 +14,7 @@ import {
     Mail,
     MapPin,
     Star,
-    
+
     ChevronUp,
     MessageCircle,
     CheckCircle,
@@ -44,7 +44,7 @@ import MessagesRest from './actions/MessagesRest';
 import Swal from 'sweetalert2';
 
 
-const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
+const Home = ({ services = [], testimonies = [], faqs = [], generals = [] }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeTestimonial, setActiveTestimonial] = useState(0);
     const [openFAQ, setOpenFAQ] = useState(null);
@@ -56,7 +56,7 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
     const [languagesSystem, setLanguagesSystem] = useState([]);
     const { currentLanguage, changeLanguage } = useContext(LanguageContext);
     const [selectLanguage, setSelectLanguage] = useState(currentLanguage || languagesSystem[0]);
-    
+
     // Form states
     const [formData, setFormData] = useState({
         phone: "",
@@ -71,12 +71,12 @@ const Home = ({ services=[], testimonies=[], faqs=[], generals=[] }) => {
     const descriptionRef = useRef();
     const serviceDropdownRef = useRef();
     const messagesRest = new MessagesRest();
-    
+
     // Translation system compatibility
-console.log("Current Language:", currentLanguage);
+    console.log("Current Language:", currentLanguage);
     const [languageContext, setLanguageContext] = useState(currentLanguage?.description || 'es');
-    
-    const language= languageContext || 'es';
+
+    const language = languageContext || 'es';
     const t = translations[language];
 
     // Cargar idiomas del sistema (desde Header)
@@ -228,7 +228,7 @@ console.log("Current Language:", currentLanguage);
         try {
             const result = await messagesRest.save(request);
             setSending(false);
-            
+
             if (result) {
                 // Redirigir a página de agradecimiento
                 window.location.href = "/thanks";
@@ -284,16 +284,16 @@ console.log("Current Language:", currentLanguage);
                     <div className="flex items-center justify-between">
                         <div className={`flex items-center space-x-3 transform transition-all duration-700 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
                             <div className="relative">
-                               
-                                  <a href="/">
-                                                               <img
-                                                                 
-                                                                   src="/assets/img/logo.png"
-                                                                   alt="Dokux Logo"
-                                                                   className="h-[40px] w-auto md:h-[50px] object-cover object-top"
-                                                               />
-                                                           </a>
-                                </div>
+
+                                <a href="/">
+                                    <img
+
+                                        src="/assets/img/logo.png"
+                                        alt="Dokux Logo"
+                                        className="h-[40px] w-auto md:h-[50px] object-cover object-top"
+                                    />
+                                </a>
+                            </div>
                         </div>
 
                         <nav className="hidden md:flex space-x-8 items-center">
@@ -322,12 +322,12 @@ console.log("Current Language:", currentLanguage);
                                             <button
                                                 onClick={() => {
                                                     setLanguageContext(language?.description),
-                                                    onUseLanguage(language)}}
-                                                className={`flex items-center space-x-1 px-2 py-1 rounded transition-all duration-300 transform hover:scale-110 ${
-                                                    selectLanguage?.id === language.id
+                                                        onUseLanguage(language)
+                                                }}
+                                                className={`flex items-center space-x-1 px-2 py-1 rounded transition-all duration-300 transform hover:scale-110 ${selectLanguage?.id === language.id
                                                         ? 'bg-[#36C4E4] text-white shadow-md'
                                                         : 'hover:bg-gray-200 text-gray-600'
-                                                }`}
+                                                    }`}
                                             >
                                                 <img
                                                     src={`/api/lang/media/${language.image}`}
@@ -353,12 +353,12 @@ console.log("Current Language:", currentLanguage);
 
                                                 onClick={() => {
                                                     setLanguageContext(language?.description),
-                                                    onUseLanguage(language)}}
-                                                className={`flex items-center space-x-1 px-2 py-1 rounded transition-all duration-300 transform hover:scale-110 ${
-                                                    selectLanguage?.id === language.id
+                                                        onUseLanguage(language)
+                                                }}
+                                                className={`flex items-center space-x-1 px-2 py-1 rounded transition-all duration-300 transform hover:scale-110 ${selectLanguage?.id === language.id
                                                         ? 'bg-[#36C4E4] text-white shadow-md'
                                                         : 'hover:bg-gray-200 text-gray-600'
-                                                }`}
+                                                    }`}
                                             >
                                                 <img
                                                     src={`/api/lang/media/${language.image}`}
@@ -598,8 +598,8 @@ console.log("Current Language:", currentLanguage);
                                         key={index}
                                         onClick={() => setActiveTestimonial(index)}
                                         className={`w-4 h-4 rounded-full transition-all duration-500 transform hover:scale-125 ${index === activeTestimonial
-                                                ? 'bg-[#36C4E4] shadow-lg'
-                                                : 'bg-gray-300 hover:bg-gray-400'
+                                            ? 'bg-[#36C4E4] shadow-lg'
+                                            : 'bg-gray-300 hover:bg-gray-400'
                                             }`}
                                     />
                                 ))}
@@ -858,7 +858,7 @@ console.log("Current Language:", currentLanguage);
                                                 type="tel"
                                                 id="telefono"
                                                 required
-                                                onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                                                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                                 className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#36C4E4] focus:border-transparent transition-all duration-300 bg-white/80 backdrop-blur-sm"
                                                 placeholder={t.contact.form.placeholders.phone}
                                             />
@@ -878,11 +878,11 @@ console.log("Current Language:", currentLanguage);
                                                 <div className="flex items-center">
                                                     {formData.selectedService ? (
                                                         <>
-                                                            <div 
-                                                                className="w-6 h-6 rounded-full mr-3 p-1" 
+                                                            <div
+                                                                className="w-6 h-6 rounded-full mr-3 p-1"
                                                                 style={{ backgroundColor: formData.selectedService?.color || '#36C4E4' }}
                                                             >
-<img src={`/api/service/media/${formData.selectedService.icon}`} className='h-full w-full object-cover'/>
+                                                                <img src={`/api/service/media/${formData.selectedService.icon}`} className='h-full w-full object-cover' />
 
                                                             </div>
                                                             <span>{formData.selectedService.title}</span>
@@ -893,13 +893,13 @@ console.log("Current Language:", currentLanguage);
                                                 </div>
                                                 <ChevronDown className={`h-5 w-5 transition-transform ${showServiceDropdown ? 'rotate-180' : ''}`} />
                                             </button>
-                                            
+
                                             {showServiceDropdown && (
                                                 <div className="absolute z-10 mt-2 w-full bg-white shadow-lg rounded-xl py-2 max-h-60 overflow-auto border border-gray-200">
                                                     <div
                                                         className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex items-center transition-colors"
                                                         onClick={() => {
-                                                            setFormData({...formData, selectedService: null});
+                                                            setFormData({ ...formData, selectedService: null });
                                                             setShowServiceDropdown(false);
                                                         }}
                                                     >
@@ -910,12 +910,12 @@ console.log("Current Language:", currentLanguage);
                                                             key={service.id}
                                                             className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex items-center transition-colors"
                                                             onClick={() => {
-                                                                setFormData({...formData, selectedService: service});
+                                                                setFormData({ ...formData, selectedService: service });
                                                                 setShowServiceDropdown(false);
                                                             }}
                                                         >
-                                                            <div 
-                                                                className="w-4 h-4 rounded-full mr-3" 
+                                                            <div
+                                                                className="w-4 h-4 rounded-full mr-3"
                                                                 style={{ backgroundColor: service.color }}
                                                             ></div>
                                                             <span>{service.title}</span>
@@ -949,7 +949,7 @@ console.log("Current Language:", currentLanguage);
                                         {sending && (
                                             <div className="absolute inset-0 bg-gradient-to-r from-[#2BA3C4] to-[#36C4E4] animate-pulse"></div>
                                         )}
-                                        
+
                                         {/* Loading spinner */}
                                         {sending && (
                                             <div className="absolute inset-0 flex items-center justify-center">
@@ -960,14 +960,14 @@ console.log("Current Language:", currentLanguage);
                                                 </div>
                                             </div>
                                         )}
-                                        
+
                                         {/* Content */}
                                         <div className={`flex items-center space-x-3 transition-all duration-300 ${sending ? 'opacity-0' : 'opacity-100'}`}>
                                             <span>{t.contact.form.submit}</span>
                                             <ArrowRight className="h-5 w-5" />
                                         </div>
-                                        
-                                       
+
+
                                     </button>
                                 </form>
                             </div>
@@ -998,7 +998,7 @@ console.log("Current Language:", currentLanguage);
                                     const IconComponent = getSocialIcon(social.description);
                                     const colorClasses = getSocialColors(social.description);
                                     const shadowClass = getSocialShadowColor(social.description);
-                                    
+
                                     return (
                                         <a
                                             key={index}
@@ -1008,9 +1008,9 @@ console.log("Current Language:", currentLanguage);
                                             className={`w-12 h-12 bg-gradient-to-r ${colorClasses} rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 shadow-lg ${shadowClass}`}
                                             title={social.description || social.name}
                                         >
-                                            
-                                                <IconComponent className="h-6 w-6 text-white" />
-                                            
+
+                                            <IconComponent className="h-6 w-6 text-white" />
+
                                         </a>
                                     );
                                 })}
@@ -1035,33 +1035,33 @@ console.log("Current Language:", currentLanguage);
                                 <div className="flex items-center space-x-3">
                                     <Phone className="h-5 w-5 text-[#36C4E4]" />
 
-                                       <span className="whitespace-pre-line">
-                                                   {generals?.find(g => g.correlative === 'phone_contact')?.description}
-                                                </span>
-                             
+                                    <span className="whitespace-pre-line">
+                                        {generals?.find(g => g.correlative === 'phone_contact')?.description}
+                                    </span>
+
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <Mail className="h-5 w-5 text-[#36C4E4]" />
-                                      <span className="whitespace-pre-line">
-                                                   {generals?.find(g => g.correlative === 'email_contact')?.description}
-                                                </span>
+                                    <span className="whitespace-pre-line">
+                                        {generals?.find(g => g.correlative === 'email_contact')?.description}
+                                    </span>
                                 </div>
                                 <div className="flex items-start space-x-3">
                                     <MapPin className="h-5 w-5 text-[#36C4E4] mt-1" />
                                     <div>
-                                          <span className="whitespace-pre-line">
-                                                   {generals?.find(g => g.correlative === 'address')?.description}
-                                                </span>
-                                      
+                                        <span className="whitespace-pre-line">
+                                            {generals?.find(g => g.correlative === 'address')?.description}
+                                        </span>
+
                                     </div>
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <Clock className="h-5 w-5 text-[#36C4E4]" />
                                     <div>
-                                          <span className="whitespace-pre-line">
-                                                   {generals?.find(g => g.correlative === 'opening_hours')?.description}
-                                                </span>
-                                      
+                                        <span className="whitespace-pre-line">
+                                            {generals?.find(g => g.correlative === 'opening_hours')?.description}
+                                        </span>
+
                                     </div>
                                 </div>
                             </div>
@@ -1076,12 +1076,12 @@ console.log("Current Language:", currentLanguage);
 
             {/* WhatsApp Floating Button */}
             {(() => {
-                const whatsappSocial = socials?.find(social => 
+                const whatsappSocial = socials?.find(social =>
                     social.name.toLowerCase().includes('whatsapp') && social.visible && social.status
                 );
-                
+
                 if (!whatsappSocial) return null;
-                
+
                 return (
                     <a
                         href={whatsappSocial.link}
