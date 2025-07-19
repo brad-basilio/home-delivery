@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import Base from './Components/Tailwind/Base';
 import CreateReactScript from './Utils/CreateReactScript';
 import { CarritoProvider } from './Context/CarritoContext.jsx';
-
+import motion from 'framer-motion';
 
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
@@ -1077,13 +1077,14 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [] }) => 
             {/* WhatsApp Floating Button */}
             {(() => {
                 const whatsappSocial = socials?.find(social =>
-                    social.name.toLowerCase().includes('whatsapp') && social.visible && social.status
+                    social.description.toLowerCase().includes('whatsapp') && social.visible && social.status
                 );
 
                 if (!whatsappSocial) return null;
 
                 return (
-                    <a
+                    <>
+                       <a
                         href={whatsappSocial.link}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -1093,6 +1094,12 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [] }) => 
                     >
                         <MessageCircle className="h-8 w-8" />
                     </a>
+                    
+                    
+                    
+                    
+                    </>
+                 
                 );
             })()}
 
