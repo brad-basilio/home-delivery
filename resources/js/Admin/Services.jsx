@@ -79,7 +79,21 @@ const Services = ({ brands }) => {
         descriptionRef.current.value = data?.description || "";
         imageRef.current.value = null;
         iconRef.current.value = null;
-        colorRef.current.value = data?.color || "#000000";
+        
+        // Manejo del color (transparente o con valor)
+        const hasColor = data?.color && data.color !== "transparent" && data.color !== "";
+        setItemData({
+            ...data,
+            transparent_color: !hasColor,
+            color: hasColor ? data?.color : "transparent"
+        });
+        
+        if (hasColor) {
+            colorRef.current.value = data?.color;
+        } else {
+            colorRef.current.value = "#000000";
+            colorRef.current.dataset.prevColor = "#000000";
+        }
         
         if (data?.image) {
             imageRef.image.src = `/api/service/media/${data.image}`;
@@ -121,7 +135,9 @@ const Services = ({ brands }) => {
         const formData = new FormData();
         formData.append("title", titleRef.current.value);
         formData.append("description", descriptionRef.current.value);
-        formData.append("color", colorRef.current.value);
+        
+        // Si el color es transparente, enviar valor especial, de lo contrario enviar el color seleccionado
+        formData.append("color", itemData?.transparent_color ? "transparent" : colorRef.current.value);
         // formData.append("link", linkRef.current.value);
 
         // Si estamos editando, agregar el ID
@@ -365,20 +381,36 @@ const Services = ({ brands }) => {
                         caption: "Color",
                         width: "80px",
                         cellTemplate: (container, { data }) => {
+                            const isTransparent = !data.color || data.color === "transparent" || data.color === "";
+                            
                             ReactAppend(
                                 container,
                                 <div className="d-flex align-items-center">
-                                    <div
-                                        style={{
-                                            width: "30px",
-                                            height: "20px",
-                                            backgroundColor: data.color || "#000000",
-                                            borderRadius: "3px",
-                                            border: "1px solid #ddd",
-                                            marginRight: "5px"
-                                        }}
-                                    ></div>
-                                    <small>{data.color || "#000000"}</small>
+                                    {isTransparent ? (
+                                        <div
+                                            style={{
+                                                width: "30px",
+                                                height: "20px",
+                                                borderRadius: "3px",
+                                                border: "1px solid #ddd",
+                                                marginRight: "5px",
+                                                backgroundImage: "linear-gradient(45deg, #f0f0f0 25%, transparent 25%, transparent 50%, #f0f0f0 50%, #f0f0f0 75%, transparent 75%, transparent)",
+                                                backgroundSize: "8px 8px"
+                                            }}
+                                        ></div>
+                                    ) : (
+                                        <div
+                                            style={{
+                                                width: "30px",
+                                                height: "20px",
+                                                backgroundColor: data.color,
+                                                borderRadius: "3px",
+                                                border: "1px solid #ddd",
+                                                marginRight: "5px"
+                                            }}
+                                        ></div>
+                                    )}
+                                    <small>{isTransparent ? "Transparente" : data.color}</small>
                                 </div>
                             );
                         },
@@ -478,13 +510,58 @@ const Services = ({ brands }) => {
 
                         <div className="mb-3">
                             <label className="form-label">Color del servicio</label>
-                            <input
-                                ref={colorRef}
-                                type="color"
-                                className="form-control form-control-color"
-                                defaultValue="#000000"
-                                title="Selecciona un color"
-                            />
+                            <div className="d-flex align-items-center">
+                                <input
+                                    ref={colorRef}
+                                    type="color"
+                                    className="form-control form-control-color me-2"
+                                    defaultValue="#000000"
+                                    title="Selecciona un color"
+                                    disabled={itemData?.transparent_color}
+                                    onChange={(e) => {
+                                        // Actualizar el estado para que se refleje en el overlay
+                                        setItemData({
+                                            ...itemData,
+                                            color: e.target.value
+                                        });
+                                    }}
+                                />
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="transparentColorCheck"
+                                        checked={itemData?.transparent_color}
+                                        onChange={(e) => {
+                                            const prevColor = colorRef.current.value;
+                                            if (e.target.checked) {
+                                                colorRef.current.dataset.prevColor = prevColor;
+                                                colorRef.current.value = "";
+                                                
+                                                // Actualizar el estado para reflejar que es transparente
+                                                setItemData({
+                                                    ...itemData,
+                                                    transparent_color: true,
+                                                    color: "transparent"
+                                                });
+                                            } else {
+                                                const restoredColor = colorRef.current.dataset.prevColor || "#000000";
+                                                colorRef.current.value = restoredColor;
+                                                
+                                                // Actualizar el estado para reflejar el color restaurado
+                                                setItemData({
+                                                    ...itemData,
+                                                    transparent_color: false,
+                                                    color: restoredColor
+                                                });
+                                            }
+                                        }}
+                                    />
+                                    <label className="form-check-label" htmlFor="transparentColorCheck">
+                                        Sin color (transparente)
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="mb-3">
@@ -537,7 +614,9 @@ const Services = ({ brands }) => {
                         <ImageFormGroup
                             eRef={imageRef}
                             label="Imagen principal"
-                            aspect={1 / 1}
+                            aspect={16 / 9}
+                            overlayColor={itemData?.transparent_color ? null : colorRef?.current?.value}
+                            showColorOverlay={true}
                         />
 
                         <ImageFormGroup
