@@ -8,9 +8,24 @@ const itemsRest = new ItemsRest();
 
 export const CarritoProvider = ({ children }) => {
     const [carrito, setCarrito] = useState(() => {
-        const data = localStorage.getItem("carrito");
-
-        return data ? JSON.parse(data) : [];
+        try {
+            const data = localStorage.getItem("carrito");
+            if (!data) return [];
+            
+            // Verificar si los datos parecen ser JSON válido
+            if (data.startsWith("U2FsdGVkX1")) {
+                // Los datos están encriptados, limpiar localStorage y retornar array vacío
+                localStorage.removeItem("carrito");
+                return [];
+            }
+            
+            return JSON.parse(data);
+        } catch (error) {
+            // Si hay error al parsear, limpiar localStorage y retornar array vacío
+            console.warn("Error parsing carrito data, clearing localStorage:", error);
+            localStorage.removeItem("carrito");
+            return [];
+        }
     });
     //  console.log("data", carrito);
 

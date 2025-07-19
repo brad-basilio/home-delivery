@@ -42,6 +42,7 @@ class HomeController extends BasicController
         $faqs = Faq::where('status', true)->where('visible', true)->where('lang_id', $langId)->get();
         $generlas = General::where('lang_id', $langId)->get();
         $socials = Social::where('status', true)->where('visible', true)->get();
+        $sliders = Slider::where('status', true)->where('visible', true)->get();
         return [
 
             'indicators' => $indicators,
@@ -53,6 +54,7 @@ class HomeController extends BasicController
             'faqs' => $faqs,
             'generals' => $generlas,
             'socials' => $socials,
+            'sliders' => $sliders,
             // 'languagesSystem' => Lang::where('status', true)->where('visible', true)->get(),
         ];
     }

@@ -31,7 +31,7 @@ const Menu = ({
         <div
             className="left-side-menu"
             style={{
-                background: "#36a9e1",
+                background: "#1a252f",
             }}
         >
             <div className="h-100" data-simplebar>
@@ -45,7 +45,7 @@ const Menu = ({
                         className="rounded-circle img-thumbnail avatar-md"
                         style={{
                             backgroundColor: "unset",
-                            borderColor: "#36a9e1",
+                            borderColor: "#1a252f",
                             objectFit: "cover",
                             objectPosition: "center",
                         }}
@@ -263,6 +263,13 @@ const Menu = ({
                                     </MenuItem>
                                 </MenuItemContainer>*/}
                                 <li className="menu-title">Landing Page</li>
+                             <MenuItem
+                                    href="/admin/sliders"
+                                    icon="mdi mdi-page-layout-body"
+                                >
+                                    Sliders
+                                </MenuItem>
+                             
                               {/*  <MenuItem
                                     href="/admin/translations"
                                     icon="mdi mdi-translate"
@@ -324,8 +331,8 @@ const Menu = ({
                                     icon="mdi mdi-shield-half-full"
                                 >
                                     Valores
-                                </MenuItem>*/}
-                                <MenuItem
+                                </MenuItem>
+                                 <MenuItem
                                     href="/admin/testimonies"
                                     icon="mdi mdi-forum"
                                 >
@@ -334,6 +341,8 @@ const Menu = ({
                                         "Testimonios"
                                     )}
                                 </MenuItem>
+                                */}
+                               
                                {/* <MenuItem
                                     href="/admin/categories"
                                     icon="mdi mdi-clipboard-list-outline"
@@ -350,12 +359,12 @@ const Menu = ({
                                     {t("admin.sidebar.posts", "Posts")}
                                 </MenuItem> */}
                                 
-                                <MenuItem
+                           {/*     <MenuItem
                                     href="/admin/faqs"
                                     icon="mdi mdi-frequently-asked-questions"
                                 >
                                     FAQs
-                                </MenuItem>
+                                </MenuItem> */}
                                 <MenuItem
                                     href="/admin/socials"
                                     icon="mdi mdi-web"

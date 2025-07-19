@@ -24,7 +24,7 @@ const Services = ({ brands }) => {
     const idRef = useRef();
     const titleRef = useRef();
     const descriptionRef = useRef();
-    const imageRef = useRef();
+    //const imageRef = useRef();
     const iconRef = useRef();
     const colorRef = useRef();
     //const linkRef = useRef();
@@ -77,7 +77,7 @@ const Services = ({ brands }) => {
         idRef.current.value = data?.id || "";
         titleRef.current.value = data?.title || "";
         descriptionRef.current.value = data?.description || "";
-        imageRef.current.value = null;
+       // imageRef.current.value = null;
         iconRef.current.value = null;
         
         // Manejo del color (transparente o con valor)
@@ -95,9 +95,9 @@ const Services = ({ brands }) => {
             colorRef.current.dataset.prevColor = "#000000";
         }
         
-        if (data?.image) {
+      /*  if (data?.image) {
             imageRef.image.src = `/api/service/media/${data.image}`;
-        }
+        } */
         
         if (data?.icon) {
             iconRef.image.src = `/api/service/media/${data.icon}`;
@@ -146,9 +146,9 @@ const Services = ({ brands }) => {
         }
 
         // Agregar imagen principal si existe
-        if (imageRef.current.files[0]) {
+      /*  if (imageRef.current.files[0]) {
             formData.append("image", imageRef.current.files[0]);
-        }
+        }*/
 
         // Agregar icono si existe
         if (iconRef.current.files[0]) {
@@ -286,68 +286,8 @@ const Services = ({ brands }) => {
                             );
                         },
                     },
-                    {
-                        dataField: "characteristics",
-                        caption: "Características",
-                        cellTemplate: (container, { data }) => {
-                            if (!data.characteristics) return;
-                            container.html(
-                                renderToString(
-                                    <ul
-                                        className="m-0 ps-3"
-                                        style={{ listStyle: "none" }}
-                                    >
-                                        {data.characteristics
-                                            .slice(0, 2)
-                                            .map((char, i) => (
-                                                <li
-                                                    key={i}
-                                                    className="text-truncate"
-                                                    style={{
-                                                        maxWidth: "250px",
-                                                    }}
-                                                >
-                                                    <small>• {char}</small>
-                                                </li>
-                                            ))}
-                                        {data.characteristics.length > 2 && (
-                                            <li>
-                                                <small className="text-muted">
-                                                    +
-                                                    {data.characteristics
-                                                        .length - 2}{" "}
-                                                    más...
-                                                </small>
-                                            </li>
-                                        )}
-                                    </ul>
-                                )
-                            );
-                        },
-                    },
-                    {
-                        dataField: "image",
-                        caption: "Imagen",
-                        width: "100px",
-                        cellTemplate: (container, { data }) => {
-                            ReactAppend(
-                                container,
-                                <img
-                                    src={`/api/service/media/${data.image}`}
-                                    style={{
-                                        width: "80px",
-                                        height: "45px",
-                                        objectFit: "cover",
-                                        borderRadius: "4px",
-                                    }}
-                                    onError={(e) =>
-                                        (e.target.src =
-                                            "/images/default-thumbnail.jpg")
-                                    }
-                                />
-                            );
-                        },
-                    },
+                   
+                   
                     {
                         dataField: "icon",
                         caption: "Icono",
@@ -564,7 +504,7 @@ const Services = ({ brands }) => {
                             </div>
                         </div>
 
-                        <div className="mb-3">
+                      {/*  <div className="mb-3">
                             <label className="form-label">
                                 Características
                             </label>
@@ -602,7 +542,7 @@ const Services = ({ brands }) => {
                                 <i className="fas fa-plus me-1"></i> Agregar
                                 característica
                             </button>
-                        </div>
+                        </div> */}
                         {/*  <InputFormGroup
                             type="url"
                             eRef={linkRef}
@@ -611,13 +551,13 @@ const Services = ({ brands }) => {
                     </div>
 
                     <div className="col-md-4">
-                        <ImageFormGroup
+                       {/* <ImageFormGroup
                             eRef={imageRef}
                             label="Imagen principal"
                             aspect={16 / 9}
                             overlayColor={itemData?.transparent_color ? null : colorRef?.current?.value}
                             showColorOverlay={true}
-                        />
+                        /> */}
 
                         <ImageFormGroup
                             eRef={iconRef}

@@ -5,8 +5,24 @@ export const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
     const [currentLanguage, setCurrentLanguage] = useState(() => {
-        const savedLang = localStorage.getItem("currentLanguage");
-        return savedLang ? JSON.parse(savedLang) : null;
+        try {
+            const savedLang = localStorage.getItem("currentLanguage");
+            if (!savedLang) return null;
+            
+            // Verificar si los datos parecen ser JSON válido
+            if (savedLang.startsWith("U2FsdGVkX1")) {
+                // Los datos están encriptados, limpiar localStorage y retornar null
+                localStorage.removeItem("currentLanguage");
+                return null;
+            }
+            
+            return JSON.parse(savedLang);
+        } catch (error) {
+            // Si hay error al parsear, limpiar localStorage y retornar null
+            console.warn("Error parsing currentLanguage data, clearing localStorage:", error);
+            localStorage.removeItem("currentLanguage");
+            return null;
+        }
     });
 
     const [translations, setTranslations] = useState({});

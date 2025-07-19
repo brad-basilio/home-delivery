@@ -39,7 +39,7 @@ const Sliders = () => {
         descriptionRef.current.value = data?.description ?? "";
         // Configurar video existente si estamos editando
         if (bgImageRef.current && data?.image) {
-            bgImageRef.current.setVideoSrc(`/api/sliders/media/${data.image}`);
+             bgImageRef.image.src = `/api/items/media/${data?.image ?? "undefined"}`;
         }
         buttonTextRef.current.value = data?.button_text ?? "";
         buttonLinkRef.current.value = data?.button_link ?? "";
@@ -64,11 +64,9 @@ const Sliders = () => {
         }
 
         // Obtener el archivo de video
-        if (bgImageRef.current) {
-            const videoFile = bgImageRef.current.getFile();
-            if (videoFile) {
-                formData.append("video", videoFile);
-            }
+       const image = bgImageRef.current.files[0];
+        if (image) {
+            formData.append("image", image);
         }
 
         const result = await slidersRest.save(formData);
@@ -269,11 +267,14 @@ const Sliders = () => {
             >
                 <div className="row" id="sliders-container">
                     <input ref={idRef} type="hidden" />
-                    <VideoFormGroup
+                    <ImageFormGroup
                         eRef={bgImageRef}
-                        label="Selecciona un video"
+                        label="Selecciona una imagen"
                         col="col-12"
-                    />
+                      
+                        required
+                       />
+                   
 
                     <TextareaFormGroup
                         eRef={nameRef}

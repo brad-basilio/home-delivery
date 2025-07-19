@@ -122,7 +122,7 @@ const Generals = ({ generals }) => {
         },
     });
 
-    const [activeTab, setActiveTab] = useState("policies");
+    const [activeTab, setActiveTab] = useState("contact");
 
     const handleInputChange = (e, index, field) => {
         const { value } = e.target;

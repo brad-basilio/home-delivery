@@ -54,32 +54,7 @@ const NavBar = ({ session = {}, title = "Pagina", languagesSystem }) => {
                 <li className="dropdown notification-list topbar-dropdown ">
                     <div className=" ">
                         <div className="d-flex gap-0 align-items-center justify-content-center ">
-                            {languagesSystem.map((language) => (
-                                <a
-                                    key={language.id}
-                                    className={`nav-link dropdown-toggle nav-user me-0 waves-effect waves-light `}
-                                    data-bs-toggle="dropdown"
-                                    href="#"
-                                    role="button"
-                                    aria-haspopup="false"
-                                    aria-expanded="false"
-                                    onClick={() => onUseLanguage(language)}
-                                >
-                                    <img
-                                        src={`/api/lang/media/${language.image}`}
-                                        className={`${
-                                            selectLanguage.id === language.id
-                                                ? "border border-2 border-primary"
-                                                : ""
-                                        }`}
-                                        style={{
-                                            width: "40px",
-
-                                            borderRadius: "20%",
-                                        }}
-                                    />
-                                </a>
-                            ))}
+                         
                         </div>
                     </div>
                 </li>
@@ -187,7 +162,7 @@ const NavBar = ({ session = {}, title = "Pagina", languagesSystem }) => {
             <div
                 className="logo-box"
                 style={{
-                    background: "#36a9e1 ",
+                    background: "#1a252f ",
                 }}
             >
                 <a href="/home" className="logo logo-light text-center">

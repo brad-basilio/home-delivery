@@ -97,7 +97,26 @@ const Checkout = ({ publicKey, session }) => {
         },
     });
 
-    const cart = JSON.parse(localStorage.getItem("carrito")) || [];
+    const cart = (() => {
+        try {
+            const savedCart = localStorage.getItem("carrito");
+            if (!savedCart) return [];
+            
+            // Verificar si los datos parecen ser JSON válido
+            if (savedCart.startsWith("U2FsdGVkX1")) {
+                // Los datos están encriptados, limpiar localStorage y retornar array vacío
+                localStorage.removeItem("carrito");
+                return [];
+            }
+            
+            return JSON.parse(savedCart);
+        } catch (error) {
+            // Si hay error al parsear, limpiar localStorage y retornar array vacío
+            console.warn("Error parsing cart data, clearing localStorage:", error);
+            localStorage.removeItem("carrito");
+            return [];
+        }
+    })();
     console.log(cart);
     const [sale, setSale] = useState({
         name: session?.name || null,
