@@ -78,15 +78,15 @@ const Login = ({}) => {
                             <source src="/assets/img/backgrounds/login.mp4" />
                         </video>*/}
 
-                        <img src="https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"  className="h-full object-cover rounded-xl"/>
+                        <img src="https://e.radio-grpp.io/xlarge/2023/02/13/323932_1388272.jpg"  className="h-full object-cover rounded-xl"/>
                     </div>
                     <div className="flex items-center justify-center px-8">
                         <div className="mx-auto w-full max-w-md space-y-6">
                             <div className="space-y-2">
                                 <h1 className="text-3xl font-bold text-center">
                                     Bienvenido a {" "}
-                                    <span className="text-azul">
-                                       Dokux
+                                    <span className="text-[#e5b437]">
+                                       An Malik Cargo
                                     </span>
                                 </h1>
                             </div>
