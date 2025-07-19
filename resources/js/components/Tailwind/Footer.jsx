@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactModal from "react-modal";
+import { motion } from "framer-motion";
 
 import Tippy from "@tippyjs/react";
 import HtmlContent from "../../Utils/HtmlContent";
@@ -35,14 +36,17 @@ const Footer = ({ terms, footerLinks = [] }) => {
     }, []); // Asegúrate de que este array de dependencias está vacío si solo se ejecuta una vez
 
     const Facebook = socials.find(
-        (social) => social.description === "Facebook"
+        (social) => social.description.toLowerCase() === "facebook"
     );
-    const Twitter = socials.find((social) => social.description === "Twitter");
+    const Twitter = socials.find((social) => social.description.toLowerCase() === "twitter");
     const Instagram = socials.find(
-        (social) => social.description === "Instagram"
+        (social) => social.description.toLowerCase() === "instagram"
     );
-    const Youtube = socials.find((social) => social.description === "Youtube");
+    const Youtube = socials.find((social) => social.description.toLowerCase() === "youtube");
 
+    const Whatsapp = socials.find((social) => social.description.toLowerCase() === "whatsapp");
+    
+    
     const [aboutuses, setAboutuses] = useState(null); // o useState({});
 
     useEffect(() => {
@@ -81,8 +85,39 @@ const Footer = ({ terms, footerLinks = [] }) => {
 
     return (
         <>
+          {Whatsapp && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.5 }}
+                            className="flex justify-end w-full mx-auto z-[100] relative"
+                        >
+                            <div className="fixed bottom-3 right-2 md:bottom-[1rem] lg:bottom-[2rem] lg:right-3 z-20 cursor-pointer">
+                                <a
+                                    target="_blank"
+                                    id="whatsapp-toggle"
+                                    href={Whatsapp.link}
+                                >
+                                    <motion.img
+                                        animate={{
+                                            y: [0, -10, 0],
+                                        }}
+                                        transition={{
+                                            duration: 1.5,
+                                            repeat: Infinity,
+                                            repeatType: "loop",
+                                        }}
+                                        src="/assets/img/icons/WhatsApp.svg"
+                                        alt="whatsapp"
+                                        className="mr-3 w-16 h-16 md:w-[80px] md:h-[80px]"
+                                    />
+                                </a>
+                            </div>
+                        </motion.div>
+                    )}
             <footer className="bg-[#224483] text-white mt-8 font-poppins ">
                 {" "}
+
                 {/*lg:mt-[120px] */}
                 <div className="px-[5%] max-w-xl lg:max-w-[82rem]  mx-auto py-10 lg:pt-16 lg:pb-8">
                     <div className=" flex flex-col gap-6 lg:flex-row ">
