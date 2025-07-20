@@ -92,18 +92,18 @@ const Thanks = ({ session }) => {
                 <div
                     className="absolute inset-0 bg-cover bg-center bg-fixed"
                     style={{
-                        backgroundImage: `linear-gradient(rgba(54, 196, 228, 0.85), rgba(43, 163, 196, 0.85)), url('https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')`,
+                        backgroundImage: `linear-gradient(rgba(229, 180, 55, 0.85), rgba(229, 180, 55, 0.85)), url('https://www.esan.edu.pe/images/blog/2019/02/26/1500x844-transporte-logistica.jpg')`,
                         transform: `translateY(${scrollY * 0.5}px)`
                     }}
                 ></div>
 
                 {/* Animated Background Elements */}
                 <div className="absolute inset-0">
-                    <div className="absolute top-20 left-10 w-20 h-20 bg-[#36C4E4]/20 rounded-full animate-pulse"></div>
-                    <div className="absolute top-40 right-20 w-32 h-32 bg-[#36C4E4]/30 rounded-full animate-bounce" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-white/20 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
-                    <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-green-400/20 rounded-full animate-pulse" style={{ animationDelay: '3s' }}></div>
-                    <div className="absolute bottom-40 right-10 w-12 h-12 bg-yellow-400/30 rounded-full animate-bounce" style={{ animationDelay: '4s' }}></div>
+                    <div className="absolute top-20 left-10 w-20 h-20 bg-[#e5b437]/20 rounded-full animate-pulse"></div>
+                    <div className="absolute top-40 right-20 w-32 h-32 bg-[#e5b437]/30 rounded-full animate-bounce" style={{ animationDelay: '1s' }}></div>
+                    <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-[#e5b437]/15 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
+                    <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-[#e5b437]/25 rounded-full animate-pulse" style={{ animationDelay: '3s' }}></div>
+                    <div className="absolute bottom-40 right-10 w-12 h-12 bg-[#e5b437]/30 rounded-full animate-bounce" style={{ animationDelay: '4s' }}></div>
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10">
@@ -149,7 +149,7 @@ const Thanks = ({ session }) => {
                             transition={{ delay: 0.5, duration: 0.8 }}
                         >
                             <h1 className="text-4xl md:text-7xl font-bold mb-8 leading-tight text-white drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
-                                ¡<span className="text-green-300">Gracias</span> por{' '}
+                                ¡<span className="text-[#1a252f]">Gracias</span> por{' '}
                                 <span className="text-white relative drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
                                     Contactarnos!
                                     <motion.div 
@@ -186,7 +186,7 @@ const Thanks = ({ session }) => {
                                     <span className="text-lg font-semibold">Tiempo de Respuesta</span>
                                     <Star className="h-5 w-5 text-yellow-300" />
                                 </div>
-                                <p className="text-2xl font-bold text-green-300">24-48 horas hábiles</p>
+                                <p className="text-2xl font-bold text-[#1a252f]">24-48 horas hábiles</p>
                             </div>
                         </motion.div>
 

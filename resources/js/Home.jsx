@@ -315,14 +315,13 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                 service_id: formData.selectedService?.id || null
             };
 
-            await messagesRest.save(formDataToSend);
+            const result = await messagesRest.save(formDataToSend);
 
-            Swal.fire({
-                title: '¡Éxito!',
-                text: '¡Mensaje enviado! Te contactaremos pronto.',
-                icon: 'success',
-                confirmButtonText: 'Aceptar'
-            });
+            if (result) {
+                // Redirigir a página de agradecimiento
+                window.location.href = "/thanks";
+            }
+           
 
             // Limpiar formulario
             if (nameRef.current) nameRef.current.value = '';
