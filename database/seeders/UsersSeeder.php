@@ -13,6 +13,9 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $deleteUser = User::where('email', 'marketing@nopain.com.pe')->first();
+        $deleteUser?->delete();
         User::updateOrCreate([
             'email' => 'admin@mundoweb.pe'
         ], [
@@ -22,11 +25,11 @@ class UsersSeeder extends Seeder
         ])->assignRole('Admin');
 
          User::updateOrCreate([
-            'email' => 'dokux@dokux.io'
+            'email' => 'admin@anmalikcargo.com'
         ], [
-            'name' => 'Dokux',
-            'lastname' => 'IO',
-            'password' => 'adminDokux'
+            'name' => 'Anmalik',
+            'lastname' => 'Cargo',
+            'password' => '@nm@l1kc@rgO#2025'
         ])->assignRole('Admin');
        {/* User::updateOrCreate([
             'email' => 'admin@wefem.pe'
