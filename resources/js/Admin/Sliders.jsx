@@ -38,9 +38,9 @@ const Sliders = () => {
         nameRef.current.value = data?.name ?? "";
         descriptionRef.current.value = data?.description ?? "";
         // Configurar video existente si estamos editando
-        if (bgImageRef.current && data?.image) {
+       
              bgImageRef.image.src = `/api/items/media/${data?.image ?? "undefined"}`;
-        }
+        
         buttonTextRef.current.value = data?.button_text ?? "";
         buttonLinkRef.current.value = data?.button_link ?? "";
 
