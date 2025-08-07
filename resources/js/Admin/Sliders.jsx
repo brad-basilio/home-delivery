@@ -37,9 +37,8 @@ const Sliders = () => {
         idRef.current.value = data?.id ?? "";
         nameRef.current.value = data?.name ?? "";
         descriptionRef.current.value = data?.description ?? "";
-        // Configurar video existente si estamos editando
-       
-             bgImageRef.image.src = `/api/items/media/${data?.image ?? "undefined"}`;
+        // Configurar imagen existente si estamos editando
+        bgImageRef.image.src = `/api/sliders/media/${data?.image ?? "undefined"}`;
         
         buttonTextRef.current.value = data?.button_text ?? "";
         buttonLinkRef.current.value = data?.button_link ?? "";
@@ -63,8 +62,8 @@ const Sliders = () => {
             formData.append(key, request[key]);
         }
 
-        // Obtener el archivo de video
-       const image = bgImageRef.current.files[0];
+        // Obtener el archivo de imagen
+        const image = bgImageRef.current.files[0];
         if (image) {
             formData.append("image", image);
         }
@@ -177,9 +176,8 @@ const Sliders = () => {
                         cellTemplate: (container, { data }) => {
                             ReactAppend(
                                 container,
-                                <video
+                                <img
                                     src={`/api/sliders/media/${data.image}`}
-                                    autoPlay
                                     style={{
                                         width: "80px",
                                         height: "48px",
