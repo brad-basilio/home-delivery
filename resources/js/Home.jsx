@@ -1029,7 +1029,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                         Conectamos tu negocio con más de 50 países en 5 continentes
                     </p>
                     <a href='#inicio'  className="bg-[#2e3e50] hover:bg-[#1a252f] text-white px-8 py-3 rounded-md font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg animate-bounceIn animation-delay-500">
-                      Consultanos
+                      Consúltanos
                     </a>
                 </div>
             </section>
