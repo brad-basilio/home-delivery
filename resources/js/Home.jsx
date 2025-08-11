@@ -150,7 +150,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
             button_link: "#contacto"
         },
         {
-            image: "https://e.radio-grpp.io/xlarge/2023/02/13/323932_1388272.jpg",
+            image: "/assets/img/anmalik/red-logistica.jpg",
             name: "Red Logística Global",
             description: "Conectamos tu negocio con más de 5a0 países en 5 continentes",
             button_text: "Ver Servicios",
@@ -1014,7 +1014,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                 <div
                     className="absolute inset-0 bg-cover bg-center"
                     style={{
-                        backgroundImage: "url('https://www.riversologistica.com/wp-content/uploads/2024/09/Slider-1.webp')",
+                        backgroundImage: "url('/assets/img/anmalik/red-logistica.jpg')",
                     }}
                 >
                     <div className="absolute inset-0 bg-[#e5b437]/70"></div>
@@ -1222,7 +1222,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
 
                         <div className="relative order-1 lg:order-2 animate-slideInRight">
                             <img
-                                src="https://e.radio-grpp.io/xlarge/2023/02/13/323932_1388272.jpg"
+                                src="/assets/img/anmalik/about-malik.jpg"
                                 alt="About AN MALIK CARGO"
                                 className="rounded-lg shadow-2xl w-full transform hover:scale-105 transition-transform duration-300"
                             />
