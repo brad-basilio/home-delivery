@@ -15,6 +15,7 @@ export default defineConfig({
             input: [
                 ...glob.sync("resources/js/**/*.jsx"),
                 "resources/css/app.css",
+                "resources/css/swiper-custom.css",
             ],
             refresh: true,
         }),

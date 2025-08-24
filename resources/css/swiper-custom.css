@@ -1,0 +1,98 @@
+/* Estilos personalizados para Swiper */
+
+/* Paginación personalizada */
+.swiper-pagination-custom {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.swiper-pagination-bullet-custom {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    opacity: 1;
+}
+
+.swiper-pagination-bullet-custom:hover {
+    background: rgba(255, 255, 255, 0.75);
+    transform: scale(1.1);
+}
+
+.swiper-pagination-bullet-active-custom {
+    background: #e5b437 !important;
+    transform: scale(1.25);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(229, 180, 55, 0.5);
+}
+
+/* Navegación personalizada */
+.swiper-button-prev-custom,
+.swiper-button-next-custom {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    border: none;
+}
+
+.swiper-button-prev-custom:disabled,
+.swiper-button-next-custom:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Efectos de transición suaves */
+.swiper-slide {
+    transition: all 0.6s ease-in-out;
+}
+
+.swiper-slide-active {
+    z-index: 1;
+}
+
+/* Animación de fade mejorada */
+.swiper-fade .swiper-slide {
+    pointer-events: none;
+    transition-property: opacity;
+}
+
+.swiper-fade .swiper-slide .swiper-slide-transform,
+.swiper-fade .swiper-slide .swiper-zoom-container {
+    transition-property: opacity;
+}
+
+.swiper-fade .swiper-slide-active {
+    pointer-events: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .swiper-pagination-bullet-custom {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .swiper-pagination-custom {
+        gap: 8px;
+    }
+}
+
+@media (max-width: 640px) {
+    .swiper-pagination-bullet-custom {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .swiper-pagination-custom {
+        gap: 6px;
+    }
+}
