@@ -170,14 +170,20 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
         
         try {
             const messagesRest = new MessagesRest();
-            await messagesRest.save(contactFormData);
-            setIsContactSubmitted(true);
             
-            // Reset form after 3 seconds
-            setTimeout(() => {
-                setIsContactSubmitted(false);
-                setContactFormData({ name: '', email: '', phone: '', message: '' });
-            }, 3000);
+            // Mapear los campos correctamente para el backend
+            const dataToSend = {
+                name: contactFormData.name,
+                email: contactFormData.email,
+                subject: contactFormData.phone, // El phone se envía como subject
+                description: contactFormData.message
+            };
+            
+            await messagesRest.save(dataToSend);
+            
+            // Redirigir a la página de agradecimiento
+            window.location.href = '/thanks';
+            
         } catch (error) {
             console.error('Error submitting contact form:', error);
         } finally {
