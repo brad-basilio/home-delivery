@@ -130,6 +130,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
     const [openFAQ, setOpenFAQ] = useState(null)
     const [scrollY, setScrollY] = useState(0)
     const [currentTestimonial, setCurrentTestimonial] = useState(0)
+    const [currentIndicatorSlide, setCurrentIndicatorSlide] = useState(0) // Mover estado aquí
     const [contactFormData, setContactFormData] = useState({
         name: '',
         email: '',
@@ -167,10 +168,10 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
     const handleContactSubmit = async (e) => {
         e.preventDefault();
         setIsContactSubmitting(true);
-        
+
         try {
             const messagesRest = new MessagesRest();
-            
+
             // Mapear los campos correctamente para el backend
             const dataToSend = {
                 name: contactFormData.name,
@@ -178,12 +179,12 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                 subject: contactFormData.phone, // El phone se envía como subject
                 description: contactFormData.message
             };
-            
+
             await messagesRest.save(dataToSend);
-            
+
             // Redirigir a la página de agradecimiento
             window.location.href = '/thanks';
-            
+
         } catch (error) {
             console.error('Error submitting contact form:', error);
         } finally {
@@ -398,13 +399,31 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
             { id: 5, name: "Laura Fernández", case: "Arrendadora", description: "Su asesoría en contratos." },
             { id: 6, name: "Diego Morales", case: "Constructor", description: "Excelente trabajo en la regularización." }
         ];
-        
+
         const timer = setInterval(() => {
             setCurrentTestimonial((prev) => (prev + 1) % Math.ceil(testimonialsToShow.length / 2));
         }, 5000);
-        
+
         return () => clearInterval(timer);
     }, [testimonies]);
+
+    // Auto-advance indicator slides
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentIndicatorSlide((prev) => (prev + 1) % 3); // 3 slides en total
+        }, 5000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+    // Funciones de navegación para indicadores
+    const nextIndicatorSlide = () => {
+        setCurrentIndicatorSlide((prev) => (prev + 1) % 3);
+    };
+
+    const prevIndicatorSlide = () => {
+        setCurrentIndicatorSlide((prev) => (prev - 1 + 3) % 3);
+    };
 
     // Funciones de navegación manejadas por Swiper
     const handleSlideChange = (swiper) => {
@@ -607,27 +626,25 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
             </header>
 
             {/* Hero Section */}
-            <section 
+            <section
                 ref={heroRef}
-                id="inicio" 
+                id="inicio"
                 className="relative pt-20 min-h-screen overflow-hidden"
             >
                 {slidersToShow.map((slide, index) => (
                     <div
                         key={slide.id || index}
-                        className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-                            index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-                        }`}
+                        className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                            }`}
                     >
                         {/* Background Image */}
                         <div
                             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                            style={{ 
-                                backgroundImage: `url(${
-                                    slide.image && typeof slide.image === 'string' && !slide.image.startsWith('http')
+                            style={{
+                                backgroundImage: `url(${slide.image && typeof slide.image === 'string' && !slide.image.startsWith('http')
                                         ? `/api/sliders/media/${slide.image}`
                                         : slide.image || "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080"
-                                })` 
+                                    })`
                             }}
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
@@ -640,9 +657,8 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     {/* Text Content */}
                                     <div className="space-y-8">
                                         <div className="space-y-4">
-                                            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight transform transition-all duration-1000 delay-300 ${
-                                                index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                                            }`}>
+                                            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight transform transition-all duration-1000 delay-300 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                                                }`}>
                                                 {slide.name ? (
                                                     slide.name.split(/(\*[^*]+\*)/g).map((part, partIndex) => {
                                                         if (/^\*[^*]+\*$/.test(part)) {
@@ -657,24 +673,21 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                     </>
                                                 )}
                                             </h1>
-                                            
-                                            <h2 className={`text-xl md:text-2xl text-blue-100 font-medium transform transition-all duration-1000 delay-500 ${
-                                                index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                                            }`}>
+
+                                            <h2 className={`text-xl md:text-2xl text-blue-100 font-medium transform transition-all duration-1000 delay-500 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                                                }`}>
                                                 {slide.button_text || "¿Problemas con terrenos, casas o contratos de compraventa?"}
                                             </h2>
-                                            
-                                            <p className={`text-lg text-gray-200 transform transition-all duration-1000 delay-700 ${
-                                                index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                                            }`}>
+
+                                            <p className={`text-lg text-gray-200 transform transition-all duration-1000 delay-700 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                                                }`}>
                                                 {slide.description || "Evita juicios largos, estafas y pérdida de tu inversión."}
                                             </p>
                                         </div>
 
                                         {/* Benefits */}
-                                        <div className={`space-y-3 transform transition-all duration-1000 delay-900 ${
-                                            index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                                        }`}>
+                                        <div className={`space-y-3 transform transition-all duration-1000 delay-900 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                                            }`}>
                                             <div className="flex items-center space-x-3">
                                                 <CheckCircle className="h-5 w-5 text-green-400" />
                                                 <span className="text-gray-200">Más de 15 años de experiencia</span>
@@ -690,17 +703,16 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                         </div>
 
                                         {/* CTA Buttons */}
-                                        <div className={`flex flex-col sm:flex-row gap-4 transform transition-all duration-1000 delay-1100 ${
-                                            index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                                        }`}>
-                                            <button 
+                                        <div className={`flex flex-col sm:flex-row gap-4 transform transition-all duration-1000 delay-1100 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                                            }`}>
+                                            <button
                                                 onClick={() => window.location.href = "#contacto"}
                                                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
                                             >
                                                 <Phone className="h-5 w-5" />
-                                                <span>Consulta Gratuita</span>
+                                                <span>Agenda tu consulta</span>
                                             </button>
-                                            <button 
+                                            <button
                                                 onClick={() => window.location.href = "#servicios"}
                                                 className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300"
                                             >
@@ -710,9 +722,8 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     </div>
 
                                     {/* Visual Element */}
-                                    <div className={`relative transform transition-all duration-1000 delay-1300 ${
-                                        index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
-                                    }`}>
+                                    <div className={`relative transform transition-all duration-1000 delay-1300 ${index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
+                                        }`}>
                                         <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white/20">
                                             <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl p-8 text-white">
                                                 <Shield className="h-16 w-16 mb-4" />
@@ -736,7 +747,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                 >
                     <ChevronLeft className="h-6 w-6" />
                 </button>
-                
+
                 <button
                     onClick={() => setCurrentSlide((prev) => (prev + 1) % slidersToShow.length)}
                     className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 z-20"
@@ -750,9 +761,8 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                         <button
                             key={index}
                             onClick={() => setCurrentSlide(index)}
-                            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                index === currentSlide ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
-                            }`}
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
+                                }`}
                         />
                     ))}
                 </div>
@@ -765,109 +775,91 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                 </div>
             </section>
 
-         {/*INDICADORES SECTION */}
-         <section className="relative h-96 md:h-[500px] overflow-hidden bg-gray-900">
-            {(() => {
-                const [currentIndicatorSlide, setCurrentIndicatorSlide] = useState(0);
-                
-                const slides = [
-                    {
-                        id: 1,
-                        title: "Experiencia Comprobada",
-                        description: "Más de 500 casos exitosos en derecho inmobiliario",
-                        image: "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    },
-                    {
-                        id: 2,
-                        title: "Asesoría Especializada",
-                        description: "Equipo de abogados especializados en propiedad inmobiliaria",
-                        image: "https://images.pexels.com/photos/7876050/pexels-photo-7876050.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    },
-                    {
-                        id: 3,
-                        title: "Resultados Garantizados",
-                        description: "Protegemos tu inversión inmobiliaria con estrategias efectivas",
-                        image: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    }
-                ];
+            {/*INDICADORES SECTION */}
+            <section className="relative h-96 md:h-[500px] overflow-hidden bg-gray-900">
+                {(() => {
+                    const slides = [
+                        {
+                            id: 1,
+                            title: "Experiencia Comprobada",
+                            description: "Más de 500 casos exitosos en derecho inmobiliario",
+                            image: "/assets/img/home/slide1.webp"
+                        },
+                        {
+                            id: 2,
+                            title: "Asesoría Especializada",
+                            description: "Equipo de abogados especializados en propiedad inmobiliaria",
+                            image: "/assets/img/home/slide2.webp"
+                        },
+                        {
+                            id: 3,
+                            title: "Resultados Garantizados",
+                            description: "Protegemos tu inversión inmobiliaria con estrategias efectivas",
+                            image: "/assets/img/home/slide3.webp"
+                        }
+                    ];
 
-                useEffect(() => {
-                    const timer = setInterval(() => {
-                        setCurrentIndicatorSlide((prev) => (prev + 1) % slides.length);
-                    }, 5000);
-
-                    return () => clearInterval(timer);
-                }, [slides.length]);
-
-                const nextSlide = () => {
-                    setCurrentIndicatorSlide((prev) => (prev + 1) % slides.length);
-                };
-
-                const prevSlide = () => {
-                    setCurrentIndicatorSlide((prev) => (prev - 1 + slides.length) % slides.length);
-                };
-
-                return (
-                    <>
-                        {slides.map((slide, index) => (
-                            <div
-                                key={slide.id}
-                                className={`absolute inset-0 transition-opacity duration-1000 ${
-                                    index === currentIndicatorSlide ? 'opacity-100' : 'opacity-0'
-                                }`}
-                            >
+                    return (
+                        <>
+                            {slides.map((slide, index) => (
                                 <div
-                                    className="absolute inset-0 bg-cover bg-center"
-                                    style={{ backgroundImage: `url(${slide.image})` }}
+                                    key={slide.id}
+                                    className={`absolute inset-0 transition-opacity duration-1000 ${
+                                        index === currentIndicatorSlide ? 'opacity-100' : 'opacity-0'
+                                    }`}
                                 >
-                                    <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-                                </div>
-                                
-                                <div className="relative z-10 flex items-center justify-center h-full">
-                                    <div className="text-center text-white px-4 max-w-4xl">
-                                        <h2 className="text-3xl md:text-5xl font-bold mb-4 transform transition-transform duration-1000 translate-y-0">
-                                            {slide.title}
-                                        </h2>
-                                        <p className="text-lg md:text-xl opacity-90 transform transition-transform duration-1000 delay-300 translate-y-0">
-                                            {slide.description}
-                                        </p>
+                                    <div
+                                        className="absolute inset-0 bg-cover bg-center"
+                                        style={{ backgroundImage: `url(${slide.image})` }}
+                                    >
+                                        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+                                    </div>
+
+                                    <div className="relative z-10 flex items-center justify-center h-full">
+                                        <div className="text-center text-white px-4 max-w-4xl">
+                                            <h2 className="text-3xl md:text-5xl font-bold mb-4 transform transition-transform duration-1000 translate-y-0">
+                                                {slide.title}
+                                            </h2>
+                                            <p className="text-lg md:text-xl opacity-90 transform transition-transform duration-1000 delay-300 translate-y-0">
+                                                {slide.description}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-
-                        {/* Navigation Arrows */}
-                        <button
-                            onClick={prevSlide}
-                            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-300"
-                        >
-                            <ChevronLeft className="h-6 w-6" />
-                        </button>
-                        
-                        <button
-                            onClick={nextSlide}
-                            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-300"
-                        >
-                            <ChevronRight className="h-6 w-6" />
-                        </button>
-
-                        {/* Dots Indicator */}
-                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                            {slides.map((_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => setCurrentIndicatorSlide(index)}
-                                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                        index === currentIndicatorSlide ? 'bg-white' : 'bg-white bg-opacity-50'
-                                    }`}
-                                />
                             ))}
-                        </div>
-                    </>
-                );
-            })()}
-        </section>
-         
+
+                            {/* Navigation Arrows */}
+                            <button
+                                onClick={prevIndicatorSlide}
+                                className="absolute left-4 top-1/2 z-[9999] transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-40 text-white p-2 rounded-full transition-all duration-300"
+                            >
+                                <ChevronLeft className="h-6 w-6" />
+                            </button>
+
+                            <button
+                                onClick={nextIndicatorSlide}
+                                className="absolute right-4 top-1/2 z-[9999]  transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-40 text-white p-2 rounded-full transition-all duration-300"
+                            >
+                                <ChevronRight className="h-6 w-6" />
+                            </button>
+
+                            {/* Dots Indicator */}
+                            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                                {slides.map((_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => setCurrentIndicatorSlide(index)}
+                                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                                            index === currentIndicatorSlide ? 'bg-white' : 'bg-white bg-opacity-50'
+                                        }`}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    );
+                })()}
+            </section>
+
 
             {/* Services Section */}
             <section
@@ -917,9 +909,9 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                         if (name.includes('defensa') || name.includes('juicio')) return Shield;
                                         return FileText; // Icono por defecto
                                     };
-                                    
+
                                     const IconComponent = getServiceIcon(service.title || service.name);
-                                    
+
                                     return (
                                         <div
                                             key={index}
@@ -928,11 +920,11 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                             <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-lg mb-4 group-hover:bg-blue-600 transition-colors duration-300">
                                                 <IconComponent className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors duration-300" />
                                             </div>
-                                            
+
                                             <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
                                                 {service.title || service.name}
                                             </h3>
-                                            
+
                                             <p className="text-gray-600 leading-relaxed">
                                                 {service.description}
                                             </p>
@@ -978,7 +970,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                         description: "Representación legal experta en disputas de propiedad."
                                     }
                                 ];
-                                
+
                                 return staticServices.map((service, index) => {
                                     const IconComponent = service.icon;
                                     return (
@@ -989,11 +981,11 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                             <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-lg mb-4 group-hover:bg-blue-600 transition-colors duration-300">
                                                 <IconComponent className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors duration-300" />
                                             </div>
-                                            
+
                                             <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
                                                 {service.title}
                                             </h3>
-                                            
+
                                             <p className="text-gray-600 leading-relaxed">
                                                 {service.description}
                                             </p>
@@ -1006,7 +998,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                 </div>
             </section>
 
-{/*Section testimonials */}
+            {/*Section testimonials */}
             <section id="testimonios" className="py-20 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
@@ -1014,7 +1006,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                             Lo que Dicen Nuestros Clientes
                         </h2>
                         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                            La satisfacción de nuestros clientes es nuestra mejor carta de presentación. 
+                            La satisfacción de nuestros clientes es nuestra mejor carta de presentación.
                             Conoce las experiencias de quienes han confiado en nosotros.
                         </p>
                     </div>
@@ -1072,7 +1064,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                 <div className="relative">
                                     {/* Testimonials Grid */}
                                     <div className="overflow-hidden">
-                                        <div 
+                                        <div
                                             className="flex transition-transform duration-500 ease-in-out"
                                             style={{ transform: `translateX(-${currentTestimonial * 100}%)` }}
                                         >
@@ -1104,8 +1096,8 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                                 {/* Client Info */}
                                                                 <div className="flex items-center space-x-4">
                                                                     <img
-                                                                        src={testimonial.image && typeof testimonial.image === 'string' && !testimonial.image.startsWith('http') 
-                                                                            ? `/api/testimonies/media/${testimonial.image}` 
+                                                                        src={testimonial.image && typeof testimonial.image === 'string' && !testimonial.image.startsWith('http')
+                                                                            ? `/api/testimonies/media/${testimonial.image}`
                                                                             : testimonial.image || "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150"}
                                                                         alt={testimonial.name}
                                                                         className="w-12 h-12 rounded-full object-cover"
@@ -1131,7 +1123,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     >
                                         <ChevronLeft className="h-6 w-6" />
                                     </button>
-                                    
+
                                     <button
                                         onClick={nextTestimonial}
                                         className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-white hover:bg-gray-50 text-gray-600 hover:text-blue-600 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10"
@@ -1146,11 +1138,10 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                             <button
                                                 key={index}
                                                 onClick={() => goToTestimonial(index)}
-                                                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                                    index === currentTestimonial 
-                                                        ? 'bg-blue-600 scale-125' 
+                                                className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial
+                                                        ? 'bg-blue-600 scale-125'
                                                         : 'bg-gray-300 hover:bg-gray-400'
-                                                }`}
+                                                    }`}
                                                 aria-label={`Ir al grupo de testimonios ${index + 1}`}
                                             />
                                         ))}
@@ -1162,7 +1153,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     <p className="text-lg text-gray-600 mb-6">
                                         ¿Listo para ser nuestro próximo cliente satisfecho?
                                     </p>
-                                    <button 
+                                    <button
                                         onClick={() => window.location.href = "#contacto"}
                                         className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
                                     >
@@ -1174,8 +1165,8 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                     })()}
                 </div>
             </section>
-      
-{/*Section Contacto */}
+
+            {/*Section Contacto */}
             <section id="contacto" className="py-20 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
@@ -1183,7 +1174,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                             Contáctanos Hoy Mismo
                         </h2>
                         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                            ¿Tienes un problema legal inmobiliario? No esperes más. 
+                            ¿Tienes un problema legal inmobiliario? No esperes más.
                             Contáctanos para una consulta gratuita y protege tu patrimonio.
                         </p>
                     </div>
@@ -1195,7 +1186,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                 <h3 className="text-2xl font-bold text-gray-900 mb-6">
                                     Información de Contacto
                                 </h3>
-                                
+
                                 <div className="space-y-6">
                                     <div className="flex items-start space-x-4">
                                         <div className="bg-blue-100 p-3 rounded-lg">
@@ -1363,14 +1354,14 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                 </span>
                             </div>
                             <p className="text-gray-300 leading-relaxed">
-                                {generals?.find(g => g.correlative === 'company_description')?.description || 
-                                'Especialistas en derecho inmobiliario con más de 15 años de experiencia protegiendo el patrimonio de nuestros clientes.'}
+                                {generals?.find(g => g.correlative === 'company_description')?.description ||
+                                    'Especialistas en derecho inmobiliario con más de 15 años de experiencia protegiendo el patrimonio de nuestros clientes.'}
                             </p>
                             <div className="flex space-x-4">
                                 {/* Dynamic Social Media Links */}
-                                {socials?.filter(social => 
-                                    social.visible && 
-                                    social.status && 
+                                {socials?.filter(social =>
+                                    social.visible &&
+                                    social.status &&
                                     !social.description?.toLowerCase().includes('whatsapp') &&
                                     !social.name?.toLowerCase().includes('whatsapp')
                                 ).map((social, index) => {
@@ -1381,20 +1372,20 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                         if (socialName.includes('tiktok')) {
                                             return () => (
                                                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                                                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
                                                 </svg>
                                             );
                                         }
                                         return Facebook; // Default icon
                                     };
-                                    
+
                                     const IconComponent = getSocialIconComponent(social.description || social.name);
-                                    
+
                                     return (
-                                        <a 
+                                        <a
                                             key={social.id || index}
-                                            href={social.link} 
-                                            target="_blank" 
+                                            href={social.link}
+                                            target="_blank"
                                             rel="noopener noreferrer"
                                             className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
                                         >
@@ -1402,43 +1393,43 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                         </a>
                                     );
                                 })}
-                                
+
                                 {/* Static fallback social links if no dynamic ones */}
-                                {(!socials || socials.filter(social => 
-                                    social.visible && 
-                                    social.status && 
+                                {(!socials || socials.filter(social =>
+                                    social.visible &&
+                                    social.status &&
                                     !social.description?.toLowerCase().includes('whatsapp') &&
                                     !social.name?.toLowerCase().includes('whatsapp')
                                 ).length === 0) && (
-                                    <>
-                                        <a 
-                                            href="https://www.facebook.com/share/1BwrVpqsro/?mibextid=wwXIfr" 
-                                            target="_blank" 
-                                            rel="noopener noreferrer"
-                                            className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
-                                        >
-                                            <Facebook className="h-5 w-5" />
-                                        </a>
-                                        <a 
-                                            href="https://www.instagram.com/sergioquiroz.abogados?igsh=MXY2cDFxcjA0NTJ2eg%3D%3D&utm_source=qr" 
-                                            target="_blank" 
-                                            rel="noopener noreferrer"
-                                            className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
-                                        >
-                                            <Instagram className="h-5 w-5" />
-                                        </a>
-                                        <a 
-                                            href="https://www.tiktok.com/@sergioquirozabogado?_t=ZM-8zQDvt0oziP&_r=1" 
-                                            target="_blank" 
-                                            rel="noopener noreferrer"
-                                            className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
-                                        >
-                                            <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                                            </svg>
-                                        </a>
-                                    </>
-                                )}
+                                        <>
+                                            <a
+                                                href="https://www.facebook.com/share/1BwrVpqsro/?mibextid=wwXIfr"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                                            >
+                                                <Facebook className="h-5 w-5" />
+                                            </a>
+                                            <a
+                                                href="https://www.instagram.com/sergioquiroz.abogados?igsh=MXY2cDFxcjA0NTJ2eg%3D%3D&utm_source=qr"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                                            >
+                                                <Instagram className="h-5 w-5" />
+                                            </a>
+                                            <a
+                                                href="https://www.tiktok.com/@sergioquirozabogado?_t=ZM-8zQDvt0oziP&_r=1"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                                            >
+                                                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+                                                </svg>
+                                            </a>
+                                        </>
+                                    )}
                             </div>
                         </div>
 
@@ -1549,9 +1540,9 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                             </p>
                             <p className="text-gray-400 text-sm">
                                 Powered by{' '}
-                                <a 
-                                    href="http://mundoweb.pe/" 
-                                    target="_blank" 
+                                <a
+                                    href="http://mundoweb.pe/"
+                                    target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-blue-400 hover:text-blue-300 transition-colors duration-300 font-medium"
                                 >
