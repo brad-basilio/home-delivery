@@ -26,7 +26,7 @@ const Sliders = () => {
     const descriptionRef = useRef();
     const bgImageRef = useRef();
     const buttonTextRef = useRef();
-    const buttonLinkRef = useRef();
+    //const buttonLinkRef = useRef();
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -41,7 +41,7 @@ const Sliders = () => {
         bgImageRef.image.src = `/api/sliders/media/${data?.image ?? "undefined"}`;
         
         buttonTextRef.current.value = data?.button_text ?? "";
-        buttonLinkRef.current.value = data?.button_link ?? "";
+       // buttonLinkRef.current.value = data?.button_link ?? "";
 
         $(modalRef.current).modal("show");
     };
@@ -54,7 +54,7 @@ const Sliders = () => {
             name: nameRef.current.value,
             description: descriptionRef.current.value,
             button_text: buttonTextRef.current.value,
-            button_link: buttonLinkRef.current.value,
+           button_link: "",//buttonLinkRef.current.value,
         };
 
         const formData = new FormData();
@@ -281,21 +281,22 @@ const Sliders = () => {
                         rows={2}
                         required
                     />
+                    <InputFormGroup
+                        eRef={buttonTextRef}
+                        label="Subtítulo"
+                        col="col-sm-12"
+                    />
                     <TextareaFormGroup
                         eRef={descriptionRef}
                         label="Descripción"
                         rows={3}
                     />
-                    <InputFormGroup
-                        eRef={buttonTextRef}
-                        label="Texto botón primario"
-                        col="col-sm-6"
-                    />
-                    <InputFormGroup
+                    
+                    {/*<InputFormGroup
                         eRef={buttonLinkRef}
                         label="URL botón primario"
                         col="col-sm-6"
-                    />
+                    /> */}
                 </div>
             </Modal>
         </>
