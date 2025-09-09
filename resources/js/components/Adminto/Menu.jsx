@@ -263,11 +263,22 @@ const Menu = ({
                                     </MenuItem>
                                 </MenuItemContainer>*/}
                                 <li className="menu-title">Landing Page</li>
-                             <MenuItem
+                                
+                                <MenuItem
                                     href="/admin/sliders"
                                     icon="mdi mdi-page-layout-body"
                                 >
                                     Sliders
+                                </MenuItem>
+                                
+                                <MenuItem
+                                    href="/admin/testimonies"
+                                    icon="mdi mdi-forum"
+                                >
+                                    {t(
+                                        "admin.sidebar.testimonials",
+                                        "Testimonios"
+                                    )}
                                 </MenuItem>
                              
                               {/*  <MenuItem
@@ -332,15 +343,7 @@ const Menu = ({
                                 >
                                     Valores
                                 </MenuItem>
-                                 <MenuItem
-                                    href="/admin/testimonies"
-                                    icon="mdi mdi-forum"
-                                >
-                                    {t(
-                                        "admin.sidebar.testimonials",
-                                        "Testimonios"
-                                    )}
-                                </MenuItem>
+                               
                                 */}
                                
                                {/* <MenuItem

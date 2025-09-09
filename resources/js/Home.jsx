@@ -1078,7 +1078,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                             >
                                                                 {/* Quote Icon */}
                                                                 <div className="absolute top-4 right-4">
-                                                                    <Quote className="h-8 w-8 text-light" />
+                                                                    <Quote className="h-8 w-8 text-secondary opacity-30" />
                                                                 </div>
 
                                                                 {/* Rating */}
@@ -1096,9 +1096,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                                 {/* Client Info */}
                                                                 <div className="flex items-center space-x-4">
                                                                     <img
-                                                                        src={testimonial.image && typeof testimonial.image === 'string' && !testimonial.image.startsWith('http')
-                                                                            ? `/api/testimonies/media/${testimonial.image}`
-                                                                            : testimonial.image || "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150"}
+                                                                        src={`/api/testimony/media/${testimonial.image}`}
                                                                         alt={testimonial.name}
                                                                         className="w-12 h-12 rounded-full object-cover"
                                                                     />
@@ -1157,7 +1155,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                         onClick={() => window.location.href = "#contacto"}
                                         className="bg-secondary hover:bg-primary text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
                                     >
-                                        Solicita tu Consulta Gratuita
+                                        Agenda tu consulta
                                     </button>
                                 </div>
                             </>
@@ -1348,10 +1346,11 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                         {/* Company Info */}
                         <div className="space-y-4">
                             <div className="flex items-center space-x-2">
-                                <Scale className="h-8 w-8 text-tertiary" />
-                                <span className="text-xl font-bold">
-                                    {generals?.find(g => g.correlative === 'company_name')?.description || 'LexInmobiliaria'}
-                                </span>
+                                <img
+                                    src="/assets/img/logo-white.png"
+                                    alt="Abogado Inmobiliario Perú"
+                                    className="h-16 invert"
+                                />
                             </div>
                             <p className="text-gray-300 leading-relaxed">
                                 {generals?.find(g => g.correlative === 'company_description')?.description ||

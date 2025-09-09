@@ -23,7 +23,7 @@ const Testimonies = ({}) => {
     const idRef = useRef();
     const nameRef = useRef();
     const caseRef = useRef();
-    const correlativeRef = useRef();
+    //const correlativeRef = useRef();
     const descriptionRef = useRef();
     const imageRef = useRef();
     const [isEditing, setIsEditing] = useState(false);
@@ -35,7 +35,7 @@ const Testimonies = ({}) => {
         idRef.current.value = data?.id ?? "";
         nameRef.current.value = data?.name ?? "";
         caseRef.current.value = data?.case ?? "";
-        correlativeRef.current.value = data?.correlative ?? "";
+        //correlativeRef.current.value = data?.correlative ?? "";
         descriptionRef.current.value = data?.description ?? "";
         imageRef.image.src = `/api/testimony/media/${data?.image}`;
         imageRef.current.value = null;
@@ -50,7 +50,7 @@ const Testimonies = ({}) => {
             id: idRef.current.value || undefined,
             name: nameRef.current.value,
             case: caseRef.current.value,
-            correlative: correlativeRef.current.value,
+           correlative: caseRef.current.value,//correlativeRef.current.value,
             description: descriptionRef.current.value,
         };
         const formData = new FormData();
@@ -140,7 +140,7 @@ const Testimonies = ({}) => {
                                 <p className="mb-0" style={{ width: "100%" }}>
                                     <b className="d-block">{data.name}</b>
                                     <small className="text-nowrap text-muted truncate">
-                                        {data.correlative}
+                                        {data.case}
                                     </small>
                                 </p>
                             );
@@ -148,7 +148,7 @@ const Testimonies = ({}) => {
                     },
                     {
                         dataField: "description",
-                        caption: "Youtube",
+                        caption: "Descripción",
                         width: "50%",
                     },
                     {
@@ -244,11 +244,11 @@ const Testimonies = ({}) => {
                             label="Nombre"
                             required
                         />
-                        <InputFormGroup
+                        {/*<InputFormGroup
                             eRef={correlativeRef}
                             label="Ubicación"
                             required
-                        />
+                        /> */}
                           <InputFormGroup
                             eRef={caseRef}
                             label="Caso"
