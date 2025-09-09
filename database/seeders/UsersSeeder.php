@@ -25,11 +25,11 @@ class UsersSeeder extends Seeder
         ])->assignRole('Admin');
 
          User::updateOrCreate([
-            'email' => 'admin@anmalikcargo.com'
+            'email' => 'admin@abogadoinmobiliarioperu.com'
         ], [
-            'name' => 'Anmalik',
-            'lastname' => 'Cargo',
-            'password' => '@nm@l1kc@rgO#2025'
+            'name' => 'Abogado',
+            'lastname' => 'Inmobiliario Perú',
+            'password' => '@b0g@d0!nm0b1L1ar10p3ru#2025'
         ])->assignRole('Admin');
        {/* User::updateOrCreate([
             'email' => 'admin@wefem.pe'
