@@ -26,7 +26,7 @@ const Services = ({ brands }) => {
     const descriptionRef = useRef();
     //const imageRef = useRef();
     const iconRef = useRef();
-    const colorRef = useRef();
+    //const colorRef = useRef();
     //const linkRef = useRef();
     // Estados para galería y características
     const [gallery, setGallery] = useState([]);
@@ -88,12 +88,12 @@ const Services = ({ brands }) => {
             color: hasColor ? data?.color : "transparent"
         });
         
-        if (hasColor) {
+       /* if (hasColor) {
             colorRef.current.value = data?.color;
         } else {
             colorRef.current.value = "#000000";
             colorRef.current.dataset.prevColor = "#000000";
-        }
+        } */
         
       /*  if (data?.image) {
             imageRef.image.src = `/api/service/media/${data.image}`;
@@ -137,7 +137,7 @@ const Services = ({ brands }) => {
         formData.append("description", descriptionRef.current.value);
         
         // Si el color es transparente, enviar valor especial, de lo contrario enviar el color seleccionado
-        formData.append("color", itemData?.transparent_color ? "transparent" : colorRef.current.value);
+        //formData.append("color", itemData?.transparent_color ? "transparent" : colorRef.current.value);
         // formData.append("link", linkRef.current.value);
 
         // Si estamos editando, agregar el ID
@@ -190,7 +190,7 @@ const Services = ({ brands }) => {
         setCharacteristics([{ value: "" }]);
         
         // Resetear campos adicionales
-        colorRef.current.value = "#000000";
+       // colorRef.current.value = "#000000";
         iconRef.current.value = null;
     };
 
@@ -316,7 +316,7 @@ const Services = ({ brands }) => {
                             }
                         },
                     },
-                    {
+                 /*   {
                         dataField: "color",
                         caption: "Color",
                         width: "80px",
@@ -374,7 +374,7 @@ const Services = ({ brands }) => {
                                 />
                             );
                         },
-                    },
+                    }, */
                     {
                         dataField: "visible",
                         caption: "Visible",
@@ -448,7 +448,7 @@ const Services = ({ brands }) => {
                             />
                         </div>
 
-                        <div className="mb-3">
+                      {/*  <div className="mb-3">
                             <label className="form-label">Color del servicio</label>
                             <div className="d-flex align-items-center">
                                 <input
@@ -502,7 +502,7 @@ const Services = ({ brands }) => {
                                     </label>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                       {/*  <div className="mb-3">
                             <label className="form-label">
