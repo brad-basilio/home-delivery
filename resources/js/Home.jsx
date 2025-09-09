@@ -594,17 +594,17 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
 
                         {/* Desktop Navigation */}
                         <nav className="hidden md:flex space-x-8">
-                            <a href="#inicio" className="text-gray-700 hover:text-blue-600 transition-colors duration-300">Inicio</a>
-                            <a href="#servicios" className="text-gray-700 hover:text-blue-600 transition-colors duration-300">Servicios</a>
-                            <a href="#testimonios" className="text-gray-700 hover:text-blue-600 transition-colors duration-300">Testimonios</a>
-                            <a href="#contacto" className="text-gray-700 hover:text-blue-600 transition-colors duration-300">Contacto</a>
+                            <a href="#inicio" className="text-gray-700 hover:text-secondary transition-colors duration-300">Inicio</a>
+                            <a href="#servicios" className="text-gray-700 hover:text-secondary transition-colors duration-300">Servicios</a>
+                            <a href="#testimonios" className="text-gray-700 hover:text-secondary transition-colors duration-300">Testimonios</a>
+                            <a href="#contacto" className="text-gray-700 hover:text-secondary transition-colors duration-300">Contacto</a>
                         </nav>
 
                         {/* Mobile menu button */}
                         <div className="md:hidden">
                             <button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className="text-gray-700 hover:text-blue-600 transition-colors duration-300"
+                                className="text-gray-700 hover:text-secondary transition-colors duration-300"
                             >
                                 {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                             </button>
@@ -615,10 +615,10 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                     {isMobileMenuOpen && (
                         <div className="md:hidden">
                             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-                                <a href="#inicio" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors duration-300">Inicio</a>
-                                <a href="#servicios" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors duration-300">Servicios</a>
-                                <a href="#testimonios" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors duration-300">Testimonios</a>
-                                <a href="#contacto" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors duration-300">Contacto</a>
+                                <a href="#inicio" className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300">Inicio</a>
+                                <a href="#servicios" className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300">Servicios</a>
+                                <a href="#testimonios" className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300">Testimonios</a>
+                                <a href="#contacto" className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300">Contacto</a>
                             </div>
                         </div>
                     )}
@@ -647,34 +647,34 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     })`
                             }}
                         >
-                            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
                         </div>
 
                         {/* Content */}
                         <div className="relative z-10 flex items-center min-h-screen">
                             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                                <div className="grid lg:grid-cols-2 gap-12 items-center">
+                                <div className="grid lg:grid-cols-3 gap-12 items-center">
                                     {/* Text Content */}
-                                    <div className="space-y-8">
+                                    <div className="space-y-8 lg:col-span-2">
                                         <div className="space-y-4">
                                             <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight transform transition-all duration-1000 delay-300 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                                                 }`}>
                                                 {slide.name ? (
                                                     slide.name.split(/(\*[^*]+\*)/g).map((part, partIndex) => {
                                                         if (/^\*[^*]+\*$/.test(part)) {
-                                                            return <span key={partIndex} className="text-blue-400">{part.replace(/\*/g, '')}</span>;
+                                                            return <span key={partIndex} className="text-tertiary font-bold" style={{ textShadow: '1px 0px 10px rgba(011, 013, 064)' }}>{part.replace(/\*/g, '')}</span>;
                                                         }
                                                         return <span key={partIndex}>{part}</span>;
                                                     })
                                                 ) : (
                                                     <>
                                                         Protege tu Propiedad con un{' '}
-                                                        <span className="text-blue-400">Abogado Inmobiliario Experto</span>
+                                                        <span className="text-tertiary" style={{ textShadow: '2px 2px 4px rgba(255, 255, 255, 0.8)' }}>Abogado Inmobiliario Experto</span>
                                                     </>
                                                 )}
                                             </h1>
 
-                                            <h2 className={`text-xl md:text-2xl text-blue-100 font-medium transform transition-all duration-1000 delay-500 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                                            <h2 className={`text-xl md:text-2xl text-light font-medium transform transition-all duration-1000 delay-500  ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                                                 }`}>
                                                 {slide.button_text || "¿Problemas con terrenos, casas o contratos de compraventa?"}
                                             </h2>
@@ -707,7 +707,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                             }`}>
                                             <button
                                                 onClick={() => window.location.href = "#contacto"}
-                                                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+                                                className="bg-primary z-[9999] hover:bg-secondary text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
                                             >
                                                 <Phone className="h-5 w-5" />
                                                 <span>Agenda tu consulta</span>
@@ -722,18 +722,18 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     </div>
 
                                     {/* Visual Element */}
-                                    <div className={`relative transform transition-all duration-1000 delay-1300 ${index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
+                                    {/*<div className={`relative transform transition-all duration-1000 delay-1300 ${index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
                                         }`}>
                                         <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white/20">
-                                            <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl p-8 text-white">
+                                            <div className="bg-gradient-to-br from-primary to-secondary rounded-xl p-8 text-white">
                                                 <Shield className="h-16 w-16 mb-4" />
                                                 <h3 className="text-2xl font-bold mb-2">Protección Legal Total</h3>
-                                                <p className="text-blue-100">
+                                                <p className="text-light">
                                                     Defendemos tus derechos de propiedad con la máxima dedicación y profesionalismo.
                                                 </p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -775,8 +775,147 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                 </div>
             </section>
 
-            {/*INDICADORES SECTION */}
-            <section className="relative h-96 md:h-[500px] overflow-hidden bg-gray-900">
+          
+
+
+            {/* Services Section */}
+            <section
+                ref={servicesRef}
+                id="servicios"
+                className={`py-20 bg-white transition-all duration-1000 ${servicesVisible ? "animate-fadeInUp" : "opacity-0 translate-y-10"
+                    }`}
+            >
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                            {(() => {
+                                // Si hay servicios dinámicos, usar título genérico
+                                if (services && services.length > 0) {
+                                    return "Nuestros Servicios Especializados";
+                                }
+                                // Si no hay servicios dinámicos, usar título específico para servicios estáticos
+                                return "Nuestros Servicios Especializados";
+                            })()}
+                        </h2>
+                        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                            {(() => {
+                                // Si hay servicios dinámicos, usar descripción genérica
+                                if (services && services.length > 0) {
+                                    return "Ofrecemos soluciones legales completas adaptadas a las necesidades de tu negocio, con la experiencia y profesionalismo que mereces.";
+                                }
+                                // Si no hay servicios dinámicos, usar descripción específica
+                                return "Ofrecemos soluciones legales integrales para todos tus asuntos inmobiliarios, con la experiencia y profesionalismo que tu propiedad merece.";
+                            })()}
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {(() => {
+                            // Si hay servicios dinámicos de la base de datos, usarlos
+                            if (services && services.length > 0) {
+                                return services.map((service, index) => {
+                                    // Mapear iconos dinámicos o usar icono por defecto
+                                    const getServiceIcon = (serviceName) => {
+                                        const name = serviceName?.toLowerCase() || '';
+                                        if (name.includes('contrato') || name.includes('document')) return FileText;
+                                        if (name.includes('inmueble') || name.includes('propiedad') || name.includes('casa')) return HomeIcon;
+                                        if (name.includes('desalojo') || name.includes('inquilino')) return UserX;
+                                        if (name.includes('prescripción') || name.includes('tiempo')) return Clock;
+                                        if (name.includes('división') || name.includes('partición')) return Split;
+                                        if (name.includes('terreno') || name.includes('regularización')) return MapPin;
+                                        if (name.includes('defensa') || name.includes('juicio')) return Shield;
+                                        return FileText; // Icono por defecto
+                                    };
+
+                                    const IconComponent = getServiceIcon(service.title || service.name);
+
+                                    return (
+                                        <div
+                                            key={index}
+                                            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-secondary transform hover:-translate-y-2 group"
+                                        >
+                                            <div className="flex items-center justify-center w-16 h-16 bg-light p-2 rounded-lg mb-4 group-hover:bg-secondary transition-colors duration-300">
+                                                <img src={`/api/service/media/${service.icon}`} alt={service.title || service.name} className='group-hover:invert'/>
+                                            </div>
+
+                                            <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-secondary transition-colors duration-300">
+                                                {service.title || service.name}
+                                            </h3>
+
+                                            <p className="text-gray-600 leading-relaxed">
+                                                {service.description}
+                                            </p>
+                                        </div>
+                                    );
+                                });
+                            } else {
+                                // Si no hay servicios dinámicos, usar servicios estáticos de Services.tsx
+                                const staticServices = [
+                                    {
+                                        icon: FileText,
+                                        title: "Contratos de compra venta de inmuebles",
+                                        description: "Redacción y revisión de contratos seguros para proteger tu inversión."
+                                    },
+                                    {
+                                        icon: HomeIcon,
+                                        title: "Contrato de arrendamiento",
+                                        description: "Contratos de renta que protegen tanto a propietarios como inquilinos."
+                                    },
+                                    {
+                                        icon: UserX,
+                                        title: "Desalojos",
+                                        description: "Procedimientos legales eficientes para recuperar tu propiedad."
+                                    },
+                                    {
+                                        icon: Clock,
+                                        title: "Prescripción adquisitiva de dominio",
+                                        description: "Te ayudamos a obtener la propiedad por posesión prolongada."
+                                    },
+                                    {
+                                        icon: Split,
+                                        title: "División y partición",
+                                        description: "División legal de propiedades entre copropietarios."
+                                    },
+                                    {
+                                        icon: MapPin,
+                                        title: "Regularización de terrenos",
+                                        description: "Legalización de terrenos irregulares ante las autoridades."
+                                    },
+                                    {
+                                        icon: Shield,
+                                        title: "Defensa en juicios de propiedad inmueble",
+                                        description: "Representación legal experta en disputas de propiedad."
+                                    }
+                                ];
+
+                                return staticServices.map((service, index) => {
+                                    const IconComponent = service.icon;
+                                    return (
+                                        <div
+                                            key={index}
+                                            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-secondary transform hover:-translate-y-2 group"
+                                        >
+                                            <div className="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-lg mb-4 group-hover:bg-secondary transition-colors duration-300">
+                                                <IconComponent className="h-8 w-8 text-secondary group-hover:text-white transition-colors duration-300" />
+                                            </div>
+
+                                            <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-secondary transition-colors duration-300">
+                                                {service.title}
+                                            </h3>
+
+                                            <p className="text-gray-600 leading-relaxed">
+                                                {service.description}
+                                            </p>
+                                        </div>
+                                    );
+                                });
+                            }
+                        })()}
+                    </div>
+                </div>
+            </section>
+  {/*INDICADORES SECTION */}
+            <section className="relative h-96 md:h-[500px] overflow-hidden bg-primary">
                 {(() => {
                     const slides = [
                         {
@@ -859,145 +998,6 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                     );
                 })()}
             </section>
-
-
-            {/* Services Section */}
-            <section
-                ref={servicesRef}
-                id="servicios"
-                className={`py-20 bg-white transition-all duration-1000 ${servicesVisible ? "animate-fadeInUp" : "opacity-0 translate-y-10"
-                    }`}
-            >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                            {(() => {
-                                // Si hay servicios dinámicos, usar título genérico
-                                if (services && services.length > 0) {
-                                    return "Nuestros Servicios Especializados";
-                                }
-                                // Si no hay servicios dinámicos, usar título específico para servicios estáticos
-                                return "Nuestros Servicios Especializados";
-                            })()}
-                        </h2>
-                        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                            {(() => {
-                                // Si hay servicios dinámicos, usar descripción genérica
-                                if (services && services.length > 0) {
-                                    return "Ofrecemos soluciones legales completas adaptadas a las necesidades de tu negocio, con la experiencia y profesionalismo que mereces.";
-                                }
-                                // Si no hay servicios dinámicos, usar descripción específica
-                                return "Ofrecemos soluciones legales integrales para todos tus asuntos inmobiliarios, con la experiencia y profesionalismo que tu propiedad merece.";
-                            })()}
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {(() => {
-                            // Si hay servicios dinámicos de la base de datos, usarlos
-                            if (services && services.length > 0) {
-                                return services.map((service, index) => {
-                                    // Mapear iconos dinámicos o usar icono por defecto
-                                    const getServiceIcon = (serviceName) => {
-                                        const name = serviceName?.toLowerCase() || '';
-                                        if (name.includes('contrato') || name.includes('document')) return FileText;
-                                        if (name.includes('inmueble') || name.includes('propiedad') || name.includes('casa')) return HomeIcon;
-                                        if (name.includes('desalojo') || name.includes('inquilino')) return UserX;
-                                        if (name.includes('prescripción') || name.includes('tiempo')) return Clock;
-                                        if (name.includes('división') || name.includes('partición')) return Split;
-                                        if (name.includes('terreno') || name.includes('regularización')) return MapPin;
-                                        if (name.includes('defensa') || name.includes('juicio')) return Shield;
-                                        return FileText; // Icono por defecto
-                                    };
-
-                                    const IconComponent = getServiceIcon(service.title || service.name);
-
-                                    return (
-                                        <div
-                                            key={index}
-                                            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-blue-200 transform hover:-translate-y-2 group"
-                                        >
-                                            <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-lg mb-4 group-hover:bg-blue-600 transition-colors duration-300">
-                                                <IconComponent className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors duration-300" />
-                                            </div>
-
-                                            <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
-                                                {service.title || service.name}
-                                            </h3>
-
-                                            <p className="text-gray-600 leading-relaxed">
-                                                {service.description}
-                                            </p>
-                                        </div>
-                                    );
-                                });
-                            } else {
-                                // Si no hay servicios dinámicos, usar servicios estáticos de Services.tsx
-                                const staticServices = [
-                                    {
-                                        icon: FileText,
-                                        title: "Contratos de compra venta de inmuebles",
-                                        description: "Redacción y revisión de contratos seguros para proteger tu inversión."
-                                    },
-                                    {
-                                        icon: HomeIcon,
-                                        title: "Contrato de arrendamiento",
-                                        description: "Contratos de renta que protegen tanto a propietarios como inquilinos."
-                                    },
-                                    {
-                                        icon: UserX,
-                                        title: "Desalojos",
-                                        description: "Procedimientos legales eficientes para recuperar tu propiedad."
-                                    },
-                                    {
-                                        icon: Clock,
-                                        title: "Prescripción adquisitiva de dominio",
-                                        description: "Te ayudamos a obtener la propiedad por posesión prolongada."
-                                    },
-                                    {
-                                        icon: Split,
-                                        title: "División y partición",
-                                        description: "División legal de propiedades entre copropietarios."
-                                    },
-                                    {
-                                        icon: MapPin,
-                                        title: "Regularización de terrenos",
-                                        description: "Legalización de terrenos irregulares ante las autoridades."
-                                    },
-                                    {
-                                        icon: Shield,
-                                        title: "Defensa en juicios de propiedad inmueble",
-                                        description: "Representación legal experta en disputas de propiedad."
-                                    }
-                                ];
-
-                                return staticServices.map((service, index) => {
-                                    const IconComponent = service.icon;
-                                    return (
-                                        <div
-                                            key={index}
-                                            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-blue-200 transform hover:-translate-y-2 group"
-                                        >
-                                            <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-lg mb-4 group-hover:bg-blue-600 transition-colors duration-300">
-                                                <IconComponent className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors duration-300" />
-                                            </div>
-
-                                            <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
-                                                {service.title}
-                                            </h3>
-
-                                            <p className="text-gray-600 leading-relaxed">
-                                                {service.description}
-                                            </p>
-                                        </div>
-                                    );
-                                });
-                            }
-                        })()}
-                    </div>
-                </div>
-            </section>
-
             {/*Section testimonials */}
             <section id="testimonios" className="py-20 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1078,7 +1078,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                             >
                                                                 {/* Quote Icon */}
                                                                 <div className="absolute top-4 right-4">
-                                                                    <Quote className="h-8 w-8 text-blue-200" />
+                                                                    <Quote className="h-8 w-8 text-light" />
                                                                 </div>
 
                                                                 {/* Rating */}
@@ -1118,7 +1118,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     {/* Navigation Arrows */}
                                     <button
                                         onClick={prevTestimonial}
-                                        className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-white hover:bg-gray-50 text-gray-600 hover:text-blue-600 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10"
+                                        className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-white hover:bg-gray-50 text-gray-600 hover:text-secondary p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10"
                                         aria-label="Testimonio anterior"
                                     >
                                         <ChevronLeft className="h-6 w-6" />
@@ -1126,7 +1126,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
 
                                     <button
                                         onClick={nextTestimonial}
-                                        className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-white hover:bg-gray-50 text-gray-600 hover:text-blue-600 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10"
+                                        className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-white hover:bg-gray-50 text-gray-600 hover:text-secondary p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10"
                                         aria-label="Siguiente testimonio"
                                     >
                                         <ChevronRight className="h-6 w-6" />
@@ -1139,7 +1139,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                 key={index}
                                                 onClick={() => goToTestimonial(index)}
                                                 className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial
-                                                        ? 'bg-blue-600 scale-125'
+                                                        ? 'bg-secondary scale-125'
                                                         : 'bg-gray-300 hover:bg-gray-400'
                                                     }`}
                                                 aria-label={`Ir al grupo de testimonios ${index + 1}`}
@@ -1155,7 +1155,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     </p>
                                     <button
                                         onClick={() => window.location.href = "#contacto"}
-                                        className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+                                        className="bg-secondary hover:bg-primary text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
                                     >
                                         Solicita tu Consulta Gratuita
                                     </button>
@@ -1189,8 +1189,8 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
 
                                 <div className="space-y-6">
                                     <div className="flex items-start space-x-4">
-                                        <div className="bg-blue-100 p-3 rounded-lg">
-                                            <Phone className="h-6 w-6 text-blue-600" />
+                                        <div className="bg-gray-100 p-3 rounded-lg">
+                                            <Phone className="h-6 w-6 text-secondary" />
                                         </div>
                                         <div>
                                             <h4 className="font-semibold text-gray-900">Teléfono</h4>
@@ -1201,8 +1201,8 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     </div>
 
                                     <div className="flex items-start space-x-4">
-                                        <div className="bg-blue-100 p-3 rounded-lg">
-                                            <Mail className="h-6 w-6 text-blue-600" />
+                                        <div className="bg-gray-100 p-3 rounded-lg">
+                                            <Mail className="h-6 w-6 text-secondary" />
                                         </div>
                                         <div>
                                             <h4 className="font-semibold text-gray-900">Email</h4>
@@ -1213,8 +1213,8 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     </div>
 
                                     <div className="flex items-start space-x-4">
-                                        <div className="bg-blue-100 p-3 rounded-lg">
-                                            <MapPin className="h-6 w-6 text-blue-600" />
+                                        <div className="bg-gray-100 p-3 rounded-lg">
+                                            <MapPin className="h-6 w-6 text-secondary" />
                                         </div>
                                         <div>
                                             <h4 className="font-semibold text-gray-900">Dirección</h4>
@@ -1269,7 +1269,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                         value={contactFormData.name}
                                                         onChange={handleContactChange}
                                                         required
-                                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition-all duration-300"
                                                         placeholder="Tu nombre completo"
                                                     />
                                                 </div>
@@ -1285,7 +1285,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                         value={contactFormData.email}
                                                         onChange={handleContactChange}
                                                         required
-                                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition-all duration-300"
                                                         placeholder="tu@email.com"
                                                     />
                                                 </div>
@@ -1301,7 +1301,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                         value={contactFormData.phone}
                                                         onChange={handleContactChange}
                                                         required
-                                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition-all duration-300"
                                                         placeholder="+52 (55) 1234-5678"
                                                     />
                                                 </div>
@@ -1317,7 +1317,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                         onChange={handleContactChange}
                                                         required
                                                         rows={4}
-                                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
+                                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition-all duration-300 resize-none"
                                                         placeholder="Describe tu situación legal..."
                                                     />
                                                 </div>
@@ -1325,7 +1325,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                 <button
                                                     type="submit"
                                                     disabled={isContactSubmitting}
-                                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    className="w-full bg-secondary hover:bg-primary text-white px-6 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                                                 >
                                                     <Send className="h-5 w-5" />
                                                     <span>{isContactSubmitting ? 'Enviando...' : 'Enviar Mensaje'}</span>
@@ -1348,7 +1348,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                         {/* Company Info */}
                         <div className="space-y-4">
                             <div className="flex items-center space-x-2">
-                                <Scale className="h-8 w-8 text-blue-400" />
+                                <Scale className="h-8 w-8 text-tertiary" />
                                 <span className="text-xl font-bold">
                                     {generals?.find(g => g.correlative === 'company_name')?.description || 'LexInmobiliaria'}
                                 </span>
@@ -1387,7 +1387,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                             href={social.link}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                                            className="text-gray-400 hover:text-tertiary transition-colors duration-300"
                                         >
                                             <IconComponent />
                                         </a>
@@ -1406,7 +1406,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                 href="https://www.facebook.com/share/1BwrVpqsro/?mibextid=wwXIfr"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                                                className="text-gray-400 hover:text-tertiary transition-colors duration-300"
                                             >
                                                 <Facebook className="h-5 w-5" />
                                             </a>
@@ -1414,7 +1414,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                 href="https://www.instagram.com/sergioquiroz.abogados?igsh=MXY2cDFxcjA0NTJ2eg%3D%3D&utm_source=qr"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                                                className="text-gray-400 hover:text-tertiary transition-colors duration-300"
                                             >
                                                 <Instagram className="h-5 w-5" />
                                             </a>
@@ -1422,7 +1422,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                 href="https://www.tiktok.com/@sergioquirozabogado?_t=ZM-8zQDvt0oziP&_r=1"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                                                className="text-gray-400 hover:text-tertiary transition-colors duration-300"
                                             >
                                                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                                                     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
@@ -1438,22 +1438,22 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                             <h3 className="text-lg font-semibold mb-4">Enlaces Rápidos</h3>
                             <ul className="space-y-2">
                                 <li>
-                                    <a href="#inicio" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                                    <a href="#inicio" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
                                         Inicio
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#servicios" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                                    <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
                                         Servicios
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#testimonios" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                                    <a href="#testimonios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
                                         Testimonios
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#contacto" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                                    <a href="#contacto" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
                                         Contacto
                                     </a>
                                 </li>
@@ -1468,7 +1468,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                 {services && services.length > 0 ? (
                                     services.slice(0, 5).map((service, index) => (
                                         <li key={service.id || index}>
-                                            <a href="#servicios" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
                                                 {service.title || service.name}
                                             </a>
                                         </li>
@@ -1477,27 +1477,27 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     /* Static fallback services */
                                     <>
                                         <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
                                                 Contratos de Compraventa
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
                                                 Arrendamientos
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
                                                 Desalojos
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
                                                 Regularización
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
                                                 Defensa Legal
                                             </a>
                                         </li>
@@ -1511,19 +1511,19 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                             <h3 className="text-lg font-semibold mb-4">Contacto</h3>
                             <div className="space-y-3">
                                 <div className="flex items-center space-x-3">
-                                    <Phone className="h-4 w-4 text-blue-400" />
+                                    <Phone className="h-4 w-4 text-tertiary" />
                                     <span className="text-gray-300 text-sm">
                                         {generals?.find(g => g.correlative === 'phone_contact')?.description || '+51 982 292 914'}
                                     </span>
                                 </div>
                                 <div className="flex items-center space-x-3">
-                                    <Mail className="h-4 w-4 text-blue-400" />
+                                    <Mail className="h-4 w-4 text-tertiary" />
                                     <span className="text-gray-300 text-sm">
                                         {generals?.find(g => g.correlative === 'email_contact')?.description || 'contacto@lexinmobiliaria.com'}
                                     </span>
                                 </div>
                                 <div className="flex items-start space-x-3">
-                                    <MapPin className="h-4 w-4 text-blue-400 mt-1" />
+                                    <MapPin className="h-4 w-4 text-tertiary mt-1" />
                                     <span className="text-gray-300 text-sm">
                                         {generals?.find(g => g.correlative === 'address')?.description || 'Lima, Perú'}
                                     </span>
@@ -1544,19 +1544,19 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     href="http://mundoweb.pe/"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-blue-400 hover:text-blue-300 transition-colors duration-300 font-medium"
+                                    className="text-tertiary hover:text-secondary transition-colors duration-300 font-medium"
                                 >
                                     Mundo Web
                                 </a>
                             </p>
                             <div className="flex space-x-6 text-sm">
-                                <button className="text-gray-400 hover:text-blue-400 transition-colors duration-300">
+                                <button className="text-gray-400 hover:text-tertiary transition-colors duration-300">
                                     Política de Privacidad
                                 </button>
-                                <button className="text-gray-400 hover:text-blue-400 transition-colors duration-300">
+                                <button className="text-gray-400 hover:text-tertiary transition-colors duration-300">
                                     Términos de Servicio
                                 </button>
-                                <button className="text-gray-400 hover:text-blue-400 transition-colors duration-300">
+                                <button className="text-gray-400 hover:text-tertiary transition-colors duration-300">
                                     Aviso Legal
                                 </button>
                             </div>
