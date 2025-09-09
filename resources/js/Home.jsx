@@ -243,32 +243,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
     // Crear array de sliders dinámico (filtrar solo los visibles y activos)
     const activeSliders = sliders?.filter(slider => slider.visible && slider.status) || [];
     // Fallback a imágenes estáticas si no hay sliders dinámicos
-    const slidersToShow = activeSliders.length > 0 ? activeSliders : [
-        {
-            id: 1,
-            image: "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080",
-            name: "Protege tu Propiedad con un *Abogado Inmobiliario Experto*",
-            description: "Evita juicios largos, estafas y pérdida de tu inversión.",
-            button_text: "¿Problemas con terrenos, casas o contratos de compraventa?",
-            button_link: "#contacto"
-        },
-        {
-            id: 2,
-            image: "https://images.pexels.com/photos/7876050/pexels-photo-7876050.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080",
-            name: "Especialistas en *Derecho Inmobiliario*",
-            description: "Asesoría legal integral para todas tus necesidades inmobiliarias.",
-            button_text: "Más de 15 años protegiendo tu patrimonio",
-            button_link: "#servicios"
-        },
-        {
-            id: 3,
-            image: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080",
-            name: "Consulta Gratuita *Sin Compromiso*",
-            description: "Obtén asesoría profesional y conoce tus opciones legales.",
-            button_text: "Evaluamos tu caso sin costo alguno",
-            button_link: "#contacto"
-        }
-    ];
+    const slidersToShow = activeSliders;
 
     // Cargar idiomas del sistema (desde HomeDokux)
     useEffect(() => {
@@ -641,13 +616,14 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                 </div>
             </header>
 
-            {/* Hero Section */}
-            <section
-                ref={heroRef}
-                id="inicio"
-                className="relative pt-20 min-h-screen overflow-hidden"
-            >
-                {slidersToShow.map((slide, index) => (
+            {/* Hero Section - Only show if there are sliders */}
+            {slidersToShow && slidersToShow.length > 0 && (
+                <section
+                    ref={heroRef}
+                    id="inicio"
+                    className="relative pt-20 min-h-screen overflow-hidden"
+                >
+                    {slidersToShow.map((slide, index) => (
                     <div
                         key={slide.id || index}
                         className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
@@ -790,6 +766,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                     </div>
                 </div>
             </section>
+            )}
 
           
 
