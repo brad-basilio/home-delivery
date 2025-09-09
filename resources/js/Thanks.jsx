@@ -92,18 +92,18 @@ const Thanks = ({ session }) => {
                 <div
                     className="absolute inset-0 bg-cover bg-center bg-fixed"
                     style={{
-                        backgroundImage: `linear-gradient(rgba(229, 180, 55, 0.85), rgba(229, 180, 55, 0.85)), url('https://www.esan.edu.pe/images/blog/2019/02/26/1500x844-transporte-logistica.jpg')`,
+                        backgroundImage: `linear-gradient(rgba(94, 96, 140, 0.85), rgba(94, 96, 140, 0.85)), url('/assets/img/home/slide1.webp')`,
                         transform: `translateY(${scrollY * 0.5}px)`
                     }}
                 ></div>
 
                 {/* Animated Background Elements */}
                 <div className="absolute inset-0">
-                    <div className="absolute top-20 left-10 w-20 h-20 bg-[#e5b437]/20 rounded-full animate-pulse"></div>
-                    <div className="absolute top-40 right-20 w-32 h-32 bg-[#e5b437]/30 rounded-full animate-bounce" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-[#e5b437]/15 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
-                    <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-[#e5b437]/25 rounded-full animate-pulse" style={{ animationDelay: '3s' }}></div>
-                    <div className="absolute bottom-40 right-10 w-12 h-12 bg-[#e5b437]/30 rounded-full animate-bounce" style={{ animationDelay: '4s' }}></div>
+                    <div className="absolute top-20 left-10 w-20 h-20 bg-tertiary rounded-full animate-pulse"></div>
+                    <div className="absolute top-40 right-20 w-32 h-32 bg-tertiary/30 rounded-full animate-bounce" style={{ animationDelay: '1s' }}></div>
+                    <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-tertiary/15 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
+                    <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-tertiary/25 rounded-full animate-pulse" style={{ animationDelay: '3s' }}></div>
+                    <div className="absolute bottom-40 right-10 w-12 h-12 bg-tertiary/30 rounded-full animate-bounce" style={{ animationDelay: '4s' }}></div>
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10">
@@ -204,7 +204,7 @@ const Thanks = ({ session }) => {
                                 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={handleReturnHome}
-                                className="group bg-white text-[#36C4E4] px-10 py-5 rounded-full text-lg font-semibold hover:bg-gray-50 transform transition-all duration-300 shadow-2xl flex items-center justify-center space-x-3"
+                                className="group bg-white text-primary px-10 py-5 rounded-full text-lg font-semibold hover:bg-gray-50 transform transition-all duration-300 shadow-2xl flex items-center justify-center space-x-3"
                             >
                                 <HomeIcon className="h-6 w-6 group-hover:-translate-x-1 transition-transform duration-300" />
                                 <span>Volver al Inicio</span>

@@ -40,6 +40,8 @@ import GeneralRest from './actions/GeneralRest';
 import { LanguageContext } from './context/LanguageContext.jsx';
 import Swal from 'sweetalert2';
 import { sub } from 'framer-motion/client';
+import ReactModal from 'react-modal';
+import HtmlContent from './Utils/HtmlContent';
 
 // Importar Swiper y sus módulos
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -53,6 +55,9 @@ import 'swiper/css/effect-fade';
 
 // Importar estilos personalizados
 import '../css/swiper-custom.css';
+
+// Configurar ReactModal
+ReactModal.setAppElement('#app');
 
 // Hook para detectar cuando un elemento entra en el viewport
 const useIntersectionObserver = (options = {}) => {
@@ -130,7 +135,8 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
     const [openFAQ, setOpenFAQ] = useState(null)
     const [scrollY, setScrollY] = useState(0)
     const [currentTestimonial, setCurrentTestimonial] = useState(0)
-    const [currentIndicatorSlide, setCurrentIndicatorSlide] = useState(0) // Mover estado aquí
+    const [currentIndicatorSlide, setCurrentIndicatorSlide] = useState(0)
+    const [modalOpen, setModalOpen] = useState(false) // Mover estado aquí
     const [contactFormData, setContactFormData] = useState({
         name: '',
         email: '',
@@ -419,6 +425,16 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
     // Funciones de navegación para indicadores
     const nextIndicatorSlide = () => {
         setCurrentIndicatorSlide((prev) => (prev + 1) % 3);
+    };
+
+    // Funciones para manejar modales
+    const openModal = (index) => setModalOpen(index);
+    const closeModal = () => setModalOpen(false);
+
+    // Definir las políticas disponibles
+    const policyItems = {
+        privacy_policy: "Política de Privacidad",
+        terms_conditions: "Términos y Condiciones"
     };
 
     const prevIndicatorSlide = () => {
@@ -1228,9 +1244,25 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                             <div className="bg-gray-50 p-6 rounded-lg">
                                 <h4 className="font-semibold text-gray-900 mb-4">Horarios de Atención</h4>
                                 <div className="space-y-2 text-gray-600">
-                                    <p>Lunes - Viernes: 9:00 AM - 7:00 PM</p>
-                                    <p>Sábados: 9:00 AM - 2:00 PM</p>
-                                    <p>Domingos: Cerrado</p>
+                                    {(() => {
+                                        const openingHours = generals?.find(g => g.correlative === 'opening_hours')?.description;
+                                        
+                                        if (openingHours) {
+                                            // Dividir por saltos de línea y renderizar cada línea
+                                            return openingHours.split('\n').map((line, index) => (
+                                                <p key={index}>{line.trim()}</p>
+                                            ));
+                                        } else {
+                                            // Horarios por defecto si no hay información en la BD
+                                            return (
+                                                <>
+                                                    <p>Lunes - Viernes: 9:00 AM - 7:00 PM</p>
+                                                    <p>Sábados: 9:00 AM - 2:00 PM</p>
+                                                    <p>Domingos: Cerrado</p>
+                                                </>
+                                            );
+                                        }
+                                    })()}
                                 </div>
                             </div>
                         </div>
@@ -1364,31 +1396,15 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     !social.description?.toLowerCase().includes('whatsapp') &&
                                     !social.name?.toLowerCase().includes('whatsapp')
                                 ).map((social, index) => {
-                                    const getSocialIconComponent = (name) => {
-                                        const socialName = (name || '').toLowerCase();
-                                        if (socialName.includes('facebook')) return Facebook;
-                                        if (socialName.includes('instagram')) return Instagram;
-                                        if (socialName.includes('tiktok')) {
-                                            return () => (
-                                                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-                                                </svg>
-                                            );
-                                        }
-                                        return Facebook; // Default icon
-                                    };
-
-                                    const IconComponent = getSocialIconComponent(social.description || social.name);
-
                                     return (
                                         <a
                                             key={social.id || index}
                                             href={social.link}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-gray-400 hover:text-tertiary transition-colors duration-300"
+                                            className="text-gray-400 hover:text-light transition-colors duration-300"
                                         >
-                                            <IconComponent />
+                                            <i className={`${social.icon} text-lg`}></i>
                                         </a>
                                     );
                                 })}
@@ -1405,27 +1421,25 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                 href="https://www.facebook.com/share/1BwrVpqsro/?mibextid=wwXIfr"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-tertiary transition-colors duration-300"
+                                                className="text-gray-400 hover:text-light transition-colors duration-300"
                                             >
-                                                <Facebook className="h-5 w-5" />
+                                                <i className="fab fa-facebook text-lg"></i>
                                             </a>
                                             <a
                                                 href="https://www.instagram.com/sergioquiroz.abogados?igsh=MXY2cDFxcjA0NTJ2eg%3D%3D&utm_source=qr"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-tertiary transition-colors duration-300"
+                                                className="text-gray-400 hover:text-light transition-colors duration-300"
                                             >
-                                                <Instagram className="h-5 w-5" />
+                                                <i className="fab fa-instagram text-lg"></i>
                                             </a>
                                             <a
                                                 href="https://www.tiktok.com/@sergioquirozabogado?_t=ZM-8zQDvt0oziP&_r=1"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-tertiary transition-colors duration-300"
+                                                className="text-gray-400 hover:text-light transition-colors duration-300"
                                             >
-                                                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-                                                </svg>
+                                                <i className="fab fa-tiktok text-lg"></i>
                                             </a>
                                         </>
                                     )}
@@ -1437,22 +1451,22 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                             <h3 className="text-lg font-semibold mb-4">Enlaces Rápidos</h3>
                             <ul className="space-y-2">
                                 <li>
-                                    <a href="#inicio" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
+                                    <a href="#inicio" className="text-gray-300 hover:text-light transition-colors duration-300">
                                         Inicio
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
+                                    <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
                                         Servicios
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#testimonios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
+                                    <a href="#testimonios" className="text-gray-300 hover:text-light transition-colors duration-300">
                                         Testimonios
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#contacto" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
+                                    <a href="#contacto" className="text-gray-300 hover:text-light transition-colors duration-300">
                                         Contacto
                                     </a>
                                 </li>
@@ -1467,7 +1481,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                 {services && services.length > 0 ? (
                                     services.slice(0, 5).map((service, index) => (
                                         <li key={service.id || index}>
-                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
                                                 {service.title || service.name}
                                             </a>
                                         </li>
@@ -1476,27 +1490,27 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     /* Static fallback services */
                                     <>
                                         <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
                                                 Contratos de Compraventa
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
                                                 Arrendamientos
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
                                                 Desalojos
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
                                                 Regularización
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-tertiary transition-colors duration-300">
+                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
                                                 Defensa Legal
                                             </a>
                                         </li>
@@ -1535,7 +1549,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                     <div className="border-t border-gray-800 mt-8 pt-8">
                         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                             <p className="text-gray-400 text-sm">
-                                © {new Date().getFullYear()} {generals?.find(g => g.correlative === 'company_name')?.description || 'LexInmobiliaria'}. Todos los derechos reservados.
+                                © {new Date().getFullYear()} {generals?.find(g => g.correlative === 'company_name')?.description || 'Estudio SERGIO QUIROZ Abogados'}. Todos los derechos reservados.
                             </p>
                             <p className="text-gray-400 text-sm">
                                 Powered by{' '}
@@ -1543,25 +1557,54 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     href="http://mundoweb.pe/"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-tertiary hover:text-secondary transition-colors duration-300 font-medium"
+                                    className="text-tertiary hover:text-light transition-colors duration-300 font-medium"
                                 >
                                     Mundo Web
                                 </a>
                             </p>
                             <div className="flex space-x-6 text-sm">
-                                <button className="text-gray-400 hover:text-tertiary transition-colors duration-300">
+                                <button 
+                                    onClick={() => openModal(0)}
+                                    className="text-gray-400 hover:text-light transition-colors duration-300 cursor-pointer"
+                                >
                                     Política de Privacidad
                                 </button>
-                                <button className="text-gray-400 hover:text-tertiary transition-colors duration-300">
-                                    Términos de Servicio
+                                <button 
+                                    onClick={() => openModal(1)}
+                                    className="text-gray-400 hover:text-light transition-colors duration-300 cursor-pointer"
+                                >
+                                    Términos y Condiciones
                                 </button>
-                                <button className="text-gray-400 hover:text-tertiary transition-colors duration-300">
-                                    Aviso Legal
-                                </button>
+                               
                             </div>
                         </div>
                     </div>
                 </div>
+
+                {/* Modales para Políticas y Términos */}
+                {Object.keys(policyItems).map((key, index) => {
+                    const title = policyItems[key];
+                    const content = generals?.find((x) => x.correlative == key)?.description ?? "";
+                    return (
+                        <ReactModal
+                            key={index}
+                            isOpen={modalOpen === index}
+                            onRequestClose={closeModal}
+                            contentLabel={title}
+                            className="fixed top-[5%] left-1/2 -translate-x-1/2 bg-white p-6 rounded-3xl shadow-lg w-[95%] max-w-4xl max-h-[90vh] mb-10 overflow-y-auto scrollbar-hide"
+                            overlayClassName="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-auto scrollbar-hide"
+                        >
+                            <button
+                                onClick={closeModal}
+                                className="float-right text-red-500 hover:text-red-700 transition-all duration-300"
+                            >
+                                <X width="2rem" strokeWidth="4px" />
+                            </button>
+                            <h2 className="text-2xl font-bold mb-4 text-gray-900">{title}</h2>
+                            <HtmlContent className="prose max-w-none text-gray-700" html={content} />
+                        </ReactModal>
+                    );
+                })}
 
                 {/* WhatsApp Floating Button */}
                 {(() => {
