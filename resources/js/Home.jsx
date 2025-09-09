@@ -794,223 +794,191 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
           
 
 
-            {/* Services Section */}
-            <section
-                ref={servicesRef}
-                id="servicios"
-                className={`py-20 bg-white transition-all duration-1000 ${servicesVisible ? "animate-fadeInUp" : "opacity-0 translate-y-10"
-                    }`}
-            >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                            {(() => {
-                                // Si hay servicios dinámicos, usar título genérico
-                                if (services && services.length > 0) {
-                                    return "Nuestros Servicios Especializados";
-                                }
-                                // Si no hay servicios dinámicos, usar título específico para servicios estáticos
-                                return "Nuestros Servicios Especializados";
-                            })()}
-                        </h2>
-                        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                            {(() => {
-                                // Si hay servicios dinámicos, usar descripción genérica
-                                if (services && services.length > 0) {
-                                    return "Ofrecemos soluciones legales completas adaptadas a las necesidades de tu negocio, con la experiencia y profesionalismo que mereces.";
-                                }
-                                // Si no hay servicios dinámicos, usar descripción específica
-                                return "Ofrecemos soluciones legales integrales para todos tus asuntos inmobiliarios, con la experiencia y profesionalismo que tu propiedad merece.";
-                            })()}
-                        </p>
-                    </div>
+            {/* Services Section - Only show if there are services */}
+            {services && services.length > 0 && (
+                <section
+                    ref={servicesRef}
+                    id="servicios"
+                    className={`py-20 bg-white transition-all duration-1000 ${servicesVisible ? "animate-fadeInUp" : "opacity-0 translate-y-10"
+                        }`}
+                >
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                                Nuestros Servicios Especializados
+                            </h2>
+                            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                                Ofrecemos soluciones legales completas adaptadas a las necesidades de tu negocio, con la experiencia y profesionalismo que mereces.
+                            </p>
+                        </div>
 
-                    {(() => {
-                        // Función para renderizar un servicio
-                        const renderService = (service, index, isStatic = false) => {
-                            let IconComponent;
-                            
-                            if (isStatic) {
-                                IconComponent = service.icon;
-                            } else {
-                                // Mapear iconos dinámicos o usar icono por defecto
-                                const getServiceIcon = (serviceName) => {
-                                    const name = serviceName?.toLowerCase() || '';
-                                    if (name.includes('contrato') || name.includes('document')) return FileText;
-                                    if (name.includes('inmueble') || name.includes('propiedad') || name.includes('casa')) return HomeIcon;
-                                    if (name.includes('desalojo') || name.includes('inquilino')) return UserX;
-                                    if (name.includes('prescripción') || name.includes('tiempo')) return Clock;
-                                    if (name.includes('división') || name.includes('partición')) return Split;
-                                    if (name.includes('terreno') || name.includes('regularización')) return MapPin;
-                                    if (name.includes('defensa') || name.includes('juicio')) return Shield;
-                                    return FileText; // Icono por defecto
-                                };
-                                IconComponent = getServiceIcon(service.title || service.name);
-                            }
+                        {(() => {
+                            // Función para renderizar un servicio
+                            const renderService = (service, index, isStatic = false) => {
+                                let IconComponent;
+                                
+                                if (isStatic) {
+                                    IconComponent = service.icon;
+                                } else {
+                                    // Mapear iconos dinámicos o usar icono por defecto
+                                    const getServiceIcon = (serviceName) => {
+                                        const name = serviceName?.toLowerCase() || '';
+                                        if (name.includes('contrato') || name.includes('document')) return FileText;
+                                        if (name.includes('inmueble') || name.includes('propiedad') || name.includes('casa')) return HomeIcon;
+                                        if (name.includes('desalojo') || name.includes('inquilino')) return UserX;
+                                        if (name.includes('prescripción') || name.includes('tiempo')) return Clock;
+                                        if (name.includes('división') || name.includes('partición')) return Split;
+                                        if (name.includes('terreno') || name.includes('regularización')) return MapPin;
+                                        if (name.includes('defensa') || name.includes('juicio')) return Shield;
+                                        return FileText; // Icono por defecto
+                                    };
+                                    IconComponent = getServiceIcon(service.title || service.name);
+                                }
+
+                                return (
+                                    <div
+                                        key={index}
+                                        className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-secondary transform hover:-translate-y-2 group h-full"
+                                    >
+                                        <div className="flex items-center justify-center w-16 h-16 bg-light p-2 rounded-lg mb-4 group-hover:bg-secondary transition-colors duration-300">
+                                            {isStatic ? (
+                                                <IconComponent className="h-8 w-8 text-secondary group-hover:text-white transition-colors duration-300" />
+                                            ) : (
+                                                <img src={`/api/service/media/${service.icon}`} alt={service.title || service.name} className='group-hover:invert'/>
+                                            )}
+                                        </div>
+
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-secondary transition-colors duration-300">
+                                            {service.title || service.name}
+                                        </h3>
+
+                                        <p className="text-gray-600 leading-relaxed">
+                                            {service.description}
+                                        </p>
+                                    </div>
+                                );
+                            };
+
+                            // Determinar qué servicios mostrar
+                            const servicesToShow = services.map((service, index) => renderService(service, index, false));
 
                             return (
-                                <div
-                                    key={index}
-                                    className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-secondary transform hover:-translate-y-2 group h-full"
-                                >
-                                    <div className="flex items-center justify-center w-16 h-16 bg-light p-2 rounded-lg mb-4 group-hover:bg-secondary transition-colors duration-300">
-                                        {isStatic ? (
-                                            <IconComponent className="h-8 w-8 text-secondary group-hover:text-white transition-colors duration-300" />
-                                        ) : (
-                                            <img src={`/api/service/media/${service.icon}`} alt={service.title || service.name} className='group-hover:invert'/>
-                                        )}
+                                <>
+                                    {/* Desktop & Tablet: Grid Layout */}
+                                    <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        {servicesToShow}
                                     </div>
 
-                                    <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-secondary transition-colors duration-300">
-                                        {service.title || service.name}
-                                    </h3>
-
-                                    <p className="text-gray-600 leading-relaxed">
-                                        {service.description}
-                                    </p>
-                                </div>
+                                    {/* Mobile: Swiper Carousel */}
+                                    <div className="block md:hidden">
+                                        <Swiper
+                                            spaceBetween={20}
+                                            slidesPerView={1}
+                                            pagination={{
+                                                clickable: true,
+                                                bulletActiveClass: 'swiper-pagination-bullet-active !bg-secondary',
+                                                bulletClass: 'swiper-pagination-bullet !bg-gray-300',
+                                            }}
+                                            modules={[Pagination]}
+                                            className="services-swiper"
+                                            style={{
+                                                '--swiper-pagination-color': '#30348C',
+                                                '--swiper-pagination-bullet-inactive-color': '#d1d5db',
+                                                '--swiper-pagination-bullet-size': '12px',
+                                                '--swiper-pagination-bullet-horizontal-gap': '6px'
+                                            }}
+                                        >
+                                            {servicesToShow.map((serviceComponent, index) => (
+                                                <SwiperSlide key={index} className="pb-12">
+                                                    {serviceComponent}
+                                                </SwiperSlide>
+                                            ))}
+                                        </Swiper>
+                                    </div>
+                                </>
                             );
-                        };
-
-                        // Determinar qué servicios mostrar
-                        const servicesToShow = (() => {
-                            if (services && services.length > 0) {
-                                return services.map((service, index) => renderService(service, index, false));
-                            }
-                        })();
+                        })()}
+                    </div>
+                </section>
+            )}
+  {/*INDICADORES SECTION - Only show if there are indicators */}
+            {indicators && indicators.length > 0 && (
+                <section className="relative h-96 md:h-[500px] overflow-hidden bg-primary">
+                    {(() => {
+                        // Usar indicadores dinámicos de la base de datos
+                        const indicatorsToShow = indicators;
 
                         return (
                             <>
-                                {/* Desktop & Tablet: Grid Layout */}
-                                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    {servicesToShow}
-                                </div>
-
-                                {/* Mobile: Swiper Carousel */}
-                                <div className="block md:hidden">
-                                    <Swiper
-                                        spaceBetween={20}
-                                        slidesPerView={1}
-                                        pagination={{
-                                            clickable: true,
-                                            bulletActiveClass: 'swiper-pagination-bullet-active !bg-secondary',
-                                            bulletClass: 'swiper-pagination-bullet !bg-gray-300',
-                                        }}
-                                        modules={[Pagination]}
-                                        className="services-swiper"
-                                        style={{
-                                            '--swiper-pagination-color': '#30348C',
-                                            '--swiper-pagination-bullet-inactive-color': '#d1d5db',
-                                            '--swiper-pagination-bullet-size': '12px',
-                                            '--swiper-pagination-bullet-horizontal-gap': '6px'
-                                        }}
+                                {indicatorsToShow.map((indicator, index) => (
+                                    <div
+                                        key={indicator.id}
+                                        className={`absolute inset-0 transition-opacity duration-1000 ${
+                                            index === currentIndicatorSlide ? 'opacity-100' : 'opacity-0'
+                                        }`}
                                     >
-                                        {servicesToShow.map((serviceComponent, index) => (
-                                            <SwiperSlide key={index} className="pb-12">
-                                                {serviceComponent}
-                                            </SwiperSlide>
-                                        ))}
-                                    </Swiper>
+                                        <div
+                                            className="absolute inset-0 bg-cover bg-center"
+                                            style={{ 
+                                                backgroundImage: `url(${
+                                                    // Para indicadores dinámicos, usar siempre la ruta de la API
+                                                    indicator.symbol && !indicator.symbol.startsWith('/assets')
+                                                        ? `/api/indicator/media/${indicator.symbol}`
+                                                        : indicator.symbol || "/assets/img/home/slide1.webp"
+                                                })` 
+                                            }}
+                                        >
+                                            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+                                        </div>
+
+                                        <div className="relative z-10 flex items-center justify-center h-full">
+                                            <div className="text-center text-white px-4 max-w-4xl">
+                                                <h2 className="text-3xl md:text-5xl font-bold mb-4 transform transition-transform duration-1000 translate-y-0">
+                                                    {indicator.name || indicator.title}
+                                                </h2>
+                                                <p className="text-lg md:text-xl opacity-90 transform transition-transform duration-1000 delay-300 translate-y-0">
+                                                    {indicator.description}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+
+                                {/* Navigation Arrows */}
+                                <button
+                                    onClick={prevIndicatorSlide}
+                                    className="absolute left-4 top-1/2 z-[9999] transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-40 text-white p-2 rounded-full transition-all duration-300"
+                                >
+                                    <ChevronLeft className="h-6 w-6" />
+                                </button>
+
+                                <button
+                                    onClick={nextIndicatorSlide}
+                                    className="absolute right-4 top-1/2 z-[9999]  transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-40 text-white p-2 rounded-full transition-all duration-300"
+                                >
+                                    <ChevronRight className="h-6 w-6" />
+                                </button>
+
+                                {/* Dots Indicator */}
+                                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                                    {indicatorsToShow.map((_, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => setCurrentIndicatorSlide(index)}
+                                            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                                                index === currentIndicatorSlide ? 'bg-white' : 'bg-white bg-opacity-50'
+                                            }`}
+                                        />
+                                    ))}
                                 </div>
                             </>
                         );
                     })()}
-                </div>
-            </section>
-  {/*INDICADORES SECTION */}
-            <section className="relative h-96 md:h-[500px] overflow-hidden bg-primary">
-                {(() => {
-                    // Usar indicadores dinámicos de la base de datos si están disponibles
-                    const indicatorsToShow = indicators && indicators.length > 0 ? indicators : [
-                        {
-                            id: 1,
-                            name: "Experiencia Comprobada",
-                            description: "Más de 500 casos exitosos en derecho inmobiliario",
-                            symbol: "/assets/img/home/slide1.webp"
-                        },
-                        {
-                            id: 2,
-                            name: "Asesoría Especializada",
-                            description: "Equipo de abogados especializados en propiedad inmobiliaria",
-                            symbol: "/assets/img/home/slide2.webp"
-                        },
-                        {
-                            id: 3,
-                            name: "Resultados Garantizados",
-                            description: "Protegemos tu inversión inmobiliaria con estrategias efectivas",
-                            symbol: "/assets/img/home/slide3.webp"
-                        }
-                    ];
-
-                    return (
-                        <>
-                            {indicatorsToShow.map((indicator, index) => (
-                                <div
-                                    key={indicator.id}
-                                    className={`absolute inset-0 transition-opacity duration-1000 ${
-                                        index === currentIndicatorSlide ? 'opacity-100' : 'opacity-0'
-                                    }`}
-                                >
-                                    <div
-                                        className="absolute inset-0 bg-cover bg-center"
-                                        style={{ 
-                                            backgroundImage: `url(${
-                                                // Si es un indicador dinámico, usar la ruta de la API
-                                                indicators && indicators.length > 0 && indicator.symbol && !indicator.symbol.startsWith('/assets')
-                                                    ? `/api/indicator/media/${indicator.symbol}`
-                                                    : indicator.symbol || "/assets/img/home/slide1.webp"
-                                            })` 
-                                        }}
-                                    >
-                                        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-                                    </div>
-
-                                    <div className="relative z-10 flex items-center justify-center h-full">
-                                        <div className="text-center text-white px-4 max-w-4xl">
-                                            <h2 className="text-3xl md:text-5xl font-bold mb-4 transform transition-transform duration-1000 translate-y-0">
-                                                {indicator.name || indicator.title}
-                                            </h2>
-                                            <p className="text-lg md:text-xl opacity-90 transform transition-transform duration-1000 delay-300 translate-y-0">
-                                                {indicator.description}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-
-                            {/* Navigation Arrows */}
-                            <button
-                                onClick={prevIndicatorSlide}
-                                className="absolute left-4 top-1/2 z-[9999] transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-40 text-white p-2 rounded-full transition-all duration-300"
-                            >
-                                <ChevronLeft className="h-6 w-6" />
-                            </button>
-
-                            <button
-                                onClick={nextIndicatorSlide}
-                                className="absolute right-4 top-1/2 z-[9999]  transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-40 text-white p-2 rounded-full transition-all duration-300"
-                            >
-                                <ChevronRight className="h-6 w-6" />
-                            </button>
-
-                            {/* Dots Indicator */}
-                            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                                {indicatorsToShow.map((_, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => setCurrentIndicatorSlide(index)}
-                                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                            index === currentIndicatorSlide ? 'bg-white' : 'bg-white bg-opacity-50'
-                                        }`}
-                                    />
-                                ))}
-                            </div>
-                        </>
-                    );
-                })()}
-            </section>
-            {/*Section testimonials */}
-            <section id="testimonios" className="py-20 bg-gray-50">
+                </section>
+            )}
+            {/*Section testimonials - Only show if there are testimonials */}
+            {testimonies && testimonies.length > 0 && (
+                <section id="testimonios" className="py-20 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -1023,17 +991,8 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                     </div>
 
                     {(() => {
-                        // Usar testimonios dinámicos si existen, sino usar estáticos
-                        const testimonialsToShow = testimonies && testimonies.length > 0 ? testimonies : [
-                           
-                            {
-                                id: 6,
-                                name: "Diego Morales",
-                                case: "Constructor",
-                                image: "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150",
-                                description: "Excelente trabajo en la regularización de varios terrenos para mi empresa constructora. Muy recomendados."
-                            }
-                        ];
+                        // Usar testimonios dinámicos de la base de datos
+                        const testimonialsToShow = testimonies;
 
                         return (
                             <>
@@ -1140,6 +1099,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                     })()}
                 </div>
             </section>
+            )}
 
             {/*Section Contacto */}
             <section id="contacto" className="py-20 bg-white">

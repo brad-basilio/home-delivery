@@ -522,7 +522,7 @@ const Generals = ({ generals }) => {
                                 required
                             />
                         </div>
-                       {/* <div className="mb-3">
+                         <div className="mb-3">
                             <label
                                 htmlFor="whatsapp_phone"
                                 className="form-label"
@@ -567,6 +567,7 @@ const Generals = ({ generals }) => {
                                 Este mensaje se enviará automáticamente al iniciar una conversación.
                             </small>
                         </div>
+                       {/*
                                <div className="mb-3">
                             <label
                                 htmlFor="copyright"
