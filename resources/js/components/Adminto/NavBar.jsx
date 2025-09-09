@@ -162,10 +162,10 @@ const NavBar = ({ session = {}, title = "Pagina", languagesSystem }) => {
             <div
                 className="logo-box"
                 style={{
-                    background: "#1a252f ",
+                    background: "#0B0D40 ",
                 }}
             >
-                <a href="/home" className="logo logo-light text-center">
+                <a href="/home" className="logo logo-light text-center " style={{filter: "invert(0)"}}>
                     <span className="logo-sm">
                         <img src="/assets/img/favicon.png" alt="" height="22" />
                     </span>
@@ -174,6 +174,7 @@ const NavBar = ({ session = {}, title = "Pagina", languagesSystem }) => {
                             src="/assets/img/logo-white.png"
                             alt=""
                             height="36"
+                            style={{ filter: "invert(1)" }}
                         />
                     </span>
                 </a>

@@ -31,7 +31,7 @@ const Menu = ({
         <div
             className="left-side-menu"
             style={{
-                background: "#1a252f",
+                background: "#0B0D40",
             }}
         >
             <div className="h-100" data-simplebar>
@@ -45,7 +45,7 @@ const Menu = ({
                         className="rounded-circle img-thumbnail avatar-md"
                         style={{
                             backgroundColor: "unset",
-                            borderColor: "#1a252f",
+                            borderColor: "#0B0D40",
                             objectFit: "cover",
                             objectPosition: "center",
                         }}

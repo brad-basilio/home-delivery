@@ -78,15 +78,15 @@ const Login = ({}) => {
                             <source src="/assets/img/backgrounds/login.mp4" />
                         </video>*/}
 
-                        <img src="https://e.radio-grpp.io/xlarge/2023/02/13/323932_1388272.jpg"  className="h-full object-cover rounded-xl"/>
+                        <img src="/assets/img/login.webp"  className="h-full object-cover rounded-xl"/>
                     </div>
                     <div className="flex items-center justify-center px-8">
                         <div className="mx-auto w-full max-w-md space-y-6">
                             <div className="space-y-2">
                                 <h1 className="text-3xl font-bold text-center">
                                     Bienvenido a {" "}
-                                    <span className="text-[#e5b437]">
-                                       An Malik Cargo
+                                    <span className="text-primary">
+                                       {Global.APP_NAME}
                                     </span>
                                 </h1>
                             </div>
@@ -129,13 +129,13 @@ const Login = ({}) => {
                                             Guardar mis datos
                                         </label>
                                     </div>
-                                    <a
+                                 {/*   <a
                                         href="/forgot-password"
                                         className="text-sm flex gap-2
                                     items-center justify-center text-azul font-semibold hover:text-azul  "
                                     >
                                         Olvidé mi contraseña
-                                    </a>
+                                    </a> */}
                                 </div>
                                 <button
                                     type="submit"
@@ -145,7 +145,7 @@ const Login = ({}) => {
                                 </button>
                                 <div>
                                     {" "}
-                                    <div className="row mt-3">
+                                   {/* <div className="row mt-3">
                                         <div className="text-sm text-center customtext-neutral-light">
                                             <a
                                                 href="/crear-cuenta"
@@ -155,7 +155,7 @@ const Login = ({}) => {
                                                 cuenta.{" "}
                                             </a>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </form>
                         </div>

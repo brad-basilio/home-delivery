@@ -961,39 +961,47 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
   {/*INDICADORES SECTION */}
             <section className="relative h-96 md:h-[500px] overflow-hidden bg-primary">
                 {(() => {
-                    const slides = [
+                    // Usar indicadores dinámicos de la base de datos si están disponibles
+                    const indicatorsToShow = indicators && indicators.length > 0 ? indicators : [
                         {
                             id: 1,
-                            title: "Experiencia Comprobada",
+                            name: "Experiencia Comprobada",
                             description: "Más de 500 casos exitosos en derecho inmobiliario",
-                            image: "/assets/img/home/slide1.webp"
+                            symbol: "/assets/img/home/slide1.webp"
                         },
                         {
                             id: 2,
-                            title: "Asesoría Especializada",
+                            name: "Asesoría Especializada",
                             description: "Equipo de abogados especializados en propiedad inmobiliaria",
-                            image: "/assets/img/home/slide2.webp"
+                            symbol: "/assets/img/home/slide2.webp"
                         },
                         {
                             id: 3,
-                            title: "Resultados Garantizados",
+                            name: "Resultados Garantizados",
                             description: "Protegemos tu inversión inmobiliaria con estrategias efectivas",
-                            image: "/assets/img/home/slide3.webp"
+                            symbol: "/assets/img/home/slide3.webp"
                         }
                     ];
 
                     return (
                         <>
-                            {slides.map((slide, index) => (
+                            {indicatorsToShow.map((indicator, index) => (
                                 <div
-                                    key={slide.id}
+                                    key={indicator.id}
                                     className={`absolute inset-0 transition-opacity duration-1000 ${
                                         index === currentIndicatorSlide ? 'opacity-100' : 'opacity-0'
                                     }`}
                                 >
                                     <div
                                         className="absolute inset-0 bg-cover bg-center"
-                                        style={{ backgroundImage: `url(${slide.image})` }}
+                                        style={{ 
+                                            backgroundImage: `url(${
+                                                // Si es un indicador dinámico, usar la ruta de la API
+                                                indicators && indicators.length > 0 && indicator.symbol && !indicator.symbol.startsWith('/assets')
+                                                    ? `/api/indicator/media/${indicator.symbol}`
+                                                    : indicator.symbol || "/assets/img/home/slide1.webp"
+                                            })` 
+                                        }}
                                     >
                                         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
                                     </div>
@@ -1001,10 +1009,10 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     <div className="relative z-10 flex items-center justify-center h-full">
                                         <div className="text-center text-white px-4 max-w-4xl">
                                             <h2 className="text-3xl md:text-5xl font-bold mb-4 transform transition-transform duration-1000 translate-y-0">
-                                                {slide.title}
+                                                {indicator.name || indicator.title}
                                             </h2>
                                             <p className="text-lg md:text-xl opacity-90 transform transition-transform duration-1000 delay-300 translate-y-0">
-                                                {slide.description}
+                                                {indicator.description}
                                             </p>
                                         </div>
                                     </div>
@@ -1028,7 +1036,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
 
                             {/* Dots Indicator */}
                             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                                {slides.map((_, index) => (
+                                {indicatorsToShow.map((_, index) => (
                                     <button
                                         key={index}
                                         onClick={() => setCurrentIndicatorSlide(index)}
@@ -1058,41 +1066,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                     {(() => {
                         // Usar testimonios dinámicos si existen, sino usar estáticos
                         const testimonialsToShow = testimonies && testimonies.length > 0 ? testimonies : [
-                            {
-                                id: 1,
-                                name: "María González",
-                                case: "Propietaria",
-                                image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150",
-                                description: "Excelente servicio. Me ayudaron a resolver un problema de desalojo de manera rápida y profesional. Totalmente recomendados."
-                            },
-                            {
-                                id: 2,
-                                name: "Carlos Rodríguez",
-                                case: "Inversionista",
-                                image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150",
-                                description: "Gracias a su asesoría pude regularizar mi terreno sin complicaciones. Su experiencia en derecho inmobiliario es excepcional."
-                            },
-                            {
-                                id: 3,
-                                name: "Ana Martínez",
-                                case: "Compradora",
-                                image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150",
-                                description: "Me acompañaron en todo el proceso de compra de mi casa. Su atención al detalle evitó que cayera en una estafa."
-                            },
-                            {
-                                id: 4,
-                                name: "Roberto Silva",
-                                case: "Empresario",
-                                image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150",
-                                description: "Profesionales de primer nivel. Resolvieron un juicio de propiedad que tenía años sin solución. Muy satisfecho con el resultado."
-                            },
-                            {
-                                id: 5,
-                                name: "Laura Fernández",
-                                case: "Arrendadora",
-                                image: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150",
-                                description: "Su asesoría en contratos de arrendamiento me ha ahorrado muchos problemas. Son muy detallistas y profesionales."
-                            },
+                           
                             {
                                 id: 6,
                                 name: "Diego Morales",
