@@ -876,47 +876,6 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                         const servicesToShow = (() => {
                             if (services && services.length > 0) {
                                 return services.map((service, index) => renderService(service, index, false));
-                            } else {
-                                // Si no hay servicios dinámicos, usar servicios estáticos
-                                const staticServices = [
-                                    {
-                                        icon: FileText,
-                                        title: "Contratos de compra venta de inmuebles",
-                                        description: "Redacción y revisión de contratos seguros para proteger tu inversión."
-                                    },
-                                    {
-                                        icon: HomeIcon,
-                                        title: "Contrato de arrendamiento",
-                                        description: "Contratos de renta que protegen tanto a propietarios como inquilinos."
-                                    },
-                                    {
-                                        icon: UserX,
-                                        title: "Desalojos",
-                                        description: "Procedimientos legales eficientes para recuperar tu propiedad."
-                                    },
-                                    {
-                                        icon: Clock,
-                                        title: "Prescripción adquisitiva de dominio",
-                                        description: "Te ayudamos a obtener la propiedad por posesión prolongada."
-                                    },
-                                    {
-                                        icon: Split,
-                                        title: "División y partición",
-                                        description: "División legal de propiedades entre copropietarios."
-                                    },
-                                    {
-                                        icon: MapPin,
-                                        title: "Regularización de terrenos",
-                                        description: "Legalización de terrenos irregulares ante las autoridades."
-                                    },
-                                    {
-                                        icon: Shield,
-                                        title: "Defensa en juicios de propiedad inmueble",
-                                        description: "Representación legal experta en disputas de propiedad."
-                                    }
-                                ];
-
-                                return staticServices.map((service, index) => renderService(service, index, true));
                             }
                         })();
 
@@ -1411,40 +1370,6 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     );
                                 })}
 
-                                {/* Static fallback social links if no dynamic ones */}
-                                {(!socials || socials.filter(social =>
-                                    social.visible &&
-                                    social.status &&
-                                    !social.description?.toLowerCase().includes('whatsapp') &&
-                                    !social.name?.toLowerCase().includes('whatsapp')
-                                ).length === 0) && (
-                                        <>
-                                            <a
-                                                href="https://www.facebook.com/share/1BwrVpqsro/?mibextid=wwXIfr"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-light transition-colors duration-300"
-                                            >
-                                                <i className="fab fa-facebook text-lg"></i>
-                                            </a>
-                                            <a
-                                                href="https://www.instagram.com/sergioquiroz.abogados?igsh=MXY2cDFxcjA0NTJ2eg%3D%3D&utm_source=qr"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-light transition-colors duration-300"
-                                            >
-                                                <i className="fab fa-instagram text-lg"></i>
-                                            </a>
-                                            <a
-                                                href="https://www.tiktok.com/@sergioquirozabogado?_t=ZM-8zQDvt0oziP&_r=1"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-light transition-colors duration-300"
-                                            >
-                                                <i className="fab fa-tiktok text-lg"></i>
-                                            </a>
-                                        </>
-                                    )}
                             </div>
                         </div>
 
@@ -1480,7 +1405,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                             <h3 className="text-lg font-semibold mb-4">Servicios</h3>
                             <ul className="space-y-2 text-sm">
                                 {/* Dynamic services if available */}
-                                {services && services.length > 0 ? (
+                                {services && services.length > 0 && (
                                     services.slice(0, 5).map((service, index) => (
                                         <li key={service.id || index}>
                                             <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
@@ -1488,35 +1413,6 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                             </a>
                                         </li>
                                     ))
-                                ) : (
-                                    /* Static fallback services */
-                                    <>
-                                        <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
-                                                Contratos de Compraventa
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
-                                                Arrendamientos
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
-                                                Desalojos
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
-                                                Regularización
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
-                                                Defensa Legal
-                                            </a>
-                                        </li>
-                                    </>
                                 )}
                             </ul>
                         </div>
@@ -1610,20 +1506,25 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
 
                 {/* WhatsApp Floating Button */}
                 {(() => {
-                    const whatsappSocial = socials?.find(social =>
-                        social.description?.toLowerCase().includes('whatsapp') && social.visible && social.status
-                    );
+                    const whatsappPhone = generals?.find(g => g.correlative === 'whatsapp_phone')?.description;
+                    const whatsappMessage = generals?.find(g => g.correlative === 'whatsapp_message')?.description || 'Hola, me interesa obtener más información sobre sus servicios legales.';
 
-                    if (!whatsappSocial) return null;
+                    if (!whatsappPhone) return null;
+
+                    // Limpiar el número de teléfono (remover espacios, guiones, etc.)
+                    const cleanPhone = whatsappPhone.replace(/[^\d+]/g, '');
+                    
+                    // Crear el enlace de WhatsApp con mensaje predefinido
+                    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(whatsappMessage)}`;
 
                     return (
                         <a
-                            href={whatsappSocial.link}
+                            href={whatsappUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="fixed bottom-8 right-8 bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-full shadow-2xl hover:shadow-green-500/25 hover:scale-110 transition-all duration-300 z-50 animate-bounce"
                             style={{ animationDuration: '2s' }}
-                            title={whatsappSocial.description || whatsappSocial.name}
+                            title={`Contactar por WhatsApp: ${whatsappPhone}`}
                         >
                             <svg width="36px" height="36px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                                 <title>WhatsApp icon</title>

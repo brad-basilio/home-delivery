@@ -426,7 +426,7 @@ const Services = ({ brands }) => {
                 modalRef={modalRef}
                 title={isEditing ? "Editar Servicio" : "Nuevo Servicio"}
                 onSubmit={onModalSubmit}
-                size="xl"
+                size="lg"
             >
                 <input ref={idRef} type="hidden" />
 

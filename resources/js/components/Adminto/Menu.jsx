@@ -275,10 +275,7 @@ const Menu = ({
                                     href="/admin/indicators"
                                     icon="mdi mdi-checkbox-marked-outline"
                                 >
-                                    {t(
-                                        "admin.sidebar.indicators",
-                                        "Indicadores"
-                                    )}
+                                   Banners
                                 </MenuItem>
                                 <MenuItem
                                     href="/admin/testimonies"
