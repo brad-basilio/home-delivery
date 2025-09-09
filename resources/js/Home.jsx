@@ -673,7 +673,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     {/* Text Content */}
                                     <div className="space-y-8 lg:col-span-2">
                                         <div className="space-y-4">
-                                            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight transform transition-all duration-1000 delay-300 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                                            <h1 className={`text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight transform transition-all duration-1000 delay-300 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                                                 }`}>
                                                 {slide.name ? (
                                                     slide.name.split(/(\*[^*]+\*)/g).map((part, partIndex) => {
@@ -690,19 +690,19 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                                 )}
                                             </h1>
 
-                                            <h2 className={`text-xl md:text-2xl text-light font-medium transform transition-all duration-1000 delay-500  ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                                            <h2 className={`text-lg md:text-2xl text-light font-medium transform transition-all duration-1000 delay-500  ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                                                 }`}>
                                                 {slide.button_text || "¿Problemas con terrenos, casas o contratos de compraventa?"}
                                             </h2>
 
-                                            <p className={`text-lg text-gray-200 transform transition-all duration-1000 delay-700 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                                            <p className={`text-base text-gray-200 transform transition-all duration-1000 delay-700 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                                                 }`}>
                                                 {slide.description || "Evita juicios largos, estafas y pérdida de tu inversión."}
                                             </p>
                                         </div>
 
                                         {/* Benefits */}
-                                        <div className={`space-y-3 transform transition-all duration-1000 delay-900 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                                        <div className={`hidden lg:block space-y-3 transform transition-all duration-1000 delay-900 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                                             }`}>
                                             <div className="flex items-center space-x-3">
                                                 <CheckCircle className="h-5 w-5 text-green-400" />
@@ -759,14 +759,14 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                 {/* Navigation Arrows */}
                 <button
                     onClick={() => setCurrentSlide((prev) => (prev - 1 + slidersToShow.length) % slidersToShow.length)}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 z-20"
+                    className="hidden lg:block absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 z-20"
                 >
                     <ChevronLeft className="h-6 w-6" />
                 </button>
 
                 <button
                     onClick={() => setCurrentSlide((prev) => (prev + 1) % slidersToShow.length)}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 z-20"
+                    className="hidden lg:block absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 z-20"
                 >
                     <ChevronRight className="h-6 w-6" />
                 </button>
@@ -825,47 +825,59 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {(() => {
-                            // Si hay servicios dinámicos de la base de datos, usarlos
-                            if (services && services.length > 0) {
-                                return services.map((service, index) => {
-                                    // Mapear iconos dinámicos o usar icono por defecto
-                                    const getServiceIcon = (serviceName) => {
-                                        const name = serviceName?.toLowerCase() || '';
-                                        if (name.includes('contrato') || name.includes('document')) return FileText;
-                                        if (name.includes('inmueble') || name.includes('propiedad') || name.includes('casa')) return HomeIcon;
-                                        if (name.includes('desalojo') || name.includes('inquilino')) return UserX;
-                                        if (name.includes('prescripción') || name.includes('tiempo')) return Clock;
-                                        if (name.includes('división') || name.includes('partición')) return Split;
-                                        if (name.includes('terreno') || name.includes('regularización')) return MapPin;
-                                        if (name.includes('defensa') || name.includes('juicio')) return Shield;
-                                        return FileText; // Icono por defecto
-                                    };
-
-                                    const IconComponent = getServiceIcon(service.title || service.name);
-
-                                    return (
-                                        <div
-                                            key={index}
-                                            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-secondary transform hover:-translate-y-2 group"
-                                        >
-                                            <div className="flex items-center justify-center w-16 h-16 bg-light p-2 rounded-lg mb-4 group-hover:bg-secondary transition-colors duration-300">
-                                                <img src={`/api/service/media/${service.icon}`} alt={service.title || service.name} className='group-hover:invert'/>
-                                            </div>
-
-                                            <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-secondary transition-colors duration-300">
-                                                {service.title || service.name}
-                                            </h3>
-
-                                            <p className="text-gray-600 leading-relaxed">
-                                                {service.description}
-                                            </p>
-                                        </div>
-                                    );
-                                });
+                    {(() => {
+                        // Función para renderizar un servicio
+                        const renderService = (service, index, isStatic = false) => {
+                            let IconComponent;
+                            
+                            if (isStatic) {
+                                IconComponent = service.icon;
                             } else {
-                                // Si no hay servicios dinámicos, usar servicios estáticos de Services.tsx
+                                // Mapear iconos dinámicos o usar icono por defecto
+                                const getServiceIcon = (serviceName) => {
+                                    const name = serviceName?.toLowerCase() || '';
+                                    if (name.includes('contrato') || name.includes('document')) return FileText;
+                                    if (name.includes('inmueble') || name.includes('propiedad') || name.includes('casa')) return HomeIcon;
+                                    if (name.includes('desalojo') || name.includes('inquilino')) return UserX;
+                                    if (name.includes('prescripción') || name.includes('tiempo')) return Clock;
+                                    if (name.includes('división') || name.includes('partición')) return Split;
+                                    if (name.includes('terreno') || name.includes('regularización')) return MapPin;
+                                    if (name.includes('defensa') || name.includes('juicio')) return Shield;
+                                    return FileText; // Icono por defecto
+                                };
+                                IconComponent = getServiceIcon(service.title || service.name);
+                            }
+
+                            return (
+                                <div
+                                    key={index}
+                                    className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-secondary transform hover:-translate-y-2 group h-full"
+                                >
+                                    <div className="flex items-center justify-center w-16 h-16 bg-light p-2 rounded-lg mb-4 group-hover:bg-secondary transition-colors duration-300">
+                                        {isStatic ? (
+                                            <IconComponent className="h-8 w-8 text-secondary group-hover:text-white transition-colors duration-300" />
+                                        ) : (
+                                            <img src={`/api/service/media/${service.icon}`} alt={service.title || service.name} className='group-hover:invert'/>
+                                        )}
+                                    </div>
+
+                                    <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-secondary transition-colors duration-300">
+                                        {service.title || service.name}
+                                    </h3>
+
+                                    <p className="text-gray-600 leading-relaxed">
+                                        {service.description}
+                                    </p>
+                                </div>
+                            );
+                        };
+
+                        // Determinar qué servicios mostrar
+                        const servicesToShow = (() => {
+                            if (services && services.length > 0) {
+                                return services.map((service, index) => renderService(service, index, false));
+                            } else {
+                                // Si no hay servicios dinámicos, usar servicios estáticos
                                 const staticServices = [
                                     {
                                         icon: FileText,
@@ -904,30 +916,46 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     }
                                 ];
 
-                                return staticServices.map((service, index) => {
-                                    const IconComponent = service.icon;
-                                    return (
-                                        <div
-                                            key={index}
-                                            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-secondary transform hover:-translate-y-2 group"
-                                        >
-                                            <div className="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-lg mb-4 group-hover:bg-secondary transition-colors duration-300">
-                                                <IconComponent className="h-8 w-8 text-secondary group-hover:text-white transition-colors duration-300" />
-                                            </div>
-
-                                            <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-secondary transition-colors duration-300">
-                                                {service.title}
-                                            </h3>
-
-                                            <p className="text-gray-600 leading-relaxed">
-                                                {service.description}
-                                            </p>
-                                        </div>
-                                    );
-                                });
+                                return staticServices.map((service, index) => renderService(service, index, true));
                             }
-                        })()}
-                    </div>
+                        })();
+
+                        return (
+                            <>
+                                {/* Desktop & Tablet: Grid Layout */}
+                                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    {servicesToShow}
+                                </div>
+
+                                {/* Mobile: Swiper Carousel */}
+                                <div className="block md:hidden">
+                                    <Swiper
+                                        spaceBetween={20}
+                                        slidesPerView={1}
+                                        pagination={{
+                                            clickable: true,
+                                            bulletActiveClass: 'swiper-pagination-bullet-active !bg-secondary',
+                                            bulletClass: 'swiper-pagination-bullet !bg-gray-300',
+                                        }}
+                                        modules={[Pagination]}
+                                        className="services-swiper"
+                                        style={{
+                                            '--swiper-pagination-color': '#30348C',
+                                            '--swiper-pagination-bullet-inactive-color': '#d1d5db',
+                                            '--swiper-pagination-bullet-size': '12px',
+                                            '--swiper-pagination-bullet-horizontal-gap': '6px'
+                                        }}
+                                    >
+                                        {servicesToShow.map((serviceComponent, index) => (
+                                            <SwiperSlide key={index} className="pb-12">
+                                                {serviceComponent}
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                </div>
+                            </>
+                        );
+                    })()}
                 </div>
             </section>
   {/*INDICADORES SECTION */}
@@ -1132,7 +1160,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                     {/* Navigation Arrows */}
                                     <button
                                         onClick={prevTestimonial}
-                                        className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-white hover:bg-gray-50 text-gray-600 hover:text-secondary p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10"
+                                        className="hidden lg:block absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-white hover:bg-gray-50 text-gray-600 hover:text-secondary p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10"
                                         aria-label="Testimonio anterior"
                                     >
                                         <ChevronLeft className="h-6 w-6" />
@@ -1140,7 +1168,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
 
                                     <button
                                         onClick={nextTestimonial}
-                                        className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-white hover:bg-gray-50 text-gray-600 hover:text-secondary p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10"
+                                        className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-white hover:bg-gray-50 text-gray-600 hover:text-secondary p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10"
                                         aria-label="Siguiente testimonio"
                                     >
                                         <ChevronRight className="h-6 w-6" />

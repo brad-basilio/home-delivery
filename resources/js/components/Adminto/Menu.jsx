@@ -262,6 +262,7 @@ const Menu = ({
                                         Cupones
                                     </MenuItem>
                                 </MenuItemContainer>*/}
+                                
                                 <li className="menu-title">Landing Page</li>
                                 
                                 <MenuItem
@@ -270,7 +271,15 @@ const Menu = ({
                                 >
                                     Sliders
                                 </MenuItem>
-                                
+                                 <MenuItem
+                                    href="/admin/indicators"
+                                    icon="mdi mdi-checkbox-marked-outline"
+                                >
+                                    {t(
+                                        "admin.sidebar.indicators",
+                                        "Indicadores"
+                                    )}
+                                </MenuItem>
                                 <MenuItem
                                     href="/admin/testimonies"
                                     icon="mdi mdi-forum"
@@ -322,15 +331,7 @@ const Menu = ({
                                 >
                                     Nosotros
                                 </MenuItem>*/}
-                              {/*  <MenuItem
-                                    href="/admin/indicators"
-                                    icon="mdi mdi-checkbox-marked-outline"
-                                >
-                                    {t(
-                                        "admin.sidebar.indicators",
-                                        "Indicadores"
-                                    )}
-                                </MenuItem>
+                              {/* 
                                 <MenuItem
                                     href="/admin/strengths"
                                     icon="mdi mdi-cards-heart"
