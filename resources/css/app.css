@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Offset for fixed header when scrolling to sections */
+section[id] {
+  scroll-margin-top: 5rem; /* Adjust based on header height */
+}
+
 .banner-swiper .swiper-pagination-bullet {
   background-color: white;
   opacity: 0.25;

@@ -148,6 +148,22 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
     const mobileMenuRef = useRef(null)
     const swiperRef = useRef(null)
 
+    // Función para smooth scroll a secciones
+    const smoothScrollTo = (sectionId) => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            })
+        }
+        // Cerrar menú móvil si está abierto
+        if (isMobileMenuOpen) {
+            setIsMobileMenuOpen(false)
+        }
+    }
+
     // Estados para idiomas (desde HomeDokux)
     const [socialsState, setSocialsState] = useState(socials || []);
     const [languagesSystem, setLanguagesSystem] = useState([]);
@@ -585,10 +601,10 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
 
                         {/* Desktop Navigation */}
                         <nav className="hidden md:flex space-x-8">
-                            <a href="#inicio" className="text-gray-700 hover:text-secondary transition-colors duration-300">Inicio</a>
-                            <a href="#servicios" className="text-gray-700 hover:text-secondary transition-colors duration-300">Servicios</a>
-                            <a href="#testimonios" className="text-gray-700 hover:text-secondary transition-colors duration-300">Testimonios</a>
-                            <a href="#contacto" className="text-gray-700 hover:text-secondary transition-colors duration-300">Contacto</a>
+                            <button onClick={() => smoothScrollTo('inicio')} className="text-gray-700 hover:text-secondary transition-colors duration-300">Inicio</button>
+                            <button onClick={() => smoothScrollTo('servicios')} className="text-gray-700 hover:text-secondary transition-colors duration-300">Servicios</button>
+                            <button onClick={() => smoothScrollTo('testimonios')} className="text-gray-700 hover:text-secondary transition-colors duration-300">Testimonios</button>
+                            <button onClick={() => smoothScrollTo('contacto')} className="text-gray-700 hover:text-secondary transition-colors duration-300">Contacto</button>
                         </nav>
 
                         {/* Mobile menu button */}
@@ -606,10 +622,10 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                     {isMobileMenuOpen && (
                         <div className="md:hidden">
                             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-                                <a href="#inicio" className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300">Inicio</a>
-                                <a href="#servicios" className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300">Servicios</a>
-                                <a href="#testimonios" className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300">Testimonios</a>
-                                <a href="#contacto" className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300">Contacto</a>
+                                <button onClick={() => smoothScrollTo('inicio')} className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300 w-full text-left">Inicio</button>
+                                <button onClick={() => smoothScrollTo('servicios')} className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300 w-full text-left">Servicios</button>
+                                <button onClick={() => smoothScrollTo('testimonios')} className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300 w-full text-left">Testimonios</button>
+                                <button onClick={() => smoothScrollTo('contacto')} className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300 w-full text-left">Contacto</button>
                             </div>
                         </div>
                     )}
@@ -698,14 +714,14 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                         <div className={`flex flex-col sm:flex-row gap-4 transform transition-all duration-1000 delay-1100 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                                             }`}>
                                             <button
-                                                onClick={() => window.location.href = "#contacto"}
+                                                onClick={() => smoothScrollTo('contacto')}
                                                 className="bg-primary z-[9999] hover:bg-secondary text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
                                             >
                                                 <Phone className="h-5 w-5" />
                                                 <span>Agenda tu consulta</span>
                                             </button>
                                             <button
-                                                onClick={() => window.location.href = "#servicios"}
+                                                onClick={() => smoothScrollTo('servicios')}
                                                 className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300"
                                             >
                                                 Ver Servicios
@@ -1065,7 +1081,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                         ¿Listo para ser nuestro próximo cliente satisfecho?
                                     </p>
                                     <button
-                                        onClick={() => window.location.href = "#contacto"}
+                                        onClick={() => smoothScrollTo('contacto')}
                                         className="bg-secondary hover:bg-primary text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
                                     >
                                         Agenda tu consulta
@@ -1315,24 +1331,24 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                             <h3 className="text-lg font-semibold mb-4">Enlaces Rápidos</h3>
                             <ul className="space-y-2">
                                 <li>
-                                    <a href="#inicio" className="text-gray-300 hover:text-light transition-colors duration-300">
+                                    <button onClick={() => smoothScrollTo('inicio')} className="text-gray-300 hover:text-light transition-colors duration-300 text-left">
                                         Inicio
-                                    </a>
+                                    </button>
                                 </li>
                                 <li>
-                                    <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
+                                    <button onClick={() => smoothScrollTo('servicios')} className="text-gray-300 hover:text-light transition-colors duration-300 text-left">
                                         Servicios
-                                    </a>
+                                    </button>
                                 </li>
                                 <li>
-                                    <a href="#testimonios" className="text-gray-300 hover:text-light transition-colors duration-300">
+                                    <button onClick={() => smoothScrollTo('testimonios')} className="text-gray-300 hover:text-light transition-colors duration-300 text-left">
                                         Testimonios
-                                    </a>
+                                    </button>
                                 </li>
                                 <li>
-                                    <a href="#contacto" className="text-gray-300 hover:text-light transition-colors duration-300">
+                                    <button onClick={() => smoothScrollTo('contacto')} className="text-gray-300 hover:text-light transition-colors duration-300 text-left">
                                         Contacto
-                                    </a>
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -1345,9 +1361,9 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                 {services && services.length > 0 && (
                                     services.slice(0, 5).map((service, index) => (
                                         <li key={service.id || index}>
-                                            <a href="#servicios" className="text-gray-300 hover:text-light transition-colors duration-300">
+                                            <button onClick={() => smoothScrollTo('servicios')} className="text-gray-300 hover:text-light transition-colors duration-300 text-left">
                                                 {service.title || service.name}
-                                            </a>
+                                            </button>
                                         </li>
                                     ))
                                 )}
