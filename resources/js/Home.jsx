@@ -706,7 +706,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                                             </div>
                                             <div className="flex items-center space-x-3">
                                                 <CheckCircle className="h-5 w-5 text-green-400" />
-                                                <span className="text-gray-200">Consulta inicial gratuita</span>
+                                                <span className="text-gray-200">Agenda tu consulta</span>
                                             </div>
                                         </div>
 
@@ -1103,7 +1103,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                         </h2>
                         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                             ¿Tienes un problema legal inmobiliario? No esperes más.
-                            Contáctanos para una consulta gratuita y protege tu patrimonio.
+                            Contáctanos para agendar tu consulta y protege tu patrimonio.
                         </p>
                     </div>
 
@@ -1184,7 +1184,7 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                         {/* Contact Form */}
                         <div className="bg-gray-50 p-8 rounded-xl">
                             <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                                Solicita tu Consulta Gratuita
+                                Agenda tu consulta
                             </h3>
 
                             {(() => {
