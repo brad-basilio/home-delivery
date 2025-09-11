@@ -1719,29 +1719,29 @@
     ]
   },
   "resources/js/Admin/Socials.jsx": {
-    "file": "assets/Socials-6cAZWn5Y.js",
+    "file": "assets/Socials-bQSBUXVW.js",
     "name": "Socials",
     "src": "resources/js/Admin/Socials.jsx",
     "isEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
+      "_Base-C_PKP9rm.js",
+      "_InputFormGroup-DZ3W53Mr.js",
+      "_SelectFormGroup-9bKziFRR.js",
+      "_SwitchFormGroup-ChGOZLEW.js",
+      "_TextareaFormGroup-BKhRBaxf.js",
       "_index-B80Lgev0.js",
       "resources/js/Utils/ReactAppend.jsx",
-      "_Base-C_PKP9rm.js",
-      "_CreateReactScript-Bj11ghWz.js",
-      "_Table-fNNkvby0.js",
-      "_Modal-Dyq34CHD.js",
-      "_ReactAppend-C-tNgxIf.js",
-      "_DxButton-CsjWvhyj.js",
-      "_TextareaFormGroup-BKhRBaxf.js",
-      "_SwitchFormGroup-ChGOZLEW.js",
-      "_sweetalert2.all-Dh0rZL5X.js",
-      "_InputFormGroup-DZ3W53Mr.js",
-      "resources/js/components/Blog/Results.jsx",
-      "_SelectFormGroup-9bKziFRR.js",
       "resources/js/components/Adminto/Dx/DxBox.jsx",
-      "_index-DO3Aws4m.js",
+      "_sweetalert2.all-Dh0rZL5X.js",
+      "resources/js/components/Blog/Results.jsx",
+      "_Modal-CbHkO7Dn.js",
+      "_Table-CEq6jy84.js",
+      "_DxButton-CsjWvhyj.js",
+      "_CreateReactScript-Bj11ghWz.js",
+      "_ReactAppend-C-tNgxIf.js",
       "_tippy-react.esm-CHhA99mn.js",
+      "_index-DO3Aws4m.js",
       "_Logout-Cj6nvmS-.js",
       "_main-Br9xqDfn.js",
       "____vite-browser-external_commonjs-proxy-C9-083JZ.js",
@@ -3418,7 +3418,7 @@
     ]
   },
   "resources/js/components/Adminto/form/CheckboxFormGroup.jsx": {
-    "file": "assets/CheckboxFormGroup-IlEDNq44.js",
+    "file": "assets/CheckboxFormGroup-Dr3wPUh9.js",
     "name": "CheckboxFormGroup",
     "src": "resources/js/components/Adminto/form/CheckboxFormGroup.jsx",
     "isEntry": true,
@@ -3438,7 +3438,7 @@
     ]
   },
   "resources/js/components/Adminto/form/InputFormGroup.jsx": {
-    "file": "assets/InputFormGroup-IlEDNq44.js",
+    "file": "assets/InputFormGroup-Dr3wPUh9.js",
     "name": "InputFormGroup",
     "src": "resources/js/components/Adminto/form/InputFormGroup.jsx",
     "isEntry": true,
@@ -3480,7 +3480,7 @@
     ]
   },
   "resources/js/components/Adminto/form/SelectFormGroup.jsx": {
-    "file": "assets/SelectFormGroup-IlEDNq44.js",
+    "file": "assets/SelectFormGroup-Dr3wPUh9.js",
     "name": "SelectFormGroup",
     "src": "resources/js/components/Adminto/form/SelectFormGroup.jsx",
     "isEntry": true,
@@ -3500,7 +3500,7 @@
     ]
   },
   "resources/js/components/Adminto/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-IlEDNq44.js",
+    "file": "assets/TextareaFormGroup-Dr3wPUh9.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/Adminto/form/TextareaFormGroup.jsx",
     "isEntry": true,
@@ -3737,7 +3737,7 @@
     ]
   },
   "resources/js/components/DataGrid.jsx": {
-    "file": "assets/DataGrid-Dr3wPUh9.js",
+    "file": "assets/DataGrid-IlEDNq44.js",
     "name": "DataGrid",
     "src": "resources/js/components/DataGrid.jsx",
     "isEntry": true,
@@ -4104,7 +4104,7 @@
     ]
   },
   "resources/js/components/Tailwind/DataGrid.jsx": {
-    "file": "assets/DataGrid-IlEDNq44.js",
+    "file": "assets/DataGrid-Dr3wPUh9.js",
     "name": "DataGrid",
     "src": "resources/js/components/Tailwind/DataGrid.jsx",
     "isEntry": true,
@@ -4382,20 +4382,22 @@
     ]
   },
   "resources/js/components/Test/Fragrance.jsx": {
-    "file": "assets/Fragrance-Dr3wPUh9.js",
+    "file": "assets/Fragrance-BxDHXIOM.js",
     "name": "Fragrance",
     "src": "resources/js/components/Test/Fragrance.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
-      "_index-B80Lgev0.js"
+      "_tippy-react.esm-CHhA99mn.js",
+      "_index-B80Lgev0.js",
+      "_index-DO3Aws4m.js"
     ]
   },
   "resources/js/components/Test/HairGoals.jsx": {
-    "file": "assets/HairGoals-Dr3wPUh9.js",
+    "file": "assets/HairGoals-BujIVX9q.js",
     "name": "HairGoals",
     "src": "resources/js/components/Test/HairGoals.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "_index-B80Lgev0.js"
@@ -4415,10 +4417,10 @@
     ]
   },
   "resources/js/components/Test/Main.jsx": {
-    "file": "assets/Main-DPyJ83-e.js",
+    "file": "assets/Main-Dr3wPUh9.js",
     "name": "Main",
     "src": "resources/js/components/Test/Main.jsx",
-    "isDynamicEntry": true,
+    "isEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "_index-B80Lgev0.js"
@@ -4536,7 +4538,7 @@
     "isEntry": true
   },
   "resources/js/components/form/CheckboxFormGroup.jsx": {
-    "file": "assets/CheckboxFormGroup-Dr3wPUh9.js",
+    "file": "assets/CheckboxFormGroup-IlEDNq44.js",
     "name": "CheckboxFormGroup",
     "src": "resources/js/components/form/CheckboxFormGroup.jsx",
     "isEntry": true,
@@ -4546,7 +4548,7 @@
     ]
   },
   "resources/js/components/form/InputFormGroup.jsx": {
-    "file": "assets/InputFormGroup-Dr3wPUh9.js",
+    "file": "assets/InputFormGroup-IlEDNq44.js",
     "name": "InputFormGroup",
     "src": "resources/js/components/form/InputFormGroup.jsx",
     "isEntry": true,
@@ -4588,7 +4590,7 @@
     ]
   },
   "resources/js/components/form/SelectFormGroup.jsx": {
-    "file": "assets/SelectFormGroup-Dr3wPUh9.js",
+    "file": "assets/SelectFormGroup-IlEDNq44.js",
     "name": "SelectFormGroup",
     "src": "resources/js/components/form/SelectFormGroup.jsx",
     "isEntry": true,
@@ -4598,7 +4600,7 @@
     ]
   },
   "resources/js/components/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-Dr3wPUh9.js",
+    "file": "assets/TextareaFormGroup-IlEDNq44.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/form/TextareaFormGroup.jsx",
     "isEntry": true,
