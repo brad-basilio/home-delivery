@@ -1,1 +1,0 @@
-import{j as o}from"./FileViewer-CpM0iYLI.js";import"./index-B80Lgev0.js";const m=({className:t,html:r,properties:n})=>o.jsx("div",{className:t,dangerouslySetInnerHTML:{__html:r},...n});export{m as H};

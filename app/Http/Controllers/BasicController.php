@@ -189,9 +189,20 @@ class BasicController extends Controller
     } else {
       return $reactViewProperties;
     }
+
+    // Obtener datos para el template Blade (SEO y píxeles)
+    $langId = app('current_lang_id');
+    $generalsForBlade = General::where('lang_id', $langId)->get();
+    $viewData = [
+      'generals' => $generalsForBlade,
+      'seoTitle' => $generalsForBlade->firstWhere('correlative', 'seo_title')?->description,
+      'seoDescription' => $generalsForBlade->firstWhere('correlative', 'seo_description')?->description,
+      'seoKeywords' => $generalsForBlade->firstWhere('correlative', 'seo_keywords')?->description,
+    ];
+
     return Inertia::render($this->reactView, $properties)
       ->rootView($this->reactRootView)
-      ->withViewData('data', $this->reactData ?? []);
+      ->withViewData($viewData);
   }
 
   public function paginate(Request $request): HttpResponse|ResponseFactory

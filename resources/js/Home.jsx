@@ -42,6 +42,7 @@ import Swal from 'sweetalert2';
 import { sub } from 'framer-motion/client';
 import ReactModal from 'react-modal';
 import HtmlContent from './Utils/HtmlContent';
+import TrackingPixels from './Components/TrackingPixels';
 
 // Importar Swiper y sus módulos
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -590,6 +591,9 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
 
     return (
         <div className="min-h-screen bg-white">
+            {/* Tracking Pixels */}
+            <TrackingPixels generals={generals} />
+            
             {/* Header */}
             <header className="bg-white shadow-lg fixed w-full top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,1 +1,0 @@
-import{r as a}from"./index-B80Lgev0.js";import{a as u}from"./Filter-CcOrv0Sz.js";const c=(e,t,r="")=>{var i;const n=t.split(".");if(n.length===1)return e[t]||r;const o=n.slice(0,-1).join("."),s=n.slice(-1)[0];return((i=e[o])==null?void 0:i[s])||r},l=()=>{const{translations:e,loading:t,error:r}=a.useContext(u);return{t:(o,s="")=>t||r?s:c(e,o,s),loading:t,error:r}};export{l as u};

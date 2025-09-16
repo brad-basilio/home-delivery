@@ -7,7 +7,19 @@ $component = Route::currentRouteName();
 <html lang="es">
 
 <head>
-    <!-- Google Tag Manager -->
+    {{-- Dynamic Tracking Pixels --}}
+    @php
+        // Obtener píxeles de seguimiento de la variable generals si existe
+        $facebookPixel = isset($generals) ? collect($generals)->firstWhere('correlative', 'facebook_pixel')?->description : null;
+        $googleAnalytics = isset($generals) ? collect($generals)->firstWhere('correlative', 'google_analytics')?->description : null;
+        $googleTagManager = isset($generals) ? collect($generals)->firstWhere('correlative', 'google_tag_manager')?->description : null;
+        $tiktokPixel = isset($generals) ? collect($generals)->firstWhere('correlative', 'tiktok_pixel')?->description : null;
+        $linkedinPixel = isset($generals) ? collect($generals)->firstWhere('correlative', 'linkedin_pixel')?->description : null;
+        $customPixels = isset($generals) ? collect($generals)->firstWhere('correlative', 'custom_pixels')?->description : null;
+    @endphp
+
+    {{-- Google Tag Manager --}}
+    @if(!empty($googleTagManager))
     <script>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
@@ -19,12 +31,104 @@ $component = Route::currentRouteName();
                 j = d.createElement(s),
                 dl = l != 'dataLayer' ? '&l=' + l : '';
             j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', '{{ $googleTagManager }}');
+    </script>
+    @else
+    {{-- Fallback GTM (mantener el original si no hay configuración) --}}
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-KQBC4B69');
     </script>
-    <!-- End Google Tag Manager -->
+    @endif
+
+    {{-- Facebook Pixel --}}
+    @if(!empty($facebookPixel))
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '{{ $facebookPixel }}');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id={{ $facebookPixel }}&ev=PageView&noscript=1" />
+    </noscript>
+    @endif
+
+    {{-- Google Analytics --}}
+    @if(!empty($googleAnalytics))
+        @if(Str::startsWith($googleAnalytics, 'G-'))
+            {{-- Google Analytics 4 --}}
+            <script async src="https://www.googletagmanager.com/gtag/js?id={{ $googleAnalytics }}"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '{{ $googleAnalytics }}');
+            </script>
+        @elseif(Str::startsWith($googleAnalytics, 'UA-'))
+            {{-- Universal Analytics (legacy) --}}
+            <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+                ga('create', '{{ $googleAnalytics }}', 'auto');
+                ga('send', 'pageview');
+            </script>
+        @endif
+    @endif
+
+    {{-- TikTok Pixel --}}
+    @if(!empty($tiktokPixel))
+    <script>
+        !function (w, d, t) {
+          w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+          ttq.load('{{ $tiktokPixel }}');
+          ttq.page();
+        }(window, document, 'ttq');
+    </script>
+    @endif
+
+    {{-- LinkedIn Insight Tag --}}
+    @if(!empty($linkedinPixel))
+    <script>
+        _linkedin_partner_id = "{{ $linkedinPixel }}";
+        window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+        window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+        (function(l) {
+            if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+            window.lintrk.q=[]}
+            var s = document.getElementsByTagName("script")[0];
+            var b = document.createElement("script");
+            b.type = "text/javascript";b.async = true;
+            b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+            s.parentNode.insertBefore(b, s);})(window.lintrk);
+    </script>
+    @endif
+
+    {{-- Custom Pixels --}}
+    @if(!empty($customPixels))
+        {!! $customPixels !!}
+    @endif
 
 
 
@@ -133,10 +237,15 @@ $component = Route::currentRouteName();
 </style>
 
 <body class="font-poppins">
-    <!-- Google Tag Manager (noscript) -->
+    {{-- Google Tag Manager (noscript) --}}
+    @if(!empty($googleTagManager))
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $googleTagManager }}"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    @else
+    {{-- Fallback GTM noscript --}}
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQBC4B69"
             height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+    @endif
     @inertia
 
     <script src="/lte/assets/js/vendor.min.js"></script>

@@ -120,6 +120,19 @@ const Generals = ({ generals }) => {
             lat: Number(location.split(",").map((x) => x.trim())[0]),
             lng: Number(location.split(",").map((x) => x.trim())[1]),
         },
+        // Píxeles de seguimiento
+        facebookPixel:
+            generals.find((x) => x.correlative == "facebook_pixel")?.description ?? "",
+        googleAnalytics:
+            generals.find((x) => x.correlative == "google_analytics")?.description ?? "",
+        googleTagManager:
+            generals.find((x) => x.correlative == "google_tag_manager")?.description ?? "",
+        tiktokPixel:
+            generals.find((x) => x.correlative == "tiktok_pixel")?.description ?? "",
+        linkedinPixel:
+            generals.find((x) => x.correlative == "linkedin_pixel")?.description ?? "",
+        customPixels:
+            generals.find((x) => x.correlative == "custom_pixels")?.description ?? "",
     });
 
     const [activeTab, setActiveTab] = useState("contact");
@@ -255,6 +268,37 @@ const Generals = ({ generals }) => {
                     name: "Ubicación",
                     description: `${formData.location.lat},${formData.location.lng}`,
                 },
+                // Píxeles de seguimiento
+                {
+                    correlative: "facebook_pixel",
+                    name: "Facebook Pixel ID",
+                    description: formData.facebookPixel,
+                },
+                {
+                    correlative: "google_analytics",
+                    name: "Google Analytics ID",
+                    description: formData.googleAnalytics,
+                },
+                {
+                    correlative: "google_tag_manager",
+                    name: "Google Tag Manager ID",
+                    description: formData.googleTagManager,
+                },
+                {
+                    correlative: "tiktok_pixel",
+                    name: "TikTok Pixel ID",
+                    description: formData.tiktokPixel,
+                },
+                {
+                    correlative: "linkedin_pixel",
+                    name: "LinkedIn Insight Tag ID",
+                    description: formData.linkedinPixel,
+                },
+                {
+                    correlative: "custom_pixels",
+                    name: "Píxeles Personalizados",
+                    description: formData.customPixels,
+                },
             ]);
             // alert('Datos guardados exitosamente');
         } catch (error) {
@@ -326,6 +370,16 @@ const Generals = ({ generals }) => {
                             role="tab"
                         >
                             Ubicación
+                        </button>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                        <button
+                            className={`nav-link ${activeTab === "pixels" ? "active" : ""}`}
+                            onClick={() => setActiveTab("pixels")}
+                            type="button"
+                            role="tab"
+                        >
+                            Píxeles de Seguimiento
                         </button>
                     </li>
                     {Global.APP_CORRELATIVE === "cambioDev" && (
@@ -773,6 +827,156 @@ const Generals = ({ generals }) => {
                         </small>
                     </div>
 
+                    <div
+                        className={`tab-pane fade ${activeTab === "pixels" ? "show active" : ""}`}
+                        role="tabpanel"
+                    >
+                        <div className="alert alert-info">
+                            <strong>Píxeles de Seguimiento</strong><br />
+                            Configura aquí los códigos de seguimiento para diferentes plataformas. Solo ingresa el ID o código, el script completo se generará automáticamente.
+                        </div>
+                        
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="mb-3">
+                                    <label htmlFor="facebookPixel" className="form-label">
+                                        Facebook Pixel ID
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="facebookPixel"
+                                        value={formData.facebookPixel}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                facebookPixel: e.target.value,
+                                            })
+                                        }
+                                        placeholder="123456789012345"
+                                    />
+                                    <small className="form-text text-muted">
+                                        Solo ingresa el ID del pixel (ej: 123456789012345)
+                                    </small>
+                                </div>
+
+                                <div className="mb-3">
+                                    <label htmlFor="googleAnalytics" className="form-label">
+                                        Google Analytics ID
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="googleAnalytics"
+                                        value={formData.googleAnalytics}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                googleAnalytics: e.target.value,
+                                            })
+                                        }
+                                        placeholder="G-XXXXXXXXXX o UA-XXXXXXXX-X"
+                                    />
+                                    <small className="form-text text-muted">
+                                        Ingresa tu Google Analytics ID (GA4: G-XXXXXXXXXX o Universal: UA-XXXXXXXX-X)
+                                    </small>
+                                </div>
+
+                                <div className="mb-3">
+                                    <label htmlFor="googleTagManager" className="form-label">
+                                        Google Tag Manager ID
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="googleTagManager"
+                                        value={formData.googleTagManager}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                googleTagManager: e.target.value,
+                                            })
+                                        }
+                                        placeholder="GTM-XXXXXXX"
+                                    />
+                                    <small className="form-text text-muted">
+                                        Ingresa tu Google Tag Manager ID (ej: GTM-XXXXXXX)
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6">
+                                <div className="mb-3">
+                                    <label htmlFor="tiktokPixel" className="form-label">
+                                        TikTok Pixel ID
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="tiktokPixel"
+                                        value={formData.tiktokPixel}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                tiktokPixel: e.target.value,
+                                            })
+                                        }
+                                        placeholder="C4XXXXXXXXXXXXXXXXXXXXXXXXXX"
+                                    />
+                                    <small className="form-text text-muted">
+                                        Ingresa tu TikTok Pixel ID
+                                    </small>
+                                </div>
+
+                                <div className="mb-3">
+                                    <label htmlFor="linkedinPixel" className="form-label">
+                                        LinkedIn Insight Tag ID
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="linkedinPixel"
+                                        value={formData.linkedinPixel}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                linkedinPixel: e.target.value,
+                                            })
+                                        }
+                                        placeholder="12345"
+                                    />
+                                    <small className="form-text text-muted">
+                                        Ingresa tu LinkedIn Partner ID
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="customPixels" className="form-label">
+                                Píxeles Personalizados (Código HTML)
+                            </label>
+                            <textarea
+                                className="form-control"
+                                id="customPixels"
+                                rows="8"
+                                value={formData.customPixels}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        customPixels: e.target.value,
+                                    })
+                                }
+                                placeholder="<!-- Ingresa aquí scripts personalizados de seguimiento -->
+<script>
+  // Tu código personalizado aquí
+</script>"
+                            ></textarea>
+                            <small className="form-text text-muted">
+                                Aquí puedes agregar scripts personalizados de seguimiento. ⚠️ <strong>Cuidado:</strong> Solo agrega código de fuentes confiables.
+                            </small>
+                        </div>
+                    </div>
 
                     <div
                         className={`tab-pane fade ${activeTab === "email" ? "show active" : ""}`}

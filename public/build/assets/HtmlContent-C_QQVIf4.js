@@ -1,0 +1,1 @@
+import{j as o}from"./FileViewer-DkaHswXt.js";import"./TrackingPixels-B80Lgev0.js";const m=({className:t,html:r,properties:n})=>o.jsx("div",{className:t,dangerouslySetInnerHTML:{__html:r},...n});export{m as H};
