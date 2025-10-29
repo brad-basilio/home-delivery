@@ -53,7 +53,7 @@ const AboutPage = (props) => {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
-          className="px-4 md:px-8 2xl:px-0 2xl:max-w-7xl mx-auto py-8 md:py-16"
+          className="px-4 md:px-8 2xl:px-0 2xl:max-w-7xl mx-auto py-8 md:py-16 pt-24 md:pt-32"
         >
           <motion.div variants={fadeInUp} className="text-center">
             <span className="text-hd-android font-bold inline-block text-lg">
@@ -89,18 +89,19 @@ const AboutPage = (props) => {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
-          className="px-4 md:px-8 2xl:px-0 2xl:max-w-7xl mx-auto py-12 md:py-16 bg-[#F7F9FB]"
+          className="w-full py-12 md:py-16 bg-gray-50"
         >
-          <motion.h2 
-            variants={fadeInUp}
-            className="text-2xl md:text-[40px] font-bold text-hd-onyx text-center md:text-left px-4 md:px-0"
-          >
-            {sectionTwo?.title || 'Nuestras Fortalezas'}
-          </motion.h2>
-          <motion.div 
-            variants={fadeInUp}
-            className="mt-8 md:mt-12 grid sm:grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-4 md:px-0"
-          >
+          <div className="px-4 md:px-8 2xl:px-0 2xl:max-w-7xl mx-auto">
+            <motion.h2 
+              variants={fadeInUp}
+              className="text-2xl md:text-[40px] font-bold text-hd-onyx-dark text-center md:text-left"
+            >
+              {sectionTwo?.title || 'Nuestras Fortalezas'}
+            </motion.h2>
+            <motion.div 
+              variants={fadeInUp}
+              className="mt-8 md:mt-12 grid sm:grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
+            >
             {strengths?.map(
               (item, index) =>
                 item.visible &&
@@ -115,6 +116,7 @@ const AboutPage = (props) => {
                 )
             )}
           </motion.div>
+          </div>
         </motion.section>
 
         {/* Trust Section */}
@@ -136,11 +138,11 @@ const AboutPage = (props) => {
                   className="w-full h-[300px] md:h-auto object-cover rounded-2xl"
                 />
                 <div className="space-y-4 md:space-y-6">
-                  <h2 className="text-2xl md:text-4xl font-bold text-hd-onyx">
+                  <h2 className="text-2xl md:text-4xl font-bold text-hd-onyx-dark">
                     {sectionThree.title}
                   </h2>
                   <div
-                    className="text-gray-600 text-base md:text-lg prose prose-lg"
+                    className="text-hd-onyx text-base md:text-lg prose prose-lg"
                     dangerouslySetInnerHTML={{
                       __html: sectionThree.description,
                     }}
@@ -162,11 +164,11 @@ const AboutPage = (props) => {
             <div className="max-w-7xl mx-auto">
               <motion.div variants={fadeInUp} className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                 <div className="space-y-4 md:space-y-6 order-2 md:order-1">
-                  <h2 className="text-2xl md:text-4xl font-bold text-hd-onyx">
+                  <h2 className="text-2xl md:text-4xl font-bold text-hd-onyx-dark">
                     {sectionFour.title}
                   </h2>
                   <div
-                    className="text-gray-600 text-base md:text-lg prose prose-lg"
+                    className="text-hd-onyx text-base md:text-lg prose prose-lg"
                     dangerouslySetInnerHTML={{
                       __html: sectionFour.description,
                     }}
@@ -205,11 +207,11 @@ function FeatureCard({ icon, title, description, delay }) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
       viewport={{ once: true }}
-      className="group p-6 hover:bg-white rounded-xl hover:shadow-md transition-all duration-300"
+      className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group hover:-translate-y-1"
     >
       <motion.div 
         whileHover={{ scale: 1.1 }}
-        className="w-12 h-12 rounded-xl flex items-center justify-center bg-hd-android mb-4 p-2"
+        className="bg-gradient-to-br from-hd-green/10 to-hd-blue/10 w-14 h-14 md:w-16 md:h-16 rounded-lg flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300"
       >
         <img
           src={icon ? `/api/strength/media/${icon}` : '/api/cover/thumbnail/null'}
@@ -217,11 +219,15 @@ function FeatureCard({ icon, title, description, delay }) {
             e.target.src = '/api/cover/thumbnail/null';
           }}
           alt={title}
-          className="w-full h-auto object-cover grayscale brightness-0 invert"
+          className="w-7 h-7 md:w-8 md:h-8 object-contain"
         />
       </motion.div>
-      <h3 className="text-lg md:text-xl font-semibold mb-2 text-hd-onyx">{title}</h3>
-      <p className="text-gray-600 text-sm md:text-base">{description}</p>
+      <h3 className="text-xl font-bold text-hd-onyx mb-2 group-hover:text-hd-green transition-colors duration-300">
+        {title}
+      </h3>
+      <p className="text-hd-gray leading-relaxed text-sm md:text-base">
+        {description}
+      </p>
     </motion.div>
   );
 }
