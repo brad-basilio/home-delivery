@@ -8,6 +8,7 @@ import '../css/homedelivery.css';
 // Importar todos los componentes de Home Delivery
 import Header from './components/HomeDelivery/Header';
 import Hero from './components/HomeDelivery/Hero';
+import Indicators from './components/HomeDelivery/Indicators';
 import Services from './components/HomeDelivery/Services';
 import Benefits from './components/HomeDelivery/Benefits';
 import QuoteForm from './components/HomeDelivery/QuoteForm';
@@ -22,6 +23,9 @@ import WhatsAppButton from './components/HomeDelivery/WhatsAppButton';
  * de la landing page moderna de Home Delivery.
  */
 const HomeDeliveryPage = (props) => {
+  // Extraer sliders e indicators desde las props que vienen del backend
+  const { sliders = [], indicators = [] } = props;
+
   // Configurar título y meta descripción
   useEffect(() => {
     document.title = 'Home Delivery Logistics - Soluciones Logísticas Integrales';
@@ -41,8 +45,11 @@ const HomeDeliveryPage = (props) => {
       {/* Header con navegación sticky */}
       <Header />
 
-      {/* Sección Hero con CTA principal */}
-      <Hero />
+      {/* Sección Hero con Slider Dinámico */}
+      <Hero sliders={sliders} />
+
+      {/* Sección de Indicadores */}
+      <Indicators indicators={indicators} />
 
       {/* Sección de Servicios */}
       <Services />

@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Hero = () => {
+/**
+ * Hero Slider - Sección principal con slider dinámico
+ * Obtiene los sliders desde el backend y los muestra con animaciones premium
+ * Degradado oficial de Home Delivery como overlay
+ */
+const Hero = ({ sliders = [] }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -15,104 +23,216 @@ const Hero = () => {
     }
   };
 
+  // Auto-advance slider
+  useEffect(() => {
+    if (sliders.length <= 1) return;
+
+    const timer = setInterval(() => {
+      handleNext();
+    }, 6000); // Cambiar cada 6 segundos
+
+    return () => clearInterval(timer);
+  }, [currentSlide, sliders.length]);
+
+  const handleNext = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentSlide((prev) => (prev + 1) % sliders.length);
+    setTimeout(() => setIsAnimating(false), 800);
+  };
+
+  const handlePrev = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentSlide((prev) => (prev - 1 + sliders.length) % sliders.length);
+    setTimeout(() => setIsAnimating(false), 800);
+  };
+
+  const goToSlide = (index) => {
+    if (isAnimating || index === currentSlide) return;
+    setIsAnimating(true);
+    setCurrentSlide(index);
+    setTimeout(() => setIsAnimating(false), 800);
+  };
+
+  // Si no hay sliders, mostrar versión estática
+  if (!sliders || sliders.length === 0) {
+    return (
+      <section 
+        className="relative pt-40 pb-20 overflow-hidden min-h-[600px] flex items-center"
+        style={{
+          background: 'linear-gradient(135deg, #84BC28 0%, #0F66A7 10%, #604796 25%, #AB307E 45%, #D43070 65%, #E43367 85%, #E71664 100%)'
+        }}
+      >
+        <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0 relative z-10">
+          <div className="text-center text-white space-y-6">
+            <h1 className="text-4xl md:text-6xl font-bold drop-shadow-lg">
+              Logística que llega <span className="text-white">más lejos</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
+              Soluciones integrales de distribución para hacer crecer tu negocio
+            </p>
+            <button
+              onClick={() => scrollToSection('cotizacion')}
+              className="bg-white text-hd-cerise px-8 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition-transform"
+            >
+              Cotizar Ahora
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section 
-      className="relative pt-32 pb-20 overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #84BC28 0%, #0F66A7 10%, #604796 25%, #AB307E 45%, #D43070 65%, #E43367 85%, #E71664 100%)'
-      }}
-    >
-      {/* Decoración de fondo con opacidad reducida */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl" />
+    <section className="relative w-full overflow-hidden bg-gray-900 pt-20">
+      {/* Slides Container */}
+      <div className="relative h-[calc(100vh-80px)] min-h-[600px] max-h-[800px]">
+        {sliders.map((slide, index) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+              index === currentSlide
+                ? 'opacity-100 scale-100 z-10'
+                : 'opacity-0 scale-105 z-0'
+            }`}
+          >
+            {/* Background Image */}
+            <div className="absolute inset-0">
+              <img
+                src={`/api/sliders/media/${slide.image}`}
+                alt={slide.name}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.src = 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&h=1080&fit=crop';
+                }}
+              />
+              {/* Overlay con degradado oficial */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(132, 188, 40, 0.85) 0%, rgba(15, 102, 167, 0.75) 10%, rgba(96, 71, 150, 0.7) 25%, rgba(171, 48, 126, 0.75) 45%, rgba(212, 48, 112, 0.8) 65%, rgba(228, 51, 103, 0.85) 85%, rgba(231, 22, 100, 0.9) 100%)'
+                }}
+              />
+            </div>
+
+            {/* Content */}
+            <div className="relative h-full w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0 flex items-center">
+              <div className="max-w-3xl">
+                {/* Título con animación */}
+                <h1
+                  className={`text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight transform transition-all duration-1000 delay-300 ${
+                    index === currentSlide
+                      ? 'translate-y-0 opacity-100'
+                      : 'translate-y-8 opacity-0'
+                  }`}
+                  style={{ textShadow: '2px 4px 8px rgba(0,0,0,0.3)' }}
+                >
+                  {slide.name || 'Logística que llega más lejos'}
+                </h1>
+
+                {/* Subtítulo */}
+                {slide.button_text && (
+                  <p
+                    className={`text-xl md:text-2xl text-white/95 mb-4 font-medium transform transition-all duration-1000 delay-500 ${
+                      index === currentSlide
+                        ? 'translate-y-0 opacity-100'
+                        : 'translate-y-8 opacity-0'
+                    }`}
+                    style={{ textShadow: '1px 2px 4px rgba(0,0,0,0.3)' }}
+                  >
+                    {slide.button_text}
+                  </p>
+                )}
+
+                {/* Descripción */}
+                {slide.description && (
+                  <p
+                    className={`text-lg md:text-xl text-white/90 mb-8 leading-relaxed max-w-2xl transform transition-all duration-1000 delay-700 ${
+                      index === currentSlide
+                        ? 'translate-y-0 opacity-100'
+                        : 'translate-y-8 opacity-0'
+                    }`}
+                    style={{ textShadow: '1px 2px 4px rgba(0,0,0,0.2)' }}
+                  >
+                    {slide.description}
+                  </p>
+                )}
+
+                {/* Botones CTA */}
+                <div
+                  className={`flex flex-col sm:flex-row gap-4 transform transition-all duration-1000 delay-900 ${
+                    index === currentSlide
+                      ? 'translate-y-0 opacity-100'
+                      : 'translate-y-8 opacity-0'
+                  }`}
+                >
+                  <button
+                    onClick={() => scrollToSection('cotizacion')}
+                    className="bg-white text-hd-cerise px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-white/20"
+                  >
+                    Solicitar Cotización
+                  </button>
+                  <button
+                    onClick={() => scrollToSection('servicios')}
+                    className="bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/30 transition-all duration-300 border-2 border-white/40 shadow-xl"
+                  >
+                    Ver Servicios
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Contenido izquierdo */}
-          <div className="text-white space-y-6 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight drop-shadow-lg">
-              Logística que llega{' '}
-              <span className="text-white drop-shadow-[0_2px_8px_rgba(255,255,255,0.3)]">más lejos</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-white/90 leading-relaxed drop-shadow-md">
-              Soluciones integrales de distribución y logística para hacer crecer tu negocio.
-              Conectamos tu empresa con todo el Perú.
-            </p>
+      {/* Navigation Arrows */}
+      {sliders.length > 1 && (
+        <>
+          <button
+            onClick={handlePrev}
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white p-3 md:p-4 rounded-full transition-all duration-300 group hover:scale-110"
+            aria-label="Slide anterior"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button
-                onClick={() => scrollToSection('cotizacion')}
-                className="bg-white text-hd-cerise px-8 py-4 rounded-lg hover:bg-gray-50 transition-all duration-300 font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-hd-cerise text-center"
-              >
-                Solicitar cotización
-              </button>
-              <button
-                onClick={() => scrollToSection('servicios')}
-                className="bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-lg hover:bg-white/30 transition-all duration-300 font-semibold border-2 border-white/40 shadow-xl hover:shadow-2xl focus:ring-2 focus:ring-white text-center"
-              >
-                Ver servicios
-              </button>
-            </div>
+          <button
+            onClick={handleNext}
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white p-3 md:p-4 rounded-full transition-all duration-300 group hover:scale-110"
+            aria-label="Siguiente slide"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </>
+      )}
 
-            {/* Estadísticas */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/20">
-              <div>
-                <div className="text-3xl font-bold text-white drop-shadow-lg">8+</div>
-                <div className="text-sm text-white/80 mt-1">Almacenes en provincia</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-white drop-shadow-lg">24/7</div>
-                <div className="text-sm text-white/80 mt-1">Atención continua</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-white drop-shadow-lg">100%</div>
-                <div className="text-sm text-white/80 mt-1">Rastreabilidad</div>
-              </div>
-            </div>
-          </div>
+      {/* Dots Indicator */}
+      {sliders.length > 1 && (
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+          {sliders.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`transition-all duration-500 rounded-full ${
+                index === currentSlide
+                  ? 'w-12 h-3 bg-white'
+                  : 'w-3 h-3 bg-white/50 hover:bg-white/75'
+              }`}
+              aria-label={`Ir a slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
 
-          {/* Imagen/Ilustración derecha */}
-          <div className="relative hidden md:block animate-float">
-            <div className="relative">
-              {/* Placeholder para imagen de logística */}
-              <div className="bg-gradient-to-br from-hd-green/20 to-hd-blue/20 rounded-2xl p-12 backdrop-blur-sm border border-white/10">
-                <svg
-                  className="w-full h-auto"
-                  viewBox="0 0 400 300"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {/* Camión de reparto */}
-                  <rect x="50" y="150" width="200" height="100" rx="8" fill="#8FBD44" opacity="0.8" />
-                  <rect x="50" y="120" width="120" height="30" rx="4" fill="#8FBD44" />
-                  <circle cx="100" cy="260" r="20" fill="#33393F" />
-                  <circle cx="100" cy="260" r="12" fill="#969798" />
-                  <circle cx="200" cy="260" r="20" fill="#33393F" />
-                  <circle cx="200" cy="260" r="12" fill="#969798" />
-                  
-                  {/* Paquetes */}
-                  <rect x="280" y="160" width="60" height="60" rx="4" fill="#2354B8" opacity="0.6" />
-                  <rect x="300" y="100" width="60" height="60" rx="4" fill="#DE3464" opacity="0.6" />
-                  
-                  {/* Líneas de movimiento */}
-                  <path d="M 20 180 Q 30 180 35 185" stroke="#8FBD44" strokeWidth="3" opacity="0.4" />
-                  <path d="M 20 200 Q 30 200 35 205" stroke="#8FBD44" strokeWidth="3" opacity="0.4" />
-                  <path d="M 20 220 Q 30 220 35 225" stroke="#8FBD44" strokeWidth="3" opacity="0.4" />
-                </svg>
-              </div>
-
-              {/* Elementos flotantes decorativos */}
-              <div className="absolute -top-6 -right-6 bg-hd-green/20 backdrop-blur-sm px-4 py-2 rounded-lg border border-hd-green/30 animate-bounce-slow">
-                <div className="text-sm text-white font-medium">Entrega Rápida</div>
-              </div>
-              <div className="absolute -bottom-6 -left-6 bg-hd-blue/20 backdrop-blur-sm px-4 py-2 rounded-lg border border-hd-blue/30 animate-bounce-slow" style={{ animationDelay: '1s' }}>
-                <div className="text-sm text-white font-medium">Seguro Incluido</div>
-              </div>
-            </div>
-          </div>
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 right-8 z-20 hidden md:block animate-bounce">
+        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center p-2">
+          <div className="w-1 h-3 bg-white/50 rounded-full animate-pulse"></div>
         </div>
       </div>
     </section>

@@ -24,12 +24,20 @@ class HomeDeliveryController extends BasicController
      */
     public function setReactViewProperties(Request $request)
     {
-        // Aquí puedes pasar datos dinámicos desde la base de datos
-        // Por ahora retornamos un array vacío ya que el componente
-        // tiene todos los datos hardcodeados
+        $sliders = \App\Models\Slider::where('visible', true)
+            ->where('status', true)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+        
+        $indicators = \App\Models\Indicator::where('visible', true)
+            ->where('status', true)
+            ->orderBy('created_at', 'ASC')
+            ->get();
         
         return [
-            // Ejemplo si necesitas datos dinámicos:
+            'sliders' => $sliders,
+            'indicators' => $indicators,
+            // Aquí puedes agregar más datos dinámicos en el futuro:
             // 'services' => Service::where('visible', true)->get(),
             // 'testimonials' => Testimonial::where('visible', true)->get(),
         ];
