@@ -102,14 +102,13 @@ const Filter = ({ categories, filter, setFilter, landing }) => {
                 {/* Campo de búsqueda */}
                 <motion.label
                     htmlFor="txt-search"
-                    className="col-span-1 md:col-span-1 lg:col-span-2 px-6 py-4 flex items-center rounded-3xl bg-white"
+                    className="col-span-1 md:col-span-1 lg:col-span-2 px-6 py-4 flex items-center rounded-3xl bg-white border border-gray-200 shadow-sm"
                     variants={itemVariants}
-                    whileHover={{ y: -3 }}
+                    whileHover={{ y: -3, boxShadow: "0 4px 12px rgba(143, 189, 68, 0.15)" }}
                     whileFocus="focus"
-                    variants={inputFocus}
                 >
                     <motion.i
-                        className="fas fa-search text-negro mr-2"
+                        className="fas fa-search text-hd-cerulean mr-2"
                         whileHover={{ scale: 1.1 }}
                     />
                     <motion.input
@@ -119,7 +118,7 @@ const Filter = ({ categories, filter, setFilter, landing }) => {
                             "public.post.search",
                             "	Buscar publicación"
                         )}
-                        className="w-full bg-transparent border-none outline-none text-slate-800"
+                        className="w-full bg-transparent border-none outline-none text-gray-800 placeholder-gray-400"
                         onChange={(e) =>
                             setFilter((old) => ({
                                 ...old,
@@ -141,10 +140,10 @@ const Filter = ({ categories, filter, setFilter, landing }) => {
                     {categories.map((item, index) => (
                         <motion.button
                             key={index}
-                            className={`px-6 py-4 rounded-3xl uppercase ${
+                            className={`px-6 py-4 rounded-3xl uppercase font-semibold transition-all duration-300 ${
                                 item.id == filter.category
-                                    ? "bg-azul text-white"
-                                    : "bg-slate-100 text-negro"
+                                    ? "bg-gradient-to-r from-hd-android to-hd-android/90 text-white shadow-lg"
+                                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                             }`}
                             onClick={() =>
                                 setFilter((old) => ({
@@ -155,7 +154,6 @@ const Filter = ({ categories, filter, setFilter, landing }) => {
                                             : item.id,
                                 }))
                             }
-                            variants={itemVariants}
                             whileHover="hover"
                             whileTap="tap"
                             variants={buttonHover}

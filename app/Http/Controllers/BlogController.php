@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\General;
+use App\Models\Social;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
@@ -27,10 +29,17 @@ class BlogController extends PublicController
             ->get();
         $postRecent = Post::where('status', true)->orderBy('created_at', 'desc')->with('category')->where('lang_id', $langId)->limit(3)->get();
         $landing = LandingHome::where('correlative', 'like', 'page_blog%')->where('lang_id', $langId)->get();
+        
+        // Agregar generals y socials para Header y Footer
+        $generals = General::all();
+        $socials = Social::where('status', true)->get();
+        
         return [
             'categories' => $categories,
             'postRecent' => $postRecent,
-            'landing' => $landing
+            'landing' => $landing,
+            'generals' => $generals,
+            'socials' => $socials
         ];
     }
 }

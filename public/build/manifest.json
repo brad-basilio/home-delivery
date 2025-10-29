@@ -215,8 +215,8 @@
       "resources/js/components/TrackingPixels.jsx"
     ]
   },
-  "_PostCard-D081OQ09.js": {
-    "file": "assets/PostCard-D081OQ09.js",
+  "_PostCard-D-6W7rMF.js": {
+    "file": "assets/PostCard-D-6W7rMF.js",
     "name": "PostCard",
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
@@ -2097,7 +2097,7 @@
     ]
   },
   "resources/js/Blog.jsx": {
-    "file": "assets/Blog-CvoBiLSf.js",
+    "file": "assets/Blog--lRme81Q.js",
     "name": "Blog",
     "src": "resources/js/Blog.jsx",
     "isEntry": true,
@@ -2110,10 +2110,10 @@
       "_TextWithHighlight-BxIlP8cV.js",
       "_useTranslation-BOupZ7-X.js",
       "_proxy-Ci5QcTMU.js",
-      "_PostCard-D081OQ09.js",
+      "_PostCard-D-6W7rMF.js",
       "resources/js/components/Blog/Results.jsx",
-      "_Header-PWejSFUh.js",
-      "_Footer-DO4MaGqb.js",
+      "_WhatsAppButton-BCsanCsV.js",
+      "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "resources/js/components/Tailwind/DetailProduct/Detail.jsx",
       "_MaintenancePage-CcccXo4t.js",
       "_sweetalert2.all-C96erxsa.js",
@@ -2124,9 +2124,10 @@
       "_main-D1ujSG59.js",
       "_index-CbrplguO.js",
       "resources/js/components/Blog/Filter.jsx",
-      "_GeneralRest-DRwja8Cw.js",
       "_index-DkSDNEBT.js",
       "_index-CZSDX33M.js",
+      "_GeneralRest-DRwja8Cw.js",
+      "_index-DJI-j85T.js",
       "_x-DwxZ1MqR.js",
       "_createLucideIcon-B31oCQao.js"
     ],
@@ -2136,7 +2137,7 @@
     ]
   },
   "resources/js/BlogArticle.jsx": {
-    "file": "assets/BlogArticle-B1Ce0GAx.js",
+    "file": "assets/BlogArticle-C0gSMpRS.js",
     "name": "BlogArticle",
     "src": "resources/js/BlogArticle.jsx",
     "isEntry": true,
@@ -2151,7 +2152,7 @@
       "_Header-PWejSFUh.js",
       "_Footer-DO4MaGqb.js",
       "resources/js/components/Tailwind/DetailProduct/Detail.jsx",
-      "_PostCard-D081OQ09.js",
+      "_PostCard-D-6W7rMF.js",
       "_TextWithHighlight-BxIlP8cV.js",
       "_proxy-Ci5QcTMU.js",
       "_createLucideIcon-B31oCQao.js",
@@ -3572,7 +3573,7 @@
     ]
   },
   "resources/js/components/Adminto/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
+    "file": "assets/TextareaFormGroup-COKCz9DG.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/Adminto/form/TextareaFormGroup.jsx",
     "isEntry": true,
@@ -4301,7 +4302,7 @@
     ]
   },
   "resources/js/components/Table.jsx": {
-    "file": "assets/Table-BM6_LCjb.js",
+    "file": "assets/Table-COKCz9DG.js",
     "name": "Table",
     "src": "resources/js/components/Table.jsx",
     "isEntry": true,
@@ -4489,7 +4490,7 @@
     ]
   },
   "resources/js/components/Tailwind/Table.jsx": {
-    "file": "assets/Table-COKCz9DG.js",
+    "file": "assets/Table-BM6_LCjb.js",
     "name": "Table",
     "src": "resources/js/components/Tailwind/Table.jsx",
     "isEntry": true,
@@ -4843,7 +4844,7 @@
     ]
   },
   "resources/js/components/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-COKCz9DG.js",
+    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/form/TextareaFormGroup.jsx",
     "isEntry": true,

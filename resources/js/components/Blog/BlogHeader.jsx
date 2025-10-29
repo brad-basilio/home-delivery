@@ -120,24 +120,22 @@ const BlogHeader = ({ categories, postRecent, landing }) => {
                     transition={{ delay: 0.4 }}
                 >
                     <motion.div
-                        className="text-sm text-azul font-bold mb-1"
+                        className="text-sm text-hd-cerulean font-bold mb-1 uppercase tracking-wide"
                         whileHover={{ x: 3 }}
                     >
                         {postRecent[0].category?.name}
                     </motion.div>
                     <motion.h2
-                        className="text-xl font-bold mb-2"
-                        whileHover={{ color: "#224483" }}
+                        className="text-xl font-bold mb-2 text-gray-900 hover:text-hd-android transition-colors duration-300"
                     >
                         <TextWithHighlight text={postRecent[0].name} />
                     </motion.h2>
                     <motion.p
-                        className="text-negro mb-3 line-clamp-2"
-                        whileHover={{ color: "#4b5563" }}
+                        className="text-gray-600 mb-3 line-clamp-2"
                     >
                         <HtmlContent html={postRecent[0].description} />
                     </motion.p>
-                    <div className="flex items-center text-sm text-[#224483]">
+                    <div className="flex items-center text-sm text-hd-cerise font-medium">
                         <span>{moment(postRecent[0].post_date).format("ll")}</span>
                     </div>
                 </motion.div>
@@ -180,24 +178,22 @@ const BlogHeader = ({ categories, postRecent, landing }) => {
                         transition={{ delay: 0.5 + (index * 0.1) }}
                     >
                         <motion.div
-                            className="text-sm text-azul font-bold mb-1"
+                            className="text-sm text-hd-cerulean font-bold mb-1 uppercase tracking-wide"
                             whileHover={{ x: 3 }}
                         >
                             {post.category?.name}
                         </motion.div>
                         <motion.h2
-                            className="text-lg font-bold mb-2"
-                            whileHover={{ color: "#224483" }}
+                            className="text-lg font-bold mb-2 text-gray-900 hover:text-hd-android transition-colors duration-300"
                         >
                             <TextWithHighlight text={post.name} />
                         </motion.h2>
                         <motion.p
-                            className="text-[#242424] mb-3 text-sm line-clamp-2"
-                            whileHover={{ color: "#4b5563" }}
+                            className="text-gray-600 mb-3 text-sm line-clamp-2"
                         >
                             <HtmlContent html={post.description} />
                         </motion.p>
-                        <div className="flex items-center text-sm text-[#224483]">
+                        <div className="flex items-center text-sm text-hd-cerise font-medium">
                             <span> {moment(post.post_date).format("ll")}</span>
                         </div>
                     </motion.div>

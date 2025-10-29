@@ -50,7 +50,7 @@ const PostCard = ({
     return (
         <motion.a 
             href={`/blog/${slug}`} 
-            className="flex flex-col self-stretch my-auto w-full mt-6"
+            className="flex flex-col self-stretch my-auto w-full mt-6 group"
             initial="hidden"
             animate="visible"
             variants={cardVariants}
@@ -62,26 +62,25 @@ const PostCard = ({
                     className="flex flex-col w-full"
                     variants={contentVariants}
                 >
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-negro line-clamp-2 h-16">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 line-clamp-2 h-16 group-hover:text-hd-android transition-colors duration-300">
                         <TextWithHighlight text={name} />
                     </h3>
                     <motion.p 
-                        className="mt-3 sm:mt-4 md:mt-5 text-sm sm:text-base text-negro line-clamp-4 h-24"
-                        whileHover={{ color: "#3b82f6" }} // Cambio sutil de color al hover
+                        className="mt-3 sm:mt-4 md:mt-5 text-sm sm:text-base text-gray-600 line-clamp-4 h-24"
                     >
                         {summary || "Sin descripción"}
                     </motion.p>
                 </motion.div>
 
                 <motion.div 
-                    className="text-sm text-azul font-bold mb-1"
-                    whileHover={{ x: 3 }} // Pequeño movimiento al hover
+                    className="text-sm text-hd-cerulean font-bold mb-1 uppercase tracking-wide"
+                    whileHover={{ x: 3 }}
                 >
                     {category.name}
                 </motion.div>
 
                 <motion.div 
-                    className="flex flex-col w-full overflow-hidden rounded-3xl"
+                    className="flex flex-col w-full overflow-hidden rounded-3xl shadow-md group-hover:shadow-xl transition-shadow duration-300"
                     whileHover="hover"
                 >
                     <motion.img
@@ -90,7 +89,7 @@ const PostCard = ({
                         className="w-full object-cover aspect-[4/3]"
                         variants={imageVariants}
                         initial={{ scale: 1 }}
-                        style={{ originX: 0.5, originY: 0.5 }} // Para que el zoom sea desde el centro
+                        style={{ originX: 0.5, originY: 0.5 }}
                     />
                 </motion.div>
             </div>
@@ -99,7 +98,7 @@ const PostCard = ({
                 className="flex justify-between items-center mt-4 sm:mt-5 md:mt-6 w-full gap-4"
                 variants={contentVariants}
             >
-                <span className="text-xs sm:text-sm text-end font-medium leading-snug text-azul">
+                <span className="text-xs sm:text-sm text-end font-medium leading-snug text-hd-cerise">
                     {moment(post_date).format("ll")}
                 </span>
             </motion.div>

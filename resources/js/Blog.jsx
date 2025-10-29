@@ -5,12 +5,14 @@ import Base from "./Components/Tailwind/Base";
 
 import Filter from "./Components/Blog/Filter";
 import Results from "./Components/Blog/Results";
-import Header from "./components/Tailwind/Header";
-import Footer from "./components/Tailwind/Footer";
+import Header from "./components/HomeDelivery/Header";
+import Footer from "./components/HomeDelivery/Footer";
+import WhatsAppButton from "./components/HomeDelivery/WhatsAppButton";
 import { CarritoProvider } from "./context/CarritoContext";
 import MaintenancePage from "./Utils/MaintenancePage";
 import BlogHeader from "./components/Blog/BlogHeader";
-function Blog({ categories, postRecent, landing }) {
+import '../css/homedelivery.css';
+function Blog({ categories, postRecent, landing, generals = [], socials = [] }) {
     const [filter, setFilter] = useState({
         category: null,
         search: null,
@@ -20,23 +22,26 @@ function Blog({ categories, postRecent, landing }) {
     console.log(postRecent);
 
     return (
-        <div>
+        <div className="min-h-screen bg-white font-aeonik" style={{ fontFamily: 'Aeonik, sans-serif' }}>
             <Header />
-            {postRecent && postRecent.length > 0 ? (
-                <>
-                    <BlogHeader postRecent={postRecent} landing={landing} />
-                    <Filter
-                        categories={categories}
-                        filter={filter}
-                        setFilter={setFilter}
-                        landing={landing}
-                    />
-                    <Results filter={filter} />
-                </>
-            ) : (
-                <MaintenancePage />
-            )}
-            <Footer />
+            <main className="pt-20 md:pt-24">
+                {postRecent && postRecent.length > 0 ? (
+                    <>
+                        <BlogHeader postRecent={postRecent} landing={landing} />
+                        <Filter
+                            categories={categories}
+                            filter={filter}
+                            setFilter={setFilter}
+                            landing={landing}
+                        />
+                        <Results filter={filter} />
+                    </>
+                ) : (
+                    <MaintenancePage />
+                )}
+            </main>
+            <Footer generals={generals} socials={socials} />
+            <WhatsAppButton socials={socials} generals={generals} />
         </div>
     );
 }
