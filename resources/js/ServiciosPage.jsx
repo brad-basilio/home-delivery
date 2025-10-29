@@ -37,7 +37,7 @@ const ServiciosPage = (props) => {
 
       <main className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+        <section className="relative pt-24 md:pt-32 pb-12 md:pb-0 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
           <div className="absolute inset-0 opacity-[0.03]">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-hd-android rounded-full blur-3xl" />
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-hd-cerise rounded-full blur-3xl" />
@@ -74,7 +74,7 @@ const ServiciosPage = (props) => {
         </section>
 
         {/* Grid de Servicios */}
-        <section className="relative py-12 md:py-20 overflow-hidden bg-white">
+        <section className="relative py-12 md:pb-20 overflow-hidden bg-white">
           <div className="w-full 2xl:max-w-7xl mx-auto px-4 md:px-8 2xl:px-0 relative z-10">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {services.map((service, index) => {
@@ -173,20 +173,22 @@ const ServiciosPage = (props) => {
           onClick={() => setSelectedService(null)}
         >
           <div 
-            className="bg-white rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+            className="bg-white rounded-3xl max-w-6xl w-full h-[90vh] overflow-hidden shadow-2xl relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setSelectedService(null)}
               className="absolute top-6 right-6 p-3 bg-white rounded-full text-gray-600 hover:bg-gray-100 transition-colors z-50 shadow-lg"
+              aria-label="Cerrar"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
 
-            <div className="grid md:grid-cols-2 gap-0">
-              <div className="relative bg-gray-100 min-h-[400px] md:min-h-[600px] rounded-tl-3xl md:rounded-bl-3xl overflow-hidden">
+            <div className="grid md:grid-cols-2 gap-0 h-full">
+              {/* Columna izquierda - Imagen principal (FIJA, sin scroll) */}
+              <div className="relative bg-gray-100 h-[300px] md:h-full rounded-tl-3xl md:rounded-bl-3xl overflow-hidden">
                 {selectedService.image ? (
                   <img
                     src={`/api/service/media/${selectedService.image}`}
@@ -206,49 +208,83 @@ const ServiciosPage = (props) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
               </div>
 
-              <div className="p-8 md:p-10 flex flex-col">
-                <h3 
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
-                  }}
-                >
-                  {selectedService.title}
-                </h3>
-
-                <p className="text-gray-700 text-lg leading-relaxed mb-8">
-                  {selectedService.description}
-                </p>
-
-                {selectedService.characteristics && selectedService.characteristics.length > 0 && (
-                  <div className="mb-8">
-                    <h4 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                      <svg className="w-6 h-6 text-hd-android mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      Características
-                    </h4>
-                    <ul className="space-y-3">
-                      {selectedService.characteristics.map((char, idx) => (
-                        <li key={idx} className="flex items-start text-gray-700 group">
-                          <svg className="w-6 h-6 text-hd-android mr-3 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          <span className="text-base leading-relaxed">{char}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                <div className="mt-8 pt-6 border-t border-gray-200">
-                  <a
-                    href="/contact"
-                    onClick={() => setSelectedService(null)}
-                    className="block text-center bg-gradient-to-r from-hd-cerise to-hd-cerise/90 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+              {/* Columna derecha - Contenido con scroll */}
+              <div className="flex flex-col h-full overflow-hidden">
+                {/* Título FIJO (sin scroll) */}
+                <div className="p-8 md:px-10 md:pt-10 md:pb-6 flex-shrink-0 border-b border-gray-100">
+                  <h3 
+                    className="text-3xl md:text-4xl font-bold leading-tight bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+                    }}
                   >
-                    Solicitar este servicio
-                  </a>
+                    {selectedService.title}
+                  </h3>
+                </div>
+
+                {/* Contenido con SCROLL */}
+                <div className="flex-1 overflow-y-auto px-8 py-6 md:px-10 md:py-8">
+                  {/* Descripción */}
+                  <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                    {selectedService.description}
+                  </p>
+
+                  {/* Características */}
+                  {selectedService.characteristics && selectedService.characteristics.length > 0 && (
+                    <div className="mb-8">
+                      <h4 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                        <svg className="w-6 h-6 text-hd-android mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        Características
+                      </h4>
+                      <ul className="space-y-3">
+                        {selectedService.characteristics.map((char, idx) => (
+                          <li key={idx} className="flex items-start text-gray-700 group">
+                            <svg className="w-6 h-6 text-hd-android mr-3 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                            <span className="text-base leading-relaxed">{char}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Galería de imágenes (si existe) */}
+                  {selectedService.gallery && selectedService.gallery.length > 0 && (
+                    <div className="mb-8">
+                      <h4 className="text-lg font-bold text-gray-900 mb-4">Galería</h4>
+                      <div className="grid grid-cols-3 gap-3">
+                        {selectedService.gallery.slice(0, 6).map((img, idx) => (
+                          <div 
+                            key={idx}
+                            className="aspect-square rounded-xl overflow-hidden bg-gray-100 hover:scale-105 transition-transform cursor-pointer"
+                          >
+                            <img
+                              src={`/api/service/media/${img}`}
+                              alt={`${selectedService.title} ${idx + 1}`}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* CTA Button */}
+                  <div className="pt-6 border-t border-gray-200">
+                    <a
+                      href="/contact"
+                      onClick={() => setSelectedService(null)}
+                      className="block text-center bg-gradient-to-r from-hd-cerise to-hd-cerise/90 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                    >
+                      Solicitar este servicio
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
