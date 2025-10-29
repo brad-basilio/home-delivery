@@ -110,13 +110,7 @@ const Indicators = ({ indicators = [] }) => {
           })}
         </div>
 
-        {/* Gradiente decorativo inferior */}
-        <div 
-          className="mt-12 h-1 rounded-full"
-          style={{
-            background: 'linear-gradient(90deg, #8FBD44 0%, #2354B8 33%, #DE3464 66%, #969798 100%)'
-          }}
-        />
+       
       </div>
     </section>
   );
