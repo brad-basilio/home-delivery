@@ -1,0 +1,73 @@
+/**
+ * EJEMPLO DE INTEGRACIÓN - Home Delivery Logistics
+ * 
+ * Opción 1: Reemplazar completamente el contenido de Home.jsx
+ * Opción 2: Agregar como una nueva ruta
+ * 
+ * Este archivo muestra cómo integrar la nueva landing page
+ */
+
+import React from 'react';
+import { CreateReactScript } from 'sode-extend-react';
+
+// OPCIÓN 1: Importar la landing page completa
+import HomeDeliveryPage from './components/HomeDelivery/HomeDeliveryPage';
+
+// OPCIÓN 2: Importar componentes individuales si necesitas personalización
+/*
+import Header from './components/HomeDelivery/Header';
+import Hero from './components/HomeDelivery/Hero';
+import Services from './components/HomeDelivery/Services';
+import Benefits from './components/HomeDelivery/Benefits';
+import QuoteForm from './components/HomeDelivery/QuoteForm';
+import Locations from './components/HomeDelivery/Locations';
+import Footer from './components/HomeDelivery/Footer';
+import WhatsAppButton from './components/HomeDelivery/WhatsAppButton';
+*/
+
+const Home = (props) => {
+  // OPCIÓN 1: Usar la página completa (Recomendado)
+  return <HomeDeliveryPage />;
+
+  // OPCIÓN 2: Personalizar con componentes individuales
+  /*
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <Hero />
+      <Services />
+      <Benefits />
+      <QuoteForm />
+      <Locations />
+      <Footer />
+      <WhatsAppButton />
+    </div>
+  );
+  */
+
+  // OPCIÓN 3: Integrar con datos dinámicos del backend
+  /*
+  const { services, testimonials, locations } = props;
+  
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <Hero />
+      <Services services={services} />
+      <Benefits />
+      <QuoteForm />
+      <Locations locations={locations} />
+      <Footer />
+      <WhatsAppButton />
+    </div>
+  );
+  */
+};
+
+// Mantener el CreateReactScript original si lo usas
+CreateReactScript((el, properties) => {
+  const root = ReactDOM.createRoot(el);
+  root.render(<Home {...properties} />);
+});
+
+export default Home;

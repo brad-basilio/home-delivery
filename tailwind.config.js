@@ -10,7 +10,9 @@ export default {
         extend: {
             fontFamily: {
                 bebas: ["Bebas Neue", "serif"],
-                poppins: ["Aspekta ", "serif"],
+                poppins: ["Aeonik", "sans-serif"], // ← CAMBIADO: Aeonik en vez de Aspekta
+                aeonik: ["Aeonik", "sans-serif"],
+                sans: ["Aeonik", "system-ui", "-apple-system", "sans-serif"],
             },
             colors: {
                 // Colores originales mantenidos para compatibilidad
@@ -23,6 +25,20 @@ export default {
                 tertiary: "#5E608C",    // Tertiary color  
                 light: "#F2F2F2",       // White/Light color
                 accent: "#0D0D0D",      // Accent/Dark color
+                
+                // Colores oficiales Home Delivery Logistics (Manual de Marca)
+                // Proporción de uso: White (mayor), Cerise (30%), Android Green (30%), Cerulean (30%), Spanish Gray (10%)
+                'hd-android': '#8FBD44',        // Android Green - Color primario/CTA (30% uso aprox)
+                'hd-spanish': '#969798',        // Spanish Gray - Color mínimo (10% uso)
+                'hd-cerulean': '#2354B8',       // Cerulean Blue - Color acento (30% uso)
+                'hd-cerise': '#DE3464',         // Cerise - Color secundario importante (30% uso)
+                
+                // Mantener compatibilidad con código anterior
+                'hd-onyx': '#33393F',           
+                'hd-green': '#8FBD44',          
+                'hd-gray': '#969798',           
+                'hd-blue': '#2354B8',
+                'hd-cerise': '#DE3464',         // Cerise - Color acento rosa
                 
                 // Sobrescribir colores de Tailwind con nuestra paleta corporativa
                 blue: {

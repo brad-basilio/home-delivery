@@ -510,9 +510,9 @@
       "resources/js/components/TrackingPixels.jsx"
     ]
   },
-  "_swiper-!~{03s}~.js": {
+  "_swiper-!~{03F}~.js": {
     "file": "swiper.css",
-    "src": "_swiper-!~{03s}~.js"
+    "src": "_swiper-!~{03F}~.js"
   },
   "_swiper-react-CDKmla4x.js": {
     "file": "assets/swiper-react-CDKmla4x.js",
@@ -521,9 +521,9 @@
       "resources/js/components/TrackingPixels.jsx"
     ]
   },
-  "_tippy-!~{03k}~.js": {
+  "_tippy-!~{03x}~.js": {
     "file": "tippy.css",
-    "src": "_tippy-!~{03k}~.js"
+    "src": "_tippy-!~{03x}~.js"
   },
   "_tippy-react.esm-CIcmk6y-.js": {
     "file": "assets/tippy-react.esm-CIcmk6y-.js",
@@ -2528,6 +2528,28 @@
       "tippy.css"
     ]
   },
+  "resources/js/HomeDeliveryPage.jsx": {
+    "file": "assets/HomeDeliveryPage-BvVrbVKD.js",
+    "name": "HomeDeliveryPage",
+    "src": "resources/js/HomeDeliveryPage.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/Utils/ReactAppend.jsx",
+      "_CreateReactScript-BEktg6JA.js",
+      "resources/js/components/TrackingPixels.jsx",
+      "_index-CbrplguO.js",
+      "_index.esm-Duzu12F9.js",
+      "_axios-B4uVmeYG.js",
+      "____vite-browser-external_commonjs-proxy-DjIx6Adb.js",
+      "_main-D1ujSG59.js"
+    ],
+    "css": [
+      "HomeDeliveryPage.css",
+      "swiper.css",
+      "tippy.css"
+    ]
+  },
   "resources/js/HomeDokux.jsx": {
     "file": "assets/HomeDokux-ezNpVziR.js",
     "name": "HomeDokux",
@@ -3338,7 +3360,7 @@
     "isEntry": true
   },
   "resources/js/components/Adminto/Footer.jsx": {
-    "file": "assets/Footer-BM6_LCjb.js",
+    "file": "assets/Footer-COKCz9DG.js",
     "name": "Footer",
     "src": "resources/js/components/Adminto/Footer.jsx",
     "isEntry": true,
@@ -3366,7 +3388,7 @@
     ]
   },
   "resources/js/components/Adminto/Modal.jsx": {
-    "file": "assets/Modal-BM6_LCjb.js",
+    "file": "assets/Modal-COKCz9DG.js",
     "name": "Modal",
     "src": "resources/js/components/Adminto/Modal.jsx",
     "isEntry": true,
@@ -3434,7 +3456,7 @@
     ]
   },
   "resources/js/components/Adminto/form/InputFormGroup.jsx": {
-    "file": "assets/InputFormGroup-BM6_LCjb.js",
+    "file": "assets/InputFormGroup-COKCz9DG.js",
     "name": "InputFormGroup",
     "src": "resources/js/components/Adminto/form/InputFormGroup.jsx",
     "isEntry": true,
@@ -3464,7 +3486,7 @@
     ]
   },
   "resources/js/components/Adminto/form/SelectAPIFormGroup.jsx": {
-    "file": "assets/SelectAPIFormGroup-CIDz38r0.js",
+    "file": "assets/SelectAPIFormGroup-DGjR4AiH.js",
     "name": "SelectAPIFormGroup",
     "src": "resources/js/components/Adminto/form/SelectAPIFormGroup.jsx",
     "isEntry": true,
@@ -3496,7 +3518,7 @@
     ]
   },
   "resources/js/components/Adminto/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-COKCz9DG.js",
+    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/Adminto/form/TextareaFormGroup.jsx",
     "isEntry": true,
@@ -3733,7 +3755,7 @@
     ]
   },
   "resources/js/components/DataGrid.jsx": {
-    "file": "assets/DataGrid-BM6_LCjb.js",
+    "file": "assets/DataGrid-COKCz9DG.js",
     "name": "DataGrid",
     "src": "resources/js/components/DataGrid.jsx",
     "isEntry": true,
@@ -3953,6 +3975,126 @@
     "file": "vegan.svg",
     "src": "resources/js/components/Home/images/vegan.svg"
   },
+  "resources/js/components/HomeDelivery/BenefitCard.jsx": {
+    "file": "assets/BenefitCard-BM6_LCjb.js",
+    "name": "BenefitCard",
+    "src": "resources/js/components/HomeDelivery/BenefitCard.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "resources/js/components/HomeDelivery/Benefits.jsx": {
+    "file": "assets/Benefits-BM6_LCjb.js",
+    "name": "Benefits",
+    "src": "resources/js/components/HomeDelivery/Benefits.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "resources/js/components/HomeDelivery/Footer.jsx": {
+    "file": "assets/Footer-BM6_LCjb.js",
+    "name": "Footer",
+    "src": "resources/js/components/HomeDelivery/Footer.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "resources/js/components/HomeDelivery/Header.jsx": {
+    "file": "assets/Header-BM6_LCjb.js",
+    "name": "Header",
+    "src": "resources/js/components/HomeDelivery/Header.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "resources/js/components/HomeDelivery/Hero.jsx": {
+    "file": "assets/Hero-BM6_LCjb.js",
+    "name": "Hero",
+    "src": "resources/js/components/HomeDelivery/Hero.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx": {
+    "file": "assets/HomeDeliveryPage-BM6_LCjb.js",
+    "name": "HomeDeliveryPage",
+    "src": "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "resources/js/components/HomeDelivery/Locations.jsx": {
+    "file": "assets/Locations-BM6_LCjb.js",
+    "name": "Locations",
+    "src": "resources/js/components/HomeDelivery/Locations.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "resources/js/components/HomeDelivery/Logo.jsx": {
+    "file": "assets/Logo-BM6_LCjb.js",
+    "name": "Logo",
+    "src": "resources/js/components/HomeDelivery/Logo.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "resources/js/components/HomeDelivery/QuoteForm.jsx": {
+    "file": "assets/QuoteForm-BM6_LCjb.js",
+    "name": "QuoteForm",
+    "src": "resources/js/components/HomeDelivery/QuoteForm.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "resources/js/components/HomeDelivery/ServiceCard.jsx": {
+    "file": "assets/ServiceCard-BM6_LCjb.js",
+    "name": "ServiceCard",
+    "src": "resources/js/components/HomeDelivery/ServiceCard.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "resources/js/components/HomeDelivery/Services.jsx": {
+    "file": "assets/Services-BM6_LCjb.js",
+    "name": "Services",
+    "src": "resources/js/components/HomeDelivery/Services.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "resources/js/components/HomeDelivery/WhatsAppButton.jsx": {
+    "file": "assets/WhatsAppButton-BM6_LCjb.js",
+    "name": "WhatsAppButton",
+    "src": "resources/js/components/HomeDelivery/WhatsAppButton.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
   "resources/js/components/MenuItem.jsx": {
     "file": "assets/MenuItem-wxPHDcWW.js",
     "name": "MenuItem",
@@ -3977,7 +4119,7 @@
     ]
   },
   "resources/js/components/Modal.jsx": {
-    "file": "assets/Modal-COKCz9DG.js",
+    "file": "assets/Modal-BM6_LCjb.js",
     "name": "Modal",
     "src": "resources/js/components/Modal.jsx",
     "isEntry": true,
@@ -4100,7 +4242,7 @@
     ]
   },
   "resources/js/components/Tailwind/DataGrid.jsx": {
-    "file": "assets/DataGrid-COKCz9DG.js",
+    "file": "assets/DataGrid-BM6_LCjb.js",
     "name": "DataGrid",
     "src": "resources/js/components/Tailwind/DataGrid.jsx",
     "isEntry": true,
@@ -4364,10 +4506,10 @@
     ]
   },
   "resources/js/components/Test/Email.jsx": {
-    "file": "assets/Email-xZLZruGf.js",
+    "file": "assets/Email-DtB6xgHv.js",
     "name": "Email",
     "src": "resources/js/components/Test/Email.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx",
@@ -4548,7 +4690,7 @@
     ]
   },
   "resources/js/components/form/InputFormGroup.jsx": {
-    "file": "assets/InputFormGroup-COKCz9DG.js",
+    "file": "assets/InputFormGroup-BM6_LCjb.js",
     "name": "InputFormGroup",
     "src": "resources/js/components/form/InputFormGroup.jsx",
     "isEntry": true,
@@ -4578,7 +4720,7 @@
     ]
   },
   "resources/js/components/form/SelectAPIFormGroup.jsx": {
-    "file": "assets/SelectAPIFormGroup-DGjR4AiH.js",
+    "file": "assets/SelectAPIFormGroup-CIDz38r0.js",
     "name": "SelectAPIFormGroup",
     "src": "resources/js/components/form/SelectAPIFormGroup.jsx",
     "isEntry": true,
@@ -4600,7 +4742,7 @@
     ]
   },
   "resources/js/components/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
+    "file": "assets/TextareaFormGroup-COKCz9DG.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/form/TextareaFormGroup.jsx",
     "isEntry": true,

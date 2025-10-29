@@ -67,6 +67,7 @@ use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestResultController;
 use App\Http\Controllers\ThankController;
+use App\Http\Controllers\HomeDeliveryController;
 use Illuminate\Http\Request;
 
 /*
@@ -90,7 +91,21 @@ Route::post('/set-current-lang', function (Request $request) {
 })->middleware('web'); // <-- El middleware 'web' es clave
 
 // Public routes
-Route::get('/', [HomeController::class, 'reactView'])->name('Home.jsx');
+
+// ============================================================================
+// OPCIÓN 1: Mantener ambas páginas (recomendado para probar primero)
+// ============================================================================
+// Página antigua (mantiene todo el contenido actual)
+Route::get('/old-home', [HomeController::class, 'reactView'])->name('OldHome.jsx');
+
+// Nueva landing page de Home Delivery Logistics
+Route::get('/', [HomeDeliveryController::class, 'reactView'])->name('HomeDeliveryPage.jsx');
+
+// ============================================================================
+// OPCIÓN 2: Comentar líneas 102-106 y descomentar esta línea para usar la antigua
+// ============================================================================
+// Route::get('/', [HomeController::class, 'reactView'])->name('Home.jsx');
+
 Route::get('/about', [AboutController::class, 'reactView'])->name('FisioTerapiaPage.jsx');
 Route::get('/contact', [ContactController::class, 'reactView'])->name('Contacto.jsx');
 Route::get('/offices', [FacilityController::class, 'reactView'])->name('InstalacionesPage.jsx');
