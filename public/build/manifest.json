@@ -334,8 +334,8 @@
     "file": "WhatsAppButton.css",
     "src": "_WhatsAppButton-!~{03O}~.js"
   },
-  "_WhatsAppButton-BCsanCsV.js": {
-    "file": "assets/WhatsAppButton-BCsanCsV.js",
+  "_WhatsAppButton-9dqyiho0.js": {
+    "file": "assets/WhatsAppButton-9dqyiho0.js",
     "name": "WhatsAppButton",
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
@@ -647,7 +647,7 @@
     ]
   },
   "resources/js/AboutPage.jsx": {
-    "file": "assets/AboutPage-D6C7Jptn.js",
+    "file": "assets/AboutPage-BRtfQMlT.js",
     "name": "AboutPage",
     "src": "resources/js/AboutPage.jsx",
     "isEntry": true,
@@ -656,7 +656,7 @@
       "resources/js/Utils/ReactAppend.jsx",
       "_CreateReactScript-BEktg6JA.js",
       "resources/js/components/TrackingPixels.jsx",
-      "_WhatsAppButton-BCsanCsV.js",
+      "_WhatsAppButton-9dqyiho0.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "_proxy-Ci5QcTMU.js",
       "_index-CbrplguO.js",
@@ -2097,7 +2097,7 @@
     ]
   },
   "resources/js/Blog.jsx": {
-    "file": "assets/Blog--lRme81Q.js",
+    "file": "assets/Blog-BJBMb5s5.js",
     "name": "Blog",
     "src": "resources/js/Blog.jsx",
     "isEntry": true,
@@ -2112,7 +2112,7 @@
       "_proxy-Ci5QcTMU.js",
       "_PostCard-D-6W7rMF.js",
       "resources/js/components/Blog/Results.jsx",
-      "_WhatsAppButton-BCsanCsV.js",
+      "_WhatsAppButton-9dqyiho0.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "resources/js/components/Tailwind/DetailProduct/Detail.jsx",
       "_MaintenancePage-CcccXo4t.js",
@@ -2344,7 +2344,7 @@
     ]
   },
   "resources/js/ContactoPage.jsx": {
-    "file": "assets/ContactoPage-C6WWDewC.js",
+    "file": "assets/ContactoPage-BZz3i9th.js",
     "name": "ContactoPage",
     "src": "resources/js/ContactoPage.jsx",
     "isEntry": true,
@@ -2353,7 +2353,7 @@
       "resources/js/Utils/ReactAppend.jsx",
       "_CreateReactScript-BEktg6JA.js",
       "resources/js/components/TrackingPixels.jsx",
-      "_WhatsAppButton-BCsanCsV.js",
+      "_WhatsAppButton-9dqyiho0.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "_esm-C6KcuVSV.js",
       "_index-CbrplguO.js",
@@ -2593,7 +2593,7 @@
     ]
   },
   "resources/js/HomeDeliveryPage.jsx": {
-    "file": "assets/HomeDeliveryPage-DZLsI6ip.js",
+    "file": "assets/HomeDeliveryPage-D13A7QSA.js",
     "name": "HomeDeliveryPage",
     "src": "resources/js/HomeDeliveryPage.jsx",
     "isEntry": true,
@@ -2602,7 +2602,7 @@
       "resources/js/Utils/ReactAppend.jsx",
       "_CreateReactScript-BEktg6JA.js",
       "resources/js/components/TrackingPixels.jsx",
-      "_WhatsAppButton-BCsanCsV.js",
+      "_WhatsAppButton-9dqyiho0.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "_index-CbrplguO.js",
       "_index.esm-Duzu12F9.js",
@@ -3017,7 +3017,7 @@
     ]
   },
   "resources/js/ServiciosPage.jsx": {
-    "file": "assets/ServiciosPage-Dno0LFQQ.js",
+    "file": "assets/ServiciosPage-D1SQhfoT.js",
     "name": "ServiciosPage",
     "src": "resources/js/ServiciosPage.jsx",
     "isEntry": true,
@@ -3026,7 +3026,7 @@
       "resources/js/Utils/ReactAppend.jsx",
       "_CreateReactScript-BEktg6JA.js",
       "resources/js/components/TrackingPixels.jsx",
-      "_WhatsAppButton-BCsanCsV.js",
+      "_WhatsAppButton-9dqyiho0.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "_index-CbrplguO.js",
       "_index.esm-Duzu12F9.js",
@@ -3511,7 +3511,7 @@
     ]
   },
   "resources/js/components/Adminto/form/InputFormGroup.jsx": {
-    "file": "assets/InputFormGroup-BM6_LCjb.js",
+    "file": "assets/InputFormGroup-COKCz9DG.js",
     "name": "InputFormGroup",
     "src": "resources/js/components/Adminto/form/InputFormGroup.jsx",
     "isEntry": true,
@@ -3521,7 +3521,7 @@
     ]
   },
   "resources/js/components/Adminto/form/PasswordFormGroup.jsx": {
-    "file": "assets/PasswordFormGroup-COKCz9DG.js",
+    "file": "assets/PasswordFormGroup-BM6_LCjb.js",
     "name": "PasswordFormGroup",
     "src": "resources/js/components/Adminto/form/PasswordFormGroup.jsx",
     "isEntry": true,
@@ -3531,7 +3531,7 @@
     ]
   },
   "resources/js/components/Adminto/form/QuillFormGroup.jsx": {
-    "file": "assets/QuillFormGroup-BM6_LCjb.js",
+    "file": "assets/QuillFormGroup-COKCz9DG.js",
     "name": "QuillFormGroup",
     "src": "resources/js/components/Adminto/form/QuillFormGroup.jsx",
     "isEntry": true,
@@ -3553,7 +3553,7 @@
     ]
   },
   "resources/js/components/Adminto/form/SelectFormGroup.jsx": {
-    "file": "assets/SelectFormGroup-BM6_LCjb.js",
+    "file": "assets/SelectFormGroup-COKCz9DG.js",
     "name": "SelectFormGroup",
     "src": "resources/js/components/Adminto/form/SelectFormGroup.jsx",
     "isEntry": true,
@@ -4678,10 +4678,10 @@
     ]
   },
   "resources/js/components/Test/Treatment.jsx": {
-    "file": "assets/Treatment-BM6_LCjb.js",
+    "file": "assets/Treatment-0DU8BCXm.js",
     "name": "Treatment",
     "src": "resources/js/components/Test/Treatment.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx"
@@ -4792,7 +4792,7 @@
     ]
   },
   "resources/js/components/form/InputFormGroup.jsx": {
-    "file": "assets/InputFormGroup-COKCz9DG.js",
+    "file": "assets/InputFormGroup-BM6_LCjb.js",
     "name": "InputFormGroup",
     "src": "resources/js/components/form/InputFormGroup.jsx",
     "isEntry": true,
@@ -4802,7 +4802,7 @@
     ]
   },
   "resources/js/components/form/PasswordFormGroup.jsx": {
-    "file": "assets/PasswordFormGroup-BM6_LCjb.js",
+    "file": "assets/PasswordFormGroup-COKCz9DG.js",
     "name": "PasswordFormGroup",
     "src": "resources/js/components/form/PasswordFormGroup.jsx",
     "isEntry": true,
@@ -4812,7 +4812,7 @@
     ]
   },
   "resources/js/components/form/QuillFormGroup.jsx": {
-    "file": "assets/QuillFormGroup-COKCz9DG.js",
+    "file": "assets/QuillFormGroup-BM6_LCjb.js",
     "name": "QuillFormGroup",
     "src": "resources/js/components/form/QuillFormGroup.jsx",
     "isEntry": true,
@@ -4834,7 +4834,7 @@
     ]
   },
   "resources/js/components/form/SelectFormGroup.jsx": {
-    "file": "assets/SelectFormGroup-COKCz9DG.js",
+    "file": "assets/SelectFormGroup-BM6_LCjb.js",
     "name": "SelectFormGroup",
     "src": "resources/js/components/form/SelectFormGroup.jsx",
     "isEntry": true,

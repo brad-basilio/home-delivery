@@ -168,7 +168,7 @@ const Hero = ({ sliders = [] }) => {
                   }`}
                 >
                   <button
-                    onClick={() => scrollToSection('cotizacion')}
+                    onClick={() => window.location.href = '/contact'}
                     className="bg-white text-hd-cerise px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-white/20"
                   >
                     Solicitar Cotización

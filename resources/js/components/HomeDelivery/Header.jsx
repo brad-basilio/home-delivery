@@ -58,7 +58,7 @@ const Header = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 hover:text-hd-cerise font-medium transition-all duration-300 relative group text-sm tracking-wide font-aeonik"
+                className="text-gray-700 hover:text-hd-cerise font-medium transition-all duration-300 relative group text-lg tracking-wide font-aeonik"
               >
                 {link.label}
                 {/* Underline animado más elegante */}
@@ -106,7 +106,7 @@ const Header = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-left px-4 py-3.5 text-gray-700 hover:text-hd-cerise hover:bg-hd-cerise/5 rounded-xl transition-all duration-300 font-medium tracking-wide transform hover:translate-x-1"
+                  className="text-left  px-4 py-3.5 text-gray-700 hover:text-hd-cerise hover:bg-hd-cerise/5 rounded-xl transition-all duration-300 font-medium tracking-wide transform hover:translate-x-1"
                   style={{ 
                     animationDelay: `${index * 50}ms`,
                     animation: 'fadeIn 0.3s ease-out forwards'
