@@ -14,7 +14,10 @@ class Service extends Model
     protected $fillable = ['title', 'description', 'image', 'link', 'status', 'visible', 'slug', 'characteristics', 'gallery', 'featured', 'lang_id','icon','color'];
     protected $casts = [
         'characteristics' => 'array', // Convierte automáticamente el JSON a array de PHP
-        'gallery' => 'array'
+        'gallery' => 'array',
+        'featured' => 'boolean', // Convierte featured a boolean
+        'status' => 'boolean',
+        'visible' => 'boolean'
     ];
 
     public function lang()

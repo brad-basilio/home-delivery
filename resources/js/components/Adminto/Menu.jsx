@@ -275,7 +275,20 @@ const Menu = ({
                                     href="/admin/indicators"
                                     icon="mdi mdi-checkbox-marked-outline"
                                 >
-                                   Banners
+                                   Indicadores
+                                </MenuItem>
+                                 <MenuItem
+                                    href="/admin/strengths"
+                                    icon="mdi mdi-cards-heart"
+                                >
+                                    {t("admin.sidebar.benefits", "Beneficios")}
+                                </MenuItem>
+                               
+                                   <MenuItem
+                                    href="/admin/about"
+                                    icon="mdi mdi-briefcase"
+                                >
+                                    Nosotros
                                 </MenuItem>
                                 <MenuItem
                                     href="/admin/testimonies"
@@ -286,6 +299,21 @@ const Menu = ({
                                         "Testimonios"
                                     )}
                                 </MenuItem>
+                                <MenuItem
+                                    href="/admin/categories"
+                                    icon="mdi mdi-clipboard-list-outline"
+                                >
+                                    {t(
+                                        "admin.sidebar.categories",
+                                        "Categorias"
+                                    )}
+                                </MenuItem>
+                                <MenuItem
+                                    href="/admin/posts"
+                                    icon="mdi mdi-book-open-page-variant"
+                                >
+                                    {t("admin.sidebar.posts", "Posts")}
+                                </MenuItem> 
                              
                               {/*  <MenuItem
                                     href="/admin/translations"

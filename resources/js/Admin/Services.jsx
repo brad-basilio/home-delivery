@@ -306,8 +306,33 @@ const Services = (props) => {
                             );
                         },
                     },
-                   
-                   
+                    {
+                        dataField: "image",
+                        caption: "Imagen",
+                        width: "100px",
+                        cellTemplate: (container, { data }) => {
+                            if (data.image) {
+                                ReactAppend(
+                                    container,
+                                    <img
+                                        src={`/api/service/media/${data.image}`}
+                                        style={{
+                                            width: "60px",
+                                            height: "40px",
+                                            objectFit: "cover",
+                                            borderRadius: "4px",
+                                        }}
+                                        onError={(e) =>
+                                            (e.target.src =
+                                                "/images/default-image.png")
+                                        }
+                                    />
+                                );
+                            } else {
+                                container.html('<span class="text-muted">Sin imagen</span>');
+                            }
+                        },
+                    },
                     {
                         dataField: "icon",
                         caption: "Icono",
@@ -336,49 +361,11 @@ const Services = (props) => {
                             }
                         },
                     },
-                 /*   {
-                        dataField: "color",
-                        caption: "Color",
-                        width: "80px",
-                        cellTemplate: (container, { data }) => {
-                            const isTransparent = !data.color || data.color === "transparent" || data.color === "";
-                            
-                            ReactAppend(
-                                container,
-                                <div className="d-flex align-items-center">
-                                    {isTransparent ? (
-                                        <div
-                                            style={{
-                                                width: "30px",
-                                                height: "20px",
-                                                borderRadius: "3px",
-                                                border: "1px solid #ddd",
-                                                marginRight: "5px",
-                                                backgroundImage: "linear-gradient(45deg, #f0f0f0 25%, transparent 25%, transparent 50%, #f0f0f0 50%, #f0f0f0 75%, transparent 75%, transparent)",
-                                                backgroundSize: "8px 8px"
-                                            }}
-                                        ></div>
-                                    ) : (
-                                        <div
-                                            style={{
-                                                width: "30px",
-                                                height: "20px",
-                                                backgroundColor: data.color,
-                                                borderRadius: "3px",
-                                                border: "1px solid #ddd",
-                                                marginRight: "5px"
-                                            }}
-                                        ></div>
-                                    )}
-                                    <small>{isTransparent ? "Transparente" : data.color}</small>
-                                </div>
-                            );
-                        },
-                    },
                     {
                         dataField: "featured",
                         caption: "Destacado",
                         dataType: "boolean",
+                        width: "100px",
                         cellTemplate: (container, { data }) => {
                             $(container).empty();
                             ReactAppend(
@@ -394,11 +381,12 @@ const Services = (props) => {
                                 />
                             );
                         },
-                    }, */
+                    },
                     {
                         dataField: "visible",
                         caption: "Visible",
                         dataType: "boolean",
+                        width: "100px",
                         cellTemplate: (container, { data }) => {
                             $(container).empty();
                             ReactAppend(

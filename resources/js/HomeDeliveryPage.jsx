@@ -11,8 +11,8 @@ import Hero from './components/HomeDelivery/Hero';
 import Indicators from './components/HomeDelivery/Indicators';
 import Services from './components/HomeDelivery/Services';
 import Benefits from './components/HomeDelivery/Benefits';
-import QuoteForm from './components/HomeDelivery/QuoteForm';
-import Locations from './components/HomeDelivery/Locations';
+import Testimonials from './components/HomeDelivery/Testimonials';
+import RecentBlog from './components/HomeDelivery/RecentBlog';
 import Footer from './components/HomeDelivery/Footer';
 import WhatsAppButton from './components/HomeDelivery/WhatsAppButton';
 
@@ -24,7 +24,7 @@ import WhatsAppButton from './components/HomeDelivery/WhatsAppButton';
  */
 const HomeDeliveryPage = (props) => {
   // Extraer datos dinámicos desde las props que vienen del backend
-  const { sliders = [], indicators = [], services = [], generals = [], socials = [] } = props;
+  const { sliders = [], indicators = [], services = [], strengths = [], testimonies = [], posts = [], generals = [], socials = [] } = props;
 
   // Configurar título y meta descripción
   useEffect(() => {
@@ -51,20 +51,17 @@ const HomeDeliveryPage = (props) => {
       {/* Sección de Indicadores */}
       <Indicators indicators={indicators} />
 
-      {/* Sección de Servicios */}
+      {/* Sección de Servicios Destacados */}
       <Services services={services} socials={socials} generals={generals} />
 
-      {/* Sección de Beneficios */}
-      <Benefits />
+      {/* Sección de Testimonios */}
+      <Testimonials testimonies={testimonies} />
 
-      {/* Formulario de Cotización */}
-      <QuoteForm />
-
-      {/* Sección de Ubicaciones */}
-      <Locations />
+      {/* Sección de Blog Reciente */}
+      <RecentBlog posts={posts} />
 
       {/* Footer */}
-      <Footer />
+      <Footer generals={generals} socials={socials} />
 
       {/* Botón flotante de WhatsApp */}
       <WhatsAppButton socials={socials} generals={generals} />

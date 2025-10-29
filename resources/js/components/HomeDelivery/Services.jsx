@@ -174,7 +174,7 @@ const Services = ({ services = [], socials = [], generals = [] }) => {
         <div className="mt-16 text-center">
           <div className="inline-flex flex-col sm:flex-row gap-4">
             <a
-              href="#cotizacion"
+              href="/contact"
               className="bg-gradient-to-r from-hd-cerise to-hd-cerise/90 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
             >
               Solicitar Cotización

@@ -36,9 +36,29 @@ class HomeDeliveryController extends BasicController
             ->orderBy('created_at', 'ASC')
             ->get();
         
+        // Solo servicios destacados (featured)
         $services = \App\Models\Service::where('visible', true)
             ->where('status', true)
+            ->where('featured', true)
             ->orderBy('created_at', 'ASC')
+            ->get();
+        
+        $strengths = \App\Models\Strength::where('visible', true)
+            ->where('status', true)
+            ->orderBy('created_at', 'ASC')
+            ->get();
+        
+        // Testimonios más recientes
+        $testimonies = \App\Models\Testimony::where('visible', true)
+            ->where('status', true)
+            ->orderBy('created_at', 'DESC')
+            ->limit(6)
+            ->get();
+        
+        // Posts más recientes del blog (Post solo tiene 'status', no 'visible')
+        $posts = \App\Models\Post::where('status', true)
+            ->orderBy('created_at', 'DESC')
+            ->limit(3)
             ->get();
         
         $generals = \App\Models\General::where('lang_id', $langId)->get();
@@ -48,6 +68,9 @@ class HomeDeliveryController extends BasicController
             'sliders' => $sliders,
             'indicators' => $indicators,
             'services' => $services,
+            'strengths' => $strengths,
+            'testimonies' => $testimonies,
+            'posts' => $posts,
             'generals' => $generals,
             'socials' => $socials,
         ];

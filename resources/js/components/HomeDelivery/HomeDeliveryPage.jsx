@@ -3,8 +3,8 @@ import Header from './Header';
 import Hero from './Hero';
 import Services from './Services';
 import Benefits from './Benefits';
-import QuoteForm from './QuoteForm';
-import Locations from './Locations';
+import Testimonials from './Testimonials';
+import RecentBlog from './RecentBlog';
 import Footer from './Footer';
 import WhatsAppButton from './WhatsAppButton';
 
@@ -43,17 +43,17 @@ const HomeDeliveryPage = () => {
       {/* Hero Section */}
       <Hero />
 
-      {/* Servicios */}
+      {/* Servicios Destacados */}
       <Services />
 
-      {/* Beneficios */}
+      {/* Beneficios (Strengths + Formulario integrado) */}
       <Benefits />
 
-      {/* Formulario de Cotización */}
-      <QuoteForm />
+      {/* Testimonios */}
+      <Testimonials />
 
-      {/* Ubicaciones */}
-      <Locations />
+      {/* Blog Reciente */}
+      <RecentBlog />
 
       {/* Footer */}
       <Footer />

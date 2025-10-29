@@ -111,6 +111,34 @@ const Messages = () => {
                         },
                     },
                     {
+                        dataField: "company",
+                        caption: "Empresa",
+                        cellTemplate: (container, { data }) => {
+                            ReactAppend(
+                                container,
+                                <span>
+                                    {data.company || 
+                                        <i className="text-muted">-</i>
+                                    }
+                                </span>
+                            );
+                        },
+                    },
+                    {
+                        dataField: "phone",
+                        caption: "Teléfono",
+                        cellTemplate: (container, { data }) => {
+                            ReactAppend(
+                                container,
+                                <span>
+                                    {data.phone || 
+                                        <i className="text-muted">-</i>
+                                    }
+                                </span>
+                            );
+                        },
+                    },
+                    {
                         dataField: "created_at",
                         caption: "Fecha",
                         dataType: "datetime",
@@ -171,34 +199,90 @@ const Messages = () => {
                 ]}
             />
             <Modal modalRef={modalRef} title="Mensaje" hideFooter>
-                <p>
-                    <b>Nombre</b>:
-                    <span className="ms-1">{dataLoaded?.name}</span>
-                </p>
-                <p>
-                    <b>Correo</b>:
-                    <span className="ms-1">
-                        {dataLoaded?.email || (
-                            <i className="text-muted">- Sin correo -</i>
-                        )}
-                    </span>
-                </p>
-                <p>
-                    <b>Telefono</b>:
-                    <span className="ms-1">{dataLoaded?.subject}</span>
-                </p>
-                <p>
-                    <b>Servicio</b>:
-                    <span className="ms-1">
-                        {dataLoaded?.service?.title || (
-                            <i className="text-muted">- Consulta General -</i>
-                        )}
-                    </span>
-                </p>
-                <p>
-                    <b>Mensaje</b>:
-                    <span className="ms-1">{dataLoaded?.description}</span>
-                </p>
+                <div className="row">
+                    <div className="col-md-6">
+                        <p>
+                            <b>Nombre</b>:
+                            <span className="ms-1">{dataLoaded?.name}</span>
+                        </p>
+                    </div>
+                    <div className="col-md-6">
+                        <p>
+                            <b>Correo</b>:
+                            <span className="ms-1">
+                                {dataLoaded?.email || (
+                                    <i className="text-muted">- Sin correo -</i>
+                                )}
+                            </span>
+                        </p>
+                    </div>
+                    <div className="col-md-6">
+                        <p>
+                            <b>Teléfono</b>:
+                            <span className="ms-1">
+                                {dataLoaded?.phone || (
+                                    <i className="text-muted">- Sin teléfono -</i>
+                                )}
+                            </span>
+                        </p>
+                    </div>
+                    <div className="col-md-6">
+                        <p>
+                            <b>Empresa</b>:
+                            <span className="ms-1">
+                                {dataLoaded?.company || (
+                                    <i className="text-muted">- Sin empresa -</i>
+                                )}
+                            </span>
+                        </p>
+                    </div>
+                    <div className="col-md-6">
+                        <p>
+                            <b>Rubro</b>:
+                            <span className="ms-1">
+                                {dataLoaded?.business_sector || (
+                                    <i className="text-muted">- Sin rubro -</i>
+                                )}
+                            </span>
+                        </p>
+                    </div>
+                    <div className="col-md-6">
+                        <p>
+                            <b>Envíos diarios/mensuales</b>:
+                            <span className="ms-1">
+                                {dataLoaded?.daily_shipments || (
+                                    <i className="text-muted">- Sin especificar -</i>
+                                )}
+                            </span>
+                        </p>
+                    </div>
+                    <div className="col-md-6">
+                        <p>
+                            <b>Ubicación</b>:
+                            <span className="ms-1">
+                                {dataLoaded?.location_type || (
+                                    <i className="text-muted">- Sin especificar -</i>
+                                )}
+                            </span>
+                        </p>
+                    </div>
+                    <div className="col-md-6">
+                        <p>
+                            <b>Servicio</b>:
+                            <span className="ms-1">
+                                {dataLoaded?.service?.title || (
+                                    <i className="text-muted">- Consulta General -</i>
+                                )}
+                            </span>
+                        </p>
+                    </div>
+                    <div className="col-12">
+                        <p>
+                            <b>Mensaje</b>:
+                            <span className="ms-1">{dataLoaded?.description}</span>
+                        </p>
+                    </div>
+                </div>
             </Modal>
         </>
     );
