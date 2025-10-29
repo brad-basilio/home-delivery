@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             SliderSeeder::class,
             IndicatorSeeder::class,
+            ServiceSeeder::class, // Servicios de Home Delivery
             AboutusSeeder::class,
             TestimonySeeder::class,
             CategorySeeder::class,

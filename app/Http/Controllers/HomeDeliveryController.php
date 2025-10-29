@@ -34,11 +34,16 @@ class HomeDeliveryController extends BasicController
             ->orderBy('created_at', 'ASC')
             ->get();
         
+        $services = \App\Models\Service::where('visible', true)
+            ->where('status', true)
+            ->orderBy('created_at', 'ASC')
+            ->get();
+        
         return [
             'sliders' => $sliders,
             'indicators' => $indicators,
+            'services' => $services,
             // Aquí puedes agregar más datos dinámicos en el futuro:
-            // 'services' => Service::where('visible', true)->get(),
             // 'testimonials' => Testimonial::where('visible', true)->get(),
         ];
     }

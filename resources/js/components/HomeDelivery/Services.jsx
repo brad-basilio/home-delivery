@@ -1,85 +1,307 @@
-import React from 'react';
-import ServiceCard from './ServiceCard';
+import React, { useState } from 'react';
 
-// Íconos de servicios (SVG simples para evitar dependencias externas)
-const TruckIcon = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-  </svg>
-);
+/**
+ * Services - Sección de servicios premium
+ * Muestra servicios dinámicos desde la base de datos
+ * Usa colores oficiales de Home Delivery y efectos modernos
+ * Incluye iconos, características y galería de imágenes
+ */
+const Services = ({ services = [] }) => {
+  const [selectedService, setSelectedService] = useState(null);
 
-const ReturnIcon = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-  </svg>
-);
+  if (!services || services.length === 0) {
+    return null;
+  }
 
-const StoreIcon = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-  </svg>
-);
-
-const ClockIcon = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
-
-const MapPinIcon = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-  </svg>
-);
-
-const Services = () => {
-  const services = [
+  // Colores oficiales para alternar
+  const colorSchemes = [
     {
-      icon: TruckIcon,
-      title: 'Distribución de Última Milla',
-      description: 'Entrega directa al cliente final con rutas optimizadas y seguimiento en tiempo real para máxima eficiencia.'
+      gradient: 'from-hd-android to-hd-android/80',
+      solidBg: 'bg-hd-android',
+      text: 'text-hd-android',
+      hover: 'hover:border-hd-android',
+      ring: 'focus:ring-hd-android',
     },
     {
-      icon: ReturnIcon,
-      title: 'Logística Inversa',
-      description: 'Gestión eficiente de devoluciones y retornos, facilitando el proceso de cambio o garantía de productos.'
+      gradient: 'from-hd-cerise to-hd-cerise/80',
+      solidBg: 'bg-hd-cerise',
+      text: 'text-hd-cerise',
+      hover: 'hover:border-hd-cerise',
+      ring: 'focus:ring-hd-cerise',
     },
     {
-      icon: StoreIcon,
-      title: 'Distribución a Puntos de Venta',
-      description: 'Abastecimiento oportuno a tiendas y puntos de venta con control de inventario y reposición automática.'
+      gradient: 'from-hd-cerulean to-hd-cerulean/80',
+      solidBg: 'bg-hd-cerulean',
+      text: 'text-hd-cerulean',
+      hover: 'hover:border-hd-cerulean',
+      ring: 'focus:ring-hd-cerulean',
     },
     {
-      icon: ClockIcon,
-      title: 'Same Day Delivery',
-      description: 'Entrega el mismo día para pedidos urgentes dentro de Lima Metropolitana y principales ciudades.'
+      gradient: 'from-hd-spanish to-hd-spanish/80',
+      solidBg: 'bg-hd-spanish',
+      text: 'text-hd-spanish',
+      hover: 'hover:border-hd-spanish',
+      ring: 'focus:ring-hd-spanish',
     },
-    {
-      icon: MapPinIcon,
-      title: 'Retiro en Puntos Mall Plaza',
-      description: 'Red de puntos de retiro estratégicos en centros comerciales Mall Plaza para mayor comodidad del cliente.'
-    }
   ];
 
   return (
-    <section id="servicios" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-hd-onyx mb-4">
-            Nuestros Servicios
+    <section id="servicios" className="relative py-20 md:py-24 overflow-hidden bg-white">
+      {/* Decoración de fondo */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-hd-android rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-hd-cerise rounded-full blur-3xl" />
+      </div>
+
+      <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0 relative z-10">
+        {/* Header de la sección */}
+        <div className="text-center mb-16">
+          <div 
+            className="inline-block px-6 py-2 rounded-full mb-6"
+            style={{
+              background: 'linear-gradient(90deg, rgba(143, 189, 68, 0.1) 0%, rgba(35, 84, 184, 0.1) 50%, rgba(222, 52, 100, 0.1) 100%)'
+            }}
+          >
+            <span className="text-hd-cerulean font-bold text-sm uppercase tracking-wider">Nuestros Servicios</span>
+          </div>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            Soluciones Logísticas{' '}
+            <span 
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+              }}
+            >
+              Integrales
+            </span>
           </h2>
-          <p className="text-lg text-hd-gray max-w-2xl mx-auto">
-            Soluciones logísticas integrales diseñadas para impulsar el crecimiento de tu negocio
+          
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Impulsamos el crecimiento de tu negocio con tecnología de punta y un equipo comprometido
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {services.map((service, index) => (
-            <ServiceCard key={index} {...service} />
-          ))}
+        {/* Grid de servicios */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => {
+            const colorScheme = colorSchemes[index % colorSchemes.length];
+            
+            return (
+              <div
+                key={service.id}
+                className={`group relative bg-white rounded-3xl border-2 border-gray-100 ${colorScheme.hover} transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 cursor-pointer overflow-hidden`}
+                onClick={() => setSelectedService(service)}
+              >
+                {/* Gradiente de fondo en hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                
+                {/* Contenido */}
+                <div className="relative p-8">
+                  {/* Ícono */}
+                  <div className="mb-6">
+                    <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${colorScheme.gradient} shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                      <img
+                        src={`/api/service/media/${service.icon}`}
+                        alt={service.title}
+                        className="w-10 h-10 object-contain filter brightness-0 invert"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Título */}
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-gray-700 transition-colors">
+                    {service.title}
+                  </h3>
+
+                  {/* Descripción */}
+                  <p className="text-gray-600 leading-relaxed mb-6 line-clamp-3">
+                    {service.description}
+                  </p>
+
+                  {/* Características */}
+                  {service.characteristics && service.characteristics.length > 0 && (
+                    <ul className="space-y-2 mb-6">
+                      {service.characteristics.slice(0, 3).map((char, idx) => (
+                        <li key={idx} className="flex items-start text-sm text-gray-600">
+                          <svg className={`w-5 h-5 ${colorScheme.text} mr-2 flex-shrink-0 mt-0.5`} fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          {char}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {/* Botón ver más */}
+                  <button className={`inline-flex items-center ${colorScheme.text} font-semibold group/btn`}>
+                    <span>Ver detalles</span>
+                    <svg className="w-5 h-5 ml-2 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </button>
+
+                  {/* Número de índice decorativo */}
+                  <div className="absolute top-6 right-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span className="text-7xl font-bold text-gray-900">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                </div>
+
+              
+              </div>
+            );
+          })}
+        </div>
+
+        {/* CTA inferior */}
+        <div className="mt-16 text-center">
+          <div className="inline-flex flex-col sm:flex-row gap-4">
+            <a
+              href="#cotizacion"
+              className="bg-gradient-to-r from-hd-cerise to-hd-cerise/90 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+            >
+              Solicitar Cotización
+            </a>
+            <a
+              href="tel:+51999999999"
+              className="bg-white border-2 border-hd-cerulean text-hd-cerulean px-10 py-4 rounded-full font-bold text-lg hover:bg-hd-cerulean hover:text-white hover:shadow-xl transition-all duration-300"
+            >
+              Llamar Ahora
+            </a>
+          </div>
         </div>
       </div>
+
+      {/* Modal de detalles del servicio */}
+      {selectedService && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedService(null)}
+        >
+          <div 
+            className="bg-white rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Botón cerrar flotante */}
+            <button
+              onClick={() => setSelectedService(null)}
+              className="absolute top-6 right-6 p-3 bg-white rounded-full text-gray-600 hover:bg-gray-100 transition-colors z-50 shadow-lg"
+              aria-label="Cerrar"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div className="grid md:grid-cols-2 gap-0">
+              {/* Columna izquierda - Imagen principal */}
+              <div className="relative bg-gray-100 min-h-[400px] md:min-h-[600px] rounded-tl-3xl md:rounded-bl-3xl overflow-hidden">
+                {selectedService.image ? (
+                  <img
+                    src={`/api/service/media/${selectedService.image}`}
+                    alt={selectedService.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.src = 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=1200&fit=crop';
+                    }}
+                  />
+                ) : (
+                  <div 
+                    className="w-full h-full bg-gradient-to-br from-hd-android via-hd-cerulean to-hd-cerise flex items-center justify-center"
+                  >
+                    <svg className="w-32 h-32 text-white/30" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                )}
+                
+                {/* Overlay gradiente sutil */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              </div>
+
+              {/* Columna derecha - Contenido */}
+              <div className="p-8 md:p-10 flex flex-col">
+                {/* Título con gradiente */}
+                <h3 
+                  className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+                  }}
+                >
+                  {selectedService.title}
+                </h3>
+
+                {/* Descripción */}
+                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                  {selectedService.description}
+                </p>
+
+                {/* Características */}
+                {selectedService.characteristics && selectedService.characteristics.length > 0 && (
+                  <div className="mb-8">
+                    <h4 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                      <svg className="w-6 h-6 text-hd-android mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Características
+                    </h4>
+                    <ul className="space-y-3">
+                      {selectedService.characteristics.map((char, idx) => (
+                        <li key={idx} className="flex items-start text-gray-700 group">
+                          <svg className="w-6 h-6 text-hd-android mr-3 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          <span className="text-base leading-relaxed">{char}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Galería de imágenes (si existe) */}
+                {selectedService.gallery && selectedService.gallery.length > 0 && (
+                  <div className="mt-auto pt-6 border-t border-gray-200">
+                    <h4 className="text-lg font-bold text-gray-900 mb-4">Galería</h4>
+                    <div className="grid grid-cols-3 gap-3">
+                      {selectedService.gallery.slice(0, 6).map((img, idx) => (
+                        <div 
+                          key={idx}
+                          className="aspect-square rounded-xl overflow-hidden bg-gray-100 hover:scale-105 transition-transform cursor-pointer"
+                        >
+                          <img
+                            src={`/api/service/media/${img}`}
+                            alt={`${selectedService.title} ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* CTA Button */}
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <a
+                    href="#cotizacion"
+                    onClick={() => setSelectedService(null)}
+                    className="block text-center bg-gradient-to-r from-hd-cerise to-hd-cerise/90 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                  >
+                    Solicitar este servicio
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

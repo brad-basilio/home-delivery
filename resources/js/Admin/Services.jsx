@@ -15,10 +15,16 @@ import SwitchFormGroup from "@Adminto/form/SwitchFormGroup";
 import { LanguageProvider } from "../context/LanguageContext";
 const servicesRest = new ServicesRest();
 
-const Services = ({ brands }) => {
+const Services = (props) => {
+    const { brands } = props;
     const [itemData, setItemData] = useState([]);
     const gridRef = useRef();
     const modalRef = useRef();
+
+    // Refs para subir imagen principal, galería y lang
+    const imageRef = useRef();
+    const galleryRef = useRef();
+    const langIdRef = useRef();
 
     // Refs para campos del formulario
     const idRef = useRef();
@@ -77,7 +83,7 @@ const Services = ({ brands }) => {
         idRef.current.value = data?.id || "";
         titleRef.current.value = data?.title || "";
         descriptionRef.current.value = data?.description || "";
-       // imageRef.current.value = null;
+    // imageRef.current.value = null;
         iconRef.current.value = null;
         
         // Manejo del color (transparente o con valor)
@@ -95,9 +101,20 @@ const Services = ({ brands }) => {
             colorRef.current.dataset.prevColor = "#000000";
         } */
         
-      /*  if (data?.image) {
-            imageRef.image.src = `/api/service/media/${data.image}`;
-        } */
+        if (data?.image) {
+            try {
+                if (imageRef && imageRef.image) imageRef.image.src = `/api/service/media/${data.image}`;
+            } catch (e) {
+                // ignore
+            }
+        } else if (imageRef && imageRef.current) {
+            imageRef.current.value = null;
+        }
+
+        // lang id (hidden)
+        try {
+            if (langIdRef && langIdRef.current) langIdRef.current.value = data?.lang_id ?? 1;
+        } catch (e) {}
         
         if (data?.icon) {
             iconRef.image.src = `/api/service/media/${data.icon}`;
@@ -146,9 +163,12 @@ const Services = ({ brands }) => {
         }
 
         // Agregar imagen principal si existe
-      /*  if (imageRef.current.files[0]) {
+        if (imageRef && imageRef.current && imageRef.current.files && imageRef.current.files[0]) {
             formData.append("image", imageRef.current.files[0]);
-        }*/
+        }
+
+        // lang_id (por defecto 1 si no viene)
+        formData.append('lang_id', (langIdRef && langIdRef.current && langIdRef.current.value) ? langIdRef.current.value : 1);
 
         // Agregar icono si existe
         if (iconRef.current.files[0]) {
@@ -429,6 +449,7 @@ const Services = ({ brands }) => {
                 size="lg"
             >
                 <input ref={idRef} type="hidden" />
+                <input ref={langIdRef} type="hidden" />
 
                 <div className="row">
                     <div className="col-md-8">
@@ -504,30 +525,23 @@ const Services = ({ brands }) => {
                             </div>
                         </div> */}
 
-                      {/*  <div className="mb-3">
-                            <label className="form-label">
-                                Características
-                            </label>
+                        <div className="mb-3">
+                            <label className="form-label">Características</label>
                             {characteristics.map((char, index) => (
                                 <div key={index} className="input-group mb-2">
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Ej: Duración de la sesión - 45 a 60 minutos"
+                                        placeholder="Ej: Entrega en 24h"
                                         value={char.value}
                                         onChange={(e) =>
-                                            updateCharacteristic(
-                                                index,
-                                                e.target.value
-                                            )
+                                            updateCharacteristic(index, e.target.value)
                                         }
                                     />
                                     <button
                                         type="button"
                                         className="btn btn-outline-danger"
-                                        onClick={() =>
-                                            removeCharacteristic(index)
-                                        }
+                                        onClick={() => removeCharacteristic(index)}
                                         disabled={characteristics.length <= 1}
                                     >
                                         <i className="fas fa-times"></i>
@@ -539,10 +553,9 @@ const Services = ({ brands }) => {
                                 className="btn btn-sm btn-outline-primary"
                                 onClick={addCharacteristic}
                             >
-                                <i className="fas fa-plus me-1"></i> Agregar
-                                característica
+                                <i className="fas fa-plus me-1"></i> Agregar característica
                             </button>
-                        </div> */}
+                        </div>
                         {/*  <InputFormGroup
                             type="url"
                             eRef={linkRef}
@@ -551,13 +564,13 @@ const Services = ({ brands }) => {
                     </div>
 
                     <div className="col-md-4">
-                       {/* <ImageFormGroup
+                        <ImageFormGroup
                             eRef={imageRef}
                             label="Imagen principal"
                             aspect={16 / 9}
-                            overlayColor={itemData?.transparent_color ? null : colorRef?.current?.value}
+                            overlayColor={itemData?.transparent_color ? null : itemData?.color}
                             showColorOverlay={true}
-                        /> */}
+                        />
 
                         <ImageFormGroup
                             eRef={iconRef}
@@ -565,10 +578,8 @@ const Services = ({ brands }) => {
                             aspect={1 / 1}
                         />
 
-                 {/*       <div className="mb-3">
-                            <label className="form-label">
-                                Galería de imágenes
-                            </label>
+                        <div className="mb-3">
+                            <label className="form-label">Galería de imágenes</label>
                             <input
                                 type="file"
                                 ref={galleryRef}
@@ -596,16 +607,14 @@ const Services = ({ brands }) => {
                                         <button
                                             type="button"
                                             className="btn btn-danger btn-xs position-absolute top-0 end-0"
-                                            onClick={() =>
-                                                removeGalleryImage(index)
-                                            }
+                                            onClick={() => removeGalleryImage(index)}
                                         >
                                             ×
                                         </button>
                                     </div>
                                 ))}
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </Modal>

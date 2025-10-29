@@ -23,8 +23,8 @@ import WhatsAppButton from './components/HomeDelivery/WhatsAppButton';
  * de la landing page moderna de Home Delivery.
  */
 const HomeDeliveryPage = (props) => {
-  // Extraer sliders e indicators desde las props que vienen del backend
-  const { sliders = [], indicators = [] } = props;
+  // Extraer datos dinámicos desde las props que vienen del backend
+  const { sliders = [], indicators = [], services = [] } = props;
 
   // Configurar título y meta descripción
   useEffect(() => {
@@ -52,7 +52,7 @@ const HomeDeliveryPage = (props) => {
       <Indicators indicators={indicators} />
 
       {/* Sección de Servicios */}
-      <Services />
+      <Services services={services} />
 
       {/* Sección de Beneficios */}
       <Benefits />
