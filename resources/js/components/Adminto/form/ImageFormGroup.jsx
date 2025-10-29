@@ -11,7 +11,8 @@ const ImageFormGroup = ({
   fit = 'cover', 
   onError = '/api/cover/thumbnail/null',
   overlayColor = null,
-  showColorOverlay = false
+  showColorOverlay = false,
+  className = ''
 }) => {
 
   if (!id) id = `ck-${crypto.randomUUID()}`
@@ -43,7 +44,7 @@ const ImageFormGroup = ({
     <label htmlFor={id} style={{width: '100%', position: 'relative'}}>
       <img 
         ref={imageRef} 
-        className="d-block bg-secondary" 
+        className={`d-block bg-secondary ${className}`} 
         src="" 
         alt="aspect-video" 
         onError={e => e.target.src = onError} 

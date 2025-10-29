@@ -14,6 +14,7 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
+      
         // Obtener el idioma por defecto
         $defaultLang = \App\Models\Lang::first();
         

@@ -552,20 +552,30 @@ const Services = (props) => {
                     </div>
 
                     <div className="col-md-4">
+                       
+
+                        {/* Imagen principal - Aspecto 9:16 (vertical) */}
                         <ImageFormGroup
                             eRef={imageRef}
                             label="Imagen principal"
-                            aspect={16 / 9}
+                            aspect={9 / 16}
                             overlayColor={itemData?.transparent_color ? null : itemData?.color}
                             showColorOverlay={true}
                         />
 
+                      
+                    </div>
+                   <div className="col-md-4">
+                      {/* Icono del servicio - Aspecto 1:1 (cuadrado pequeño) */}
                         <ImageFormGroup
                             eRef={iconRef}
                             label="Icono del servicio"
                             aspect={1 / 1}
+                            className="p-2"
                         />
-
+                   </div>
+                   <div className="col-md-8">
+  {/* Galería de imágenes - Aspecto 1:1 (cuadrado) */}
                         <div className="mb-3">
                             <label className="form-label">Galería de imágenes</label>
                             <input
@@ -574,36 +584,50 @@ const Services = (props) => {
                                 multiple
                                 accept="image/*"
                                 onChange={handleGalleryChange}
-                                className="form-control"
+                                className="form-control mb-2"
                             />
 
-                            <div className="d-flex flex-wrap gap-2 mt-2">
+                            <div className="d-flex flex-wrap gap-2">
                                 {gallery.map((image, index) => (
                                     <div
                                         key={index}
                                         className="position-relative"
                                         style={{
-                                            width: "100px",
-                                            height: "100px",
+                                            width: "80px",
+                                            height: "80px",
                                         }}
                                     >
                                         <img
                                             src={image.url}
-                                            alt="Preview"
-                                            className="img-thumbnail h-100 w-100 object-fit-cover"
+                                            alt={`Galería ${index + 1}`}
+                                            className="img-thumbnail h-100 w-100 object-fit-cover rounded"
+                                            style={{ aspectRatio: "1 / 1", objectFit: "cover" }}
                                         />
                                         <button
                                             type="button"
-                                            className="btn btn-danger btn-xs position-absolute top-0 end-0"
+                                            className="btn btn-danger btn-xs position-absolute top-0 end-0 m-1"
+                                            style={{ 
+                                                width: "20px", 
+                                                height: "20px", 
+                                                padding: "0",
+                                                lineHeight: "18px",
+                                                fontSize: "14px"
+                                            }}
                                             onClick={() => removeGalleryImage(index)}
+                                            title="Eliminar imagen"
                                         >
                                             ×
                                         </button>
                                     </div>
                                 ))}
                             </div>
+                            {gallery.length > 0 && (
+                                <small className="text-muted d-block mt-2">
+                                    {gallery.length} imagen{gallery.length !== 1 ? 'es' : ''} en galería
+                                </small>
+                            )}
                         </div>
-                    </div>
+                   </div>
                 </div>
             </Modal>
         </>
