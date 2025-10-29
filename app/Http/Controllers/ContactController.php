@@ -2,37 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Facility;
 use App\Models\General;
-use App\Models\LandingHome;
+use App\Models\Office;
 use App\Models\Social;
-use App\Models\Staff;
 use Illuminate\Http\Request;
 
 class ContactController extends BasicController
 {
-    public $reactView = 'Contacto';
+    public $reactView = 'ContactoPage';
     public $reactRootView = 'public';
 
     public function setReactViewProperties(Request $request)
     {
-        $langId = app('current_lang_id');
-        $landing = LandingHome::where('correlative', 'like', 'page_contact%')->where('lang_id', $langId)->get();
-        $sedes = Facility::where('visible', true)->where('status', true)->where('lang_id', $langId)->get();
-
-        $staff = Staff::where('visible', true)
+        // Obtener todas las oficinas visibles y activas
+        $offices = Office::where('visible', true)
             ->where('status', true)
-            ->whereNotIn('job', ['Director', 'Directora'])
-            ->where('lang_id', $langId)
-            ->latest()
-            ->take(3)
+            ->orderByRaw("CASE WHEN type = 'oficina_principal' THEN 1 WHEN type = 'oficina' THEN 2 ELSE 3 END")
             ->get();
-        $whatsapp = Social::where('status', true)->where('visible', true)->where('description', '=', 'WhatsApp')->first();
+
+        // Obtener generals y socials para footer y whatsapp
+        $generals = General::all();
+        $socials = Social::where('status', true)->get();
+
         return [
-            'landing' => $landing,
-            'sedes' => $sedes,
-            'whatsapp' => $whatsapp,
-            'staff' => $staff,
+            'offices' => $offices,
+            'generals' => $generals,
+            'socials' => $socials,
         ];
     }
 }

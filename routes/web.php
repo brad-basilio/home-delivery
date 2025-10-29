@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\LandingHomeController as AdminLandingHomeController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\FacilityController as AdminFacilityController;
+use App\Http\Controllers\Admin\OfficeController as AdminOfficeController;
 use App\Http\Controllers\Admin\StaffController as AdminStaffController;
 use App\Http\Controllers\Admin\SpecialityController as AdminSpecialityController;
 use App\Http\Controllers\Admin\LangController as AdminLangController;
@@ -107,7 +108,7 @@ Route::get('/', [HomeDeliveryController::class, 'reactView'])->name('HomeDeliver
 // Route::get('/', [HomeController::class, 'reactView'])->name('Home.jsx');
 
 Route::get('/about', [AboutController::class, 'reactView'])->name('AboutPage.jsx');
-Route::get('/contact', [ContactController::class, 'reactView'])->name('Contacto.jsx');
+Route::get('/contact', [ContactController::class, 'reactView'])->name('ContactoPage.jsx');
 Route::get('/offices', [FacilityController::class, 'reactView'])->name('InstalacionesPage.jsx');
 Route::get('/services', [ServiceController::class, 'reactView'])->name('ServiciosPage.jsx');
 Route::get('/catalog', [CatalogController::class, 'reactView'])->name('CatalogProducts.jsx');
@@ -148,6 +149,7 @@ Route::middleware(['can:Admin', 'auth'])->prefix('admin')->group(function () {
     Route::get('/services', [AdminServiceController::class, 'reactView'])->name('Admin/Services.jsx');
 
     Route::get('/facilities', [AdminFacilityController::class, 'reactView'])->name('Admin/Facilities.jsx');
+    Route::get('/offices', [AdminOfficeController::class, 'reactView'])->name('Admin/Offices.jsx');
     Route::get('/staff', [AdminStaffController::class, 'reactView'])->name('Admin/Staff.jsx');
     Route::get('/specialities', [AdminSpecialityController::class, 'reactView'])->name('Admin/Specialities.jsx');
     Route::get('/langs', [AdminLangController::class, 'reactView'])->name('Admin/Langs.jsx');

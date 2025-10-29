@@ -330,9 +330,9 @@
       "swiper.css"
     ]
   },
-  "_WhatsAppButton-!~{03N}~.js": {
+  "_WhatsAppButton-!~{03O}~.js": {
     "file": "WhatsAppButton.css",
-    "src": "_WhatsAppButton-!~{03N}~.js"
+    "src": "_WhatsAppButton-!~{03O}~.js"
   },
   "_WhatsAppButton-BCsanCsV.js": {
     "file": "assets/WhatsAppButton-BCsanCsV.js",
@@ -403,6 +403,15 @@
     "name": "createLucideIcon",
     "imports": [
       "resources/js/components/TrackingPixels.jsx"
+    ]
+  },
+  "_esm-C6KcuVSV.js": {
+    "file": "assets/esm-C6KcuVSV.js",
+    "name": "esm",
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx",
+      "_index-CbrplguO.js"
     ]
   },
   "_index-CZSDX33M.js": {
@@ -499,9 +508,9 @@
       "resources/js/components/TrackingPixels.jsx"
     ]
   },
-  "_swiper-!~{03J}~.js": {
+  "_swiper-!~{03K}~.js": {
     "file": "swiper.css",
-    "src": "_swiper-!~{03J}~.js"
+    "src": "_swiper-!~{03K}~.js"
   },
   "_swiper-react-BLXWsB6t.js": {
     "file": "assets/swiper-react-BLXWsB6t.js",
@@ -510,9 +519,9 @@
       "resources/js/components/TrackingPixels.jsx"
     ]
   },
-  "_tippy-!~{03B}~.js": {
+  "_tippy-!~{03C}~.js": {
     "file": "tippy.css",
-    "src": "_tippy-!~{03B}~.js"
+    "src": "_tippy-!~{03C}~.js"
   },
   "_tippy-react.esm-CIcmk6y-.js": {
     "file": "assets/tippy-react.esm-CIcmk6y-.js",
@@ -1189,14 +1198,14 @@
     ]
   },
   "resources/js/Admin/Generals.jsx": {
-    "file": "assets/Generals-h200caYQ.js",
+    "file": "assets/Generals-DQyQN3sT.js",
     "name": "Generals",
     "src": "resources/js/Admin/Generals.jsx",
     "isEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx",
-      "_index-CbrplguO.js",
+      "_esm-C6KcuVSV.js",
       "_Base-qkus41MS.js",
       "resources/js/components/Blog/Results.jsx",
       "_CreateReactScript-BEktg6JA.js",
@@ -1206,6 +1215,7 @@
       "_InputFormGroup-DDhzlCe_.js",
       "_SelectFormGroup-DYWvpzd2.js",
       "resources/js/components/form/TinyMCEFormGroup.jsx",
+      "_index-CbrplguO.js",
       "_tippy-react.esm-CIcmk6y-.js",
       "_Logout-CHcSRTk-.js",
       "_main-D1ujSG59.js",
@@ -2326,6 +2336,38 @@
       "_sweetalert2.all-C96erxsa.js",
       "resources/js/components/Appointment/ModalAppointment.jsx",
       "_chevron-down-3nLSzNgz.js"
+    ],
+    "css": [
+      "swiper.css",
+      "tippy.css"
+    ]
+  },
+  "resources/js/ContactoPage.jsx": {
+    "file": "assets/ContactoPage-C6WWDewC.js",
+    "name": "ContactoPage",
+    "src": "resources/js/ContactoPage.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/Utils/ReactAppend.jsx",
+      "_CreateReactScript-BEktg6JA.js",
+      "resources/js/components/TrackingPixels.jsx",
+      "_WhatsAppButton-BCsanCsV.js",
+      "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
+      "_esm-C6KcuVSV.js",
+      "_index-CbrplguO.js",
+      "_index.esm-Duzu12F9.js",
+      "_axios-B4uVmeYG.js",
+      "____vite-browser-external_commonjs-proxy-DjIx6Adb.js",
+      "_main-D1ujSG59.js",
+      "_index-DkSDNEBT.js",
+      "_index-CZSDX33M.js",
+      "_HtmlContent-C_QQVIf4.js",
+      "_GeneralRest-DRwja8Cw.js",
+      "resources/js/components/Blog/Results.jsx",
+      "_index-DJI-j85T.js",
+      "_x-DwxZ1MqR.js",
+      "_createLucideIcon-B31oCQao.js"
     ],
     "css": [
       "swiper.css",
@@ -3468,7 +3510,7 @@
     ]
   },
   "resources/js/components/Adminto/form/InputFormGroup.jsx": {
-    "file": "assets/InputFormGroup-BM6_LCjb.js",
+    "file": "assets/InputFormGroup-COKCz9DG.js",
     "name": "InputFormGroup",
     "src": "resources/js/components/Adminto/form/InputFormGroup.jsx",
     "isEntry": true,
@@ -3498,7 +3540,7 @@
     ]
   },
   "resources/js/components/Adminto/form/SelectAPIFormGroup.jsx": {
-    "file": "assets/SelectAPIFormGroup-DGjR4AiH.js",
+    "file": "assets/SelectAPIFormGroup-CIDz38r0.js",
     "name": "SelectAPIFormGroup",
     "src": "resources/js/components/Adminto/form/SelectAPIFormGroup.jsx",
     "isEntry": true,
@@ -3530,7 +3572,7 @@
     ]
   },
   "resources/js/components/Adminto/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-COKCz9DG.js",
+    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/Adminto/form/TextareaFormGroup.jsx",
     "isEntry": true,
@@ -4259,7 +4301,7 @@
     ]
   },
   "resources/js/components/Table.jsx": {
-    "file": "assets/Table-BM6_LCjb.js",
+    "file": "assets/Table-COKCz9DG.js",
     "name": "Table",
     "src": "resources/js/components/Table.jsx",
     "isEntry": true,
@@ -4447,7 +4489,7 @@
     ]
   },
   "resources/js/components/Tailwind/Table.jsx": {
-    "file": "assets/Table-COKCz9DG.js",
+    "file": "assets/Table-BM6_LCjb.js",
     "name": "Table",
     "src": "resources/js/components/Tailwind/Table.jsx",
     "isEntry": true,
@@ -4565,10 +4607,10 @@
     ]
   },
   "resources/js/components/Test/Email.jsx": {
-    "file": "assets/Email-xZLZruGf.js",
+    "file": "assets/Email-DtB6xgHv.js",
     "name": "Email",
     "src": "resources/js/components/Test/Email.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx",
@@ -4749,7 +4791,7 @@
     ]
   },
   "resources/js/components/form/InputFormGroup.jsx": {
-    "file": "assets/InputFormGroup-COKCz9DG.js",
+    "file": "assets/InputFormGroup-BM6_LCjb.js",
     "name": "InputFormGroup",
     "src": "resources/js/components/form/InputFormGroup.jsx",
     "isEntry": true,
@@ -4779,7 +4821,7 @@
     ]
   },
   "resources/js/components/form/SelectAPIFormGroup.jsx": {
-    "file": "assets/SelectAPIFormGroup-CIDz38r0.js",
+    "file": "assets/SelectAPIFormGroup-DGjR4AiH.js",
     "name": "SelectAPIFormGroup",
     "src": "resources/js/components/form/SelectAPIFormGroup.jsx",
     "isEntry": true,
@@ -4801,7 +4843,7 @@
     ]
   },
   "resources/js/components/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
+    "file": "assets/TextareaFormGroup-COKCz9DG.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/form/TextareaFormGroup.jsx",
     "isEntry": true,

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\TestimonyController as AdminTestimonyController;
 use App\Http\Controllers\Admin\LandingHomeController as AdminLandingHomeController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\FacilityController as AdminFacilityController;
+use App\Http\Controllers\Admin\OfficeController as AdminOfficeController;
 
 use App\Http\Controllers\Admin\StaffController as AdminStaffController;
 use App\Http\Controllers\Admin\SpecialityController as AdminSpecialityController;
@@ -118,6 +119,7 @@ Route::get('/landing_home/video/{uuid}', [LandingHomeController::class, 'video']
 
 Route::get('/service/media/{uuid}', [ServiceController::class, 'media']);
 Route::get('/facility/media/{uuid}', [FacilityController::class, 'media']);
+Route::get('/office/media/{uuid}', [\App\Http\Controllers\OfficeController::class, 'media']);
 Route::get('/indicator/media/{uuid}', [IndicatorController::class, 'media']);
 Route::get('/testimony/media/{uuid}', [TestimonyController::class, 'media']);
 Route::get('/staff/media/{uuid}', [StaffController::class, 'media']);
@@ -387,6 +389,12 @@ Route::middleware('auth')->group(function () {
         Route::patch('/facilities/status', [AdminFacilityController::class, 'status']);
         Route::patch('/facilities/{field}', [AdminFacilityController::class, 'boolean']);
         Route::delete('/facilities/{id}', [AdminFacilityController::class, 'delete']);
+
+        Route::post('/offices', [AdminOfficeController::class, 'save']);
+        Route::post('/offices/paginate', [AdminOfficeController::class, 'paginate']);
+        Route::patch('/offices/status', [AdminOfficeController::class, 'status']);
+        Route::patch('/offices/{field}', [AdminOfficeController::class, 'boolean']);
+        Route::delete('/offices/{id}', [AdminOfficeController::class, 'delete']);
 
         Route::post('/staff', [AdminStaffController::class, 'save']);
         Route::post('/staff/paginate', [AdminStaffController::class, 'paginate']);
