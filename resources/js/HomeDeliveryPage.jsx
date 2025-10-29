@@ -24,7 +24,7 @@ import WhatsAppButton from './components/HomeDelivery/WhatsAppButton';
  */
 const HomeDeliveryPage = (props) => {
   // Extraer datos dinámicos desde las props que vienen del backend
-  const { sliders = [], indicators = [], services = [] } = props;
+  const { sliders = [], indicators = [], services = [], generals = [], socials = [] } = props;
 
   // Configurar título y meta descripción
   useEffect(() => {
@@ -52,7 +52,7 @@ const HomeDeliveryPage = (props) => {
       <Indicators indicators={indicators} />
 
       {/* Sección de Servicios */}
-      <Services services={services} />
+      <Services services={services} socials={socials} generals={generals} />
 
       {/* Sección de Beneficios */}
       <Benefits />
@@ -67,7 +67,7 @@ const HomeDeliveryPage = (props) => {
       <Footer />
 
       {/* Botón flotante de WhatsApp */}
-      <WhatsAppButton />
+      <WhatsAppButton socials={socials} generals={generals} />
     </div>
   );
 };

@@ -24,6 +24,8 @@ class HomeDeliveryController extends BasicController
      */
     public function setReactViewProperties(Request $request)
     {
+        $langId = app('current_lang_id');
+        
         $sliders = \App\Models\Slider::where('visible', true)
             ->where('status', true)
             ->orderBy('created_at', 'DESC')
@@ -39,12 +41,15 @@ class HomeDeliveryController extends BasicController
             ->orderBy('created_at', 'ASC')
             ->get();
         
+        $generals = \App\Models\General::where('lang_id', $langId)->get();
+        $socials = \App\Models\Social::where('status', true)->where('visible', true)->get();
+        
         return [
             'sliders' => $sliders,
             'indicators' => $indicators,
             'services' => $services,
-            // Aquí puedes agregar más datos dinámicos en el futuro:
-            // 'testimonials' => Testimonial::where('visible', true)->get(),
+            'generals' => $generals,
+            'socials' => $socials,
         ];
     }
 }
