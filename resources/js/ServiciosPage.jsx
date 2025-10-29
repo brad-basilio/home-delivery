@@ -1,669 +1,269 @@
-import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { createRoot } from "react-dom/client";
-import Base from "./Components/Tailwind/Base";
-import CreateReactScript from "./Utils/CreateReactScript";
-import Header from "./components/Tailwind/Header";
-import Footer from "./components/Tailwind/Footer";
-import { CarritoContext, CarritoProvider } from "./context/CarritoContext";
-import TextWithHighlight from "./Utils/TextWithHighlight";
-import ModalAppointment from "./components/Appointment/ModalAppointment";
-import DynamicGalleryServiceService from "./DynamicGalleryService";
-import { useTranslation } from "./hooks/useTranslation";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { Navigation, Pagination } from "swiper/modules";
+﻿import { createRoot } from 'react-dom/client';
+import CreateReactScript from './Utils/CreateReactScript';
+import { useState, useEffect } from 'react';
+import '../css/homedelivery.css';
+import Header from './components/HomeDelivery/Header';
+import Footer from './components/HomeDelivery/Footer';
+import WhatsAppButton from './components/HomeDelivery/WhatsAppButton';
 
-const ServiciosPage = ({ landing, services, linkWhatsApp, randomImage ,specialities}) => {
-    const landingHero = landing?.find(
-        (item) => item.correlative === "page_services_hero"
-    );
+const ServiciosPage = (props) => {
+  const { services = [], generals = [], socials = [] } = props;
+  const [selectedService, setSelectedService] = useState(null);
+  const whatsappNumber = generals?.find(g => g.correlative === 'whatsapp_phone')?.description || '51933411599';
+  const whatsappMessage = generals?.find(g => g.correlative === 'message_whatsapp')?.description || 'Hola, me gustaría obtener más información sobre sus servicios logísticos.';
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
-    const landingSpecialities = landing.find(
-        (item) => item.correlative === "page_services_specialties"
-    );
+  useEffect(() => {
+    document.title = 'Servicios - Home Delivery Logistics';
+    let metaDescription = document.querySelector('meta[name=description]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.name = 'description';
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.content = 'Descubre todos nuestros servicios logísticos.';
+  }, []);
 
-    console.log(specialities)
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [showServicesMenu, setShowServicesMenu] = useState(false);
-    const titleRef = useRef(null);
+  const colorSchemes = [
+    { gradient: 'from-hd-android to-hd-android/80', text: 'text-hd-android', hover: 'hover:border-hd-android' },
+    { gradient: 'from-hd-cerise to-hd-cerise/80', text: 'text-hd-cerise', hover: 'hover:border-hd-cerise' },
+    { gradient: 'from-hd-cerulean to-hd-cerulean/80', text: 'text-hd-cerulean', hover: 'hover:border-hd-cerulean' },
+    { gradient: 'from-hd-spanish to-hd-spanish/80', text: 'text-hd-spanish', hover: 'hover:border-hd-spanish' }
+  ];
 
-    const handleServicesMenu = () => {
-        setShowServicesMenu(!showServicesMenu);
-    };
+  return (
+    <div className="min-h-screen bg-white font-aeonik" style={{ fontFamily: 'Aeonik, sans-serif' }}>
+      <Header />
 
-    // Animaciones
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.3,
-            },
-        },
-    };
-    // Animación del botón (igual a tu versión)
-    const buttonVariants = {
-        hidden: { scale: 0.8, opacity: 0 },
-        visible: {
-            scale: 1,
-            opacity: 1,
-            transition: {
-                type: "spring",
-                stiffness: 300,
-                damping: 10,
-            },
-        },
-        pulse: {
-            scale: [1, 1.05, 1],
-            transition: {
-                repeat: Infinity,
-                duration: 2,
-                ease: "easeInOut",
-            },
-        },
-        hover: {
-            scale: 1.1,
-            rotate: [0, -5, 5, -5, 0],
-            transition: { duration: 0.5 },
-        },
-    };
+      <main className="min-h-screen bg-white">
+        {/* Hero Section */}
+        <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+          <div className="absolute inset-0 opacity-[0.03]">
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-hd-android rounded-full blur-3xl" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-hd-cerise rounded-full blur-3xl" />
+          </div>
 
-    const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                type: "spring",
-                stiffness: 100,
-                damping: 10,
-            },
-        },
-    };
-
-    // Función para dividir la descripción en párrafos
-    const renderDescription = (description) => {
-        if (!description) return null;
-        const paragraphs = description.split(/(?<=\.)\s+/);
-        return paragraphs.map((paragraph, index) => (
-            <motion.p
-                key={index}
-                className="mb-4 last:mb-0"
-                variants={itemVariants}
-            >
-                {paragraph}
-            </motion.p>
-        ));
-    };
-
-    // Obtener el slug de la URL
-    useEffect(() => {
-        const getQueryParam = (param) => {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        };
-
-        const slug = getQueryParam("slug");
-        if (slug) {
-            const foundIndex = services.findIndex(
-                (service) =>
-                    service.slug === slug ||
-                    service.title.toLowerCase().replace(/[^a-z0-9]+/g, "-") ===
-                        slug
-            );
-            if (foundIndex !== -1) setActiveIndex(foundIndex);
-        }
-    }, [services]);
-
-    const { t } = useTranslation();
-
-    return (
-        <div className="font-poppins">
-            <Header />
-            <div className="min-h-screen bg-white font-sans">
-                {/* Hero Image */}
-                {landingHero && (
-                    <motion.div
-                        className="w-full mt-4 lg:mt-0 h-52 md:h-64 overflow-hidden rounded-b-3xl"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <img
-                            src={`/api/landing_home/media/${landingHero?.image}`}
-                            alt="Equipamiento médico de fisioterapia"
-                            className="w-full h-52 md:h-64 object-cover object-left lg:object-center"
-                        />
-                    </motion.div>
-                )}
-                <div className="max-w-6xl mx-auto px-4 lg:px-3 py-8">
-                    {/* Title Section */}
-                    {landingHero && (
-                        <motion.div
-                            className="text-center mb-8 lg:mt-10"
-                            initial="hidden"
-                            animate="visible"
-                            variants={containerVariants}
-                        >
-                            <motion.h1
-                                className="text-5xl leading-[42px] lg:text-6xl font-semibold mb-2 lg:max-w-2xl lg:mx-auto"
-                                variants={itemVariants}
-                            >
-                                <TextWithHighlight text={landingHero?.title} />
-                            </motion.h1>
-                        </motion.div>
-                    )}
-                    {services && (
-                        <div className="flex flex-col lg:flex-row lg:gap-12 lg:pt-2 justify-between">
-                            {/* Services Menu */}
-                            <motion.div
-                                className="w-full lg:w-[30%] mt-10 relative"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.2 }}
-                            >
-                                <h2 className="hidden lg:block text-xl lg:text-2xl font-semibold mb-4">
-                                    Servicios
-                                </h2>
-
-                                <div className="lg:hidden mb-6">
-                                    <button
-                                        onClick={handleServicesMenu}
-                                        className="w-full flex items-center justify-between p-3 border border-gray-300 rounded-md"
-                                    >
-                                        <span className="font-medium">
-                                            Servicios
-                                        </span>
-                                        <ChevronDown className="h-5 w-5 text-gray-500" />
-                                    </button>
-                                </div>
-                                <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: "auto" }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    className="hidden lg:relative lg:block lg:bg-transparent space-y-2"
-                                >
-                                    {services.map((service, index) => (
-                                        <motion.div
-                                            key={index}
-                                            onClick={() =>
-                                                setActiveIndex(index)
-                                            }
-                                            className={`flex items-center justify-between p-3 lg:py-3 lg:px-[5%] rounded-lg cursor-pointer ${
-                                                index === activeIndex
-                                                    ? "bg-gray-100"
-                                                    : "hover:bg-gray-50"
-                                            }`}
-                                            whileHover={{ scale: 1.02 }}
-                                            whileTap={{ scale: 0.98 }}
-                                        >
-                                            <span
-                                                className={`lg:text-lg ${
-                                                    index === activeIndex
-                                                        ? "font-medium"
-                                                        : ""
-                                                }`}
-                                            >
-                                                {service.title}
-                                            </span>
-                                            <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
-                                                <img
-                                                    src={`/api/service/media/${service.image}`}
-                                                    alt={service.title}
-                                                    className="w-full h-full object-cover"
-                                                    loading="lazy"
-                                                />
-                                            </div>
-                                        </motion.div>
-                                    ))}
-                                </motion.div>
-                                <AnimatePresence>
-                                    {showServicesMenu && (
-                                        <motion.div
-                                            initial={{ opacity: 0, height: 0 }}
-                                            animate={{
-                                                opacity: 1,
-                                                height: "auto",
-                                            }}
-                                            exit={{ opacity: 0, height: 0 }}
-                                            className=" lg:hidden lg:bg-transparent space-y-2"
-                                        >
-                                            {services.map((service, index) => (
-                                                <motion.div
-                                                    key={index}
-                                                    onClick={() =>
-                                                        setActiveIndex(index)
-                                                    }
-                                                    className={`flex items-center justify-between p-3 lg:py-3 lg:px-[5%] rounded-lg cursor-pointer ${
-                                                        index === activeIndex
-                                                            ? "bg-gray-100"
-                                                            : "hover:bg-gray-50"
-                                                    }`}
-                                                    whileHover={{ scale: 1.02 }}
-                                                    whileTap={{ scale: 0.98 }}
-                                                >
-                                                    <span
-                                                        className={`lg:text-lg ${
-                                                            index ===
-                                                            activeIndex
-                                                                ? "font-medium"
-                                                                : ""
-                                                        }`}
-                                                    >
-                                                        {service.title}
-                                                    </span>
-                                                    <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
-                                                        <img
-                                                            src={`/api/service/media/${service.image}`}
-                                                            alt={service.title}
-                                                            className="w-full h-full object-cover"
-                                                            loading="lazy"
-                                                        />
-                                                    </div>
-                                                </motion.div>
-                                            ))}
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </motion.div>
-
-                            {/* Service Details */}
-                            <motion.div
-                                className="lg:w-[62%]"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.4 }}
-                                key={activeIndex}
-                            >
-                                <motion.h2
-                                    className="text-5xl lg:mt-6 font-semibold mb-4 text-wrap"
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.3 }}
-                                >
-                                    <TextWithHighlight
-                                        text={services[activeIndex].title}
-                                        split={true}
-                                    />
-                                </motion.h2>
-
-                                <motion.div
-                                    className="mb-8 lg:mb-4 pt-4 lg:pt-2 text-lg"
-                                    initial="hidden"
-                                    animate="visible"
-                                    variants={containerVariants}
-                                >
-                                    {renderDescription(
-                                        services[activeIndex].description
-                                    )}
-                                </motion.div>
-
-                                {/* Service Features */}
-                                <motion.div
-                                    className="space-y-3 mb-8 text-lg"
-                                    variants={containerVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                >
-                                    {services[activeIndex].characteristics.map(
-                                        (characteristic, index) => (
-                                            <motion.div
-                                                key={index}
-                                                className="flex gap-3 items-center"
-                                                variants={itemVariants}
-                                            >
-                                                <div className="flex-shrink-0">
-                                                    <img
-                                                        src="/assets/img/icons/pin.png"
-                                                        className="w-6 h-6 mt-1"
-                                                        alt={characteristic}
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                                <p className="leading-relaxed">
-                                                    {characteristic}
-                                                </p>
-                                            </motion.div>
-                                        )
-                                    )}
-                                </motion.div>
-
-                                {/* CTA Button */}
-                                <motion.div
-                                    className="w-full px-[5%] lg:px-0 flex items-center justify-center lg:justify-start mt-6"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.6 }}
-                                >
-                                    <motion.button
-                                        onClick={() => setIsModalOpen(true)}
-                                        className="bg-[#EFF0F1] text-[#242424] py-1 pl-1 pr-3 gap-2 mt-2 rounded-full flex items-center"
-                                        variants={buttonVariants}
-                                        initial="hidden"
-                                        animate={["visible", "pulse"]}
-                                        whileHover="hover"
-                                        style={{
-                                            position: "relative",
-                                            overflow: "hidden",
-                                        }}
-                                    >
-                                        <motion.span
-                                            className="absolute inset-0 bg-[#224483] opacity-0 rounded-full"
-                                            initial={{ scale: 0 }}
-                                            whileTap={{
-                                                scale: 2,
-                                                opacity: 0.3,
-                                                transition: { duration: 0.5 },
-                                            }}
-                                        />
-                                        <div className="bg-[#224483] w-12 p-2 rounded-full">
-                                            <img
-                                                src="/assets/img/icons/calendar-check.png"
-                                                className="h-auto"
-                                                alt="Calendario"
-                                            />
-                                        </div>
-                                        {t(
-                                            "public.btn.appointment",
-                                            "Reserva tu cita"
-                                        )}
-                                    </motion.button>
-                                </motion.div>
-
-                                {/* Service Images */}
-                                <DynamicGalleryServiceService
-                                    service={services[activeIndex]}
-                                />
-                            </motion.div>
-                        </div>
-                    )}
-                </div>
+          <div className="w-full 2xl:max-w-7xl mx-auto px-4 md:px-8 2xl:px-0 relative z-10">
+            <div className="text-center mb-16">
+              <div 
+                className="inline-block px-6 py-2 rounded-full mb-6"
+                style={{
+                  background: 'linear-gradient(90deg, rgba(143, 189, 68, 0.1) 0%, rgba(35, 84, 184, 0.1) 50%, rgba(222, 52, 100, 0.1) 100%)'
+                }}
+              >
+                <span className="text-hd-cerulean font-bold text-sm uppercase tracking-wider">Nuestros Servicios</span>
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                Soluciones Logísticas{' '}
+                <span 
+                  className="bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+                  }}
+                >
+                  Integrales
+                </span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Impulsamos el crecimiento de tu negocio con tecnología de punta y un equipo comprometido
+              </p>
             </div>
-               {/* Especialidades Section */}
-               <motion.section
-                        className="w-full lg:max-w-[82rem] lg:px-[5%] lg:mx-auto py-10 lg:py-0"
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-                        variants={containerVariants}
-                    >
-                        <div className="mx-auto">
-                            <motion.div
-                                className="flex flex-col md:flex-row gap-8 md:gap-16"
-                                variants={containerVariants}
-                            >
-                                <motion.div
-                                    className="lg:w-1/2"
-                                    variants={itemVariants}
-                                >
-                                    <div className="mb-6 lg:mb-4">
-                                        <motion.h2
-                                            className="text-[40px] leading-[42px] lg:text-6xl font-semibold mb-2 lg:max-w-lg"
-                                            variants={itemVariants}
-                                        >
-                                            <TextWithHighlight
-                                                text={
-                                                    landingSpecialities?.title
-                                                }
-                                            />
-                                        </motion.h2>
-                                        <motion.p
-                                            className="text-lg lg:max-w-lg lg:mt-4"
-                                            variants={itemVariants}
-                                            transition={{ delay: 0.1 }}
-                                        >
-                                            {landingSpecialities?.description}
-                                        </motion.p>
-                                    </div>
+          </div>
+        </section>
 
-                                    <motion.div
-                                        className="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-2 gap-y-1 lg:mt-8"
-                                        variants={containerVariants}
-                                    >
-                                        {(() => {
-                                            const middleIndex = Math.ceil(
-                                                specialities.length / 2
-                                            );
-                                            const firstHalf =
-                                                specialities.slice(
-                                                    0,
-                                                    middleIndex
-                                                );
-                                            const secondHalf =
-                                                specialities.slice(middleIndex);
-
-                                            return (
-                                                <>
-                                                    <motion.div
-                                                        className="ml-6"
-                                                        variants={itemVariants}
-                                                    >
-                                                        <ul className="list-disc text-lg leading-[22px]">
-                                                            {firstHalf &&
-                                                                firstHalf.map(
-                                                                    (
-                                                                        especialidad,
-                                                                        index
-                                                                    ) => (
-                                                                        <motion.li
-                                                                            key={
-                                                                                especialidad.id ||
-                                                                                index
-                                                                            }
-                                                                            className="mb-1"
-                                                                            variants={
-                                                                                itemVariants
-                                                                            }
-                                                                            custom={
-                                                                                index
-                                                                            }
-                                                                        >
-                                                                            {
-                                                                                especialidad.name
-                                                                            }
-                                                                        </motion.li>
-                                                                    )
-                                                                )}
-                                                        </ul>
-                                                    </motion.div>
-
-                                                    <motion.div
-                                                        className="ml-6"
-                                                        variants={itemVariants}
-                                                    >
-                                                        <ul className="list-disc text-lg leading-[22px]">
-                                                            {secondHalf &&
-                                                                secondHalf.map(
-                                                                    (
-                                                                        especialidad,
-                                                                        index
-                                                                    ) => (
-                                                                        <motion.li
-                                                                            key={
-                                                                                especialidad.id ||
-                                                                                index
-                                                                            }
-                                                                            className="mb-1"
-                                                                            variants={
-                                                                                itemVariants
-                                                                            }
-                                                                            custom={
-                                                                                index +
-                                                                                firstHalf.length
-                                                                            }
-                                                                        >
-                                                                            {
-                                                                                especialidad.name
-                                                                            }
-                                                                        </motion.li>
-                                                                    )
-                                                                )}
-                                                        </ul>
-                                                    </motion.div>
-                                                </>
-                                            );
-                                        })()}
-                                    </motion.div>
-
-                                    <motion.button
-                                        className="hidden lg:flex text-white font-medium rounded-full mt-8 lg:mt-4 items-center"
-                                        variants={itemVariants}
-                                        transition={{ delay: 0.3 }}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <a
-                                            href="/services"
-                                            className="mt-5 bg-[#EFF0F1] text-[#242424] py-1 pl-1 pr-3 gap-2 rounded-full flex items-center lg:h-14"
-                                        >
-                                            <div className="bg-[#224483] w-12 p-2 rounded-full">
-                                                <img
-                                                    src="/assets/img/icons/treatment.png"
-                                                    className="h-auto"
-                                                />
-                                            </div>
-                                            {t(
-                                                "public.btn.all_services",
-                                                "Ver todos los servicios"
-                                            )}
-                                        </a>
-                                    </motion.button>
-                                </motion.div>
-
-                                <motion.div
-                                    className="lg:w-1/2 mt-4 lg:mt-0 relative"
-                                    variants={itemVariants}
-                                >
-                                    <Swiper
-                                        navigation={{
-                                            prevEl: ".custom-prev",
-                                            nextEl: ".custom-next",
-                                        }}
-                                        slidesPerView={3}
-                                        spaceBetween={30}
-                                        loop={true}
-                                        breakpoints={{
-                                            0: {
-                                                slidesPerView: 1,
-                                                spaceBetween: 10,
-                                            },
-                                            640: {
-                                                slidesPerView: 1,
-                                                spaceBetween: 10,
-                                            },
-                                            1024: {
-                                                slidesPerView: 1,
-                                                spaceBetween: 10,
-                                            },
-                                        }}
-                                        modules={[Navigation, Pagination]}
-                                        onSlideChange={(swiper) =>
-                                            setActiveIndex(swiper.realIndex)
-                                        }
-                                    >
-                                        {specialities.map(
-                                            (speciality, index) => (
-                                                <SwiperSlide key={index}>
-                                                    <motion.div className="rounded-2xl overflow-hidden shadow-lg h-[380px] lg:h-[650px] group">
-                                                        <motion.img
-                                                            src={`/api/speciality/media/${speciality.image}`}
-                                                            alt="Tratamiento de fisioterapia"
-                                                            whileHover={{
-                                                                scale: 1.1,
-                                                            }}
-                                                            transition={{
-                                                                stiffness: 400,
-                                                                damping: 10,
-                                                            }}
-                                                            className="w-full h-full object-cover"
-                                                        />
-                                                    </motion.div>
-                                                </SwiperSlide>
-                                            )
-                                        )}
-                                    </Swiper>
-                                    {/* Botones de navegación personalizados */}
-                                    <div className="hidden lg:block absolute top-1/2 left-[-40px] transform -translate-y-1/2 custom-prev cursor-pointer">
-                                        <ChevronLeft
-                                            size={40}
-                                            strokeWidth={3}
-                                            className="text-[#224483] "
-                                        />
-                                    </div>
-
-                                    <div className="hidden lg:block  absolute top-1/2 right-[-40px]  transform -translate-y-1/2 custom-next cursor-pointer">
-                                        <ChevronRight
-                                            size={40}
-                                            strokeWidth={3}
-                                            className="text-[#224483] "
-                                        />
-                                    </div>
-
-                                    <motion.div
-                                        className="w-[150px] mx-auto overflow-hidden flex justify-center gap-2 mt-10"
-                                        variants={itemVariants}
-                                    >
-                                        {specialities
-                                            .slice(
-                                                Math.max(0, activeIndex - 1),
-                                                Math.min(
-                                                    specialities.length,
-                                                    activeIndex + 2
-                                                )
-                                            )
-                                            .map((_, indexOffset) => {
-                                                const index =
-                                                    Math.max(
-                                                        0,
-                                                        activeIndex - 1
-                                                    ) + indexOffset;
-                                                return (
-                                                    <motion.button
-                                                        key={index}
-                                                        className={`rounded-full transition-all duration-300 ${
-                                                            index ===
-                                                            activeIndex
-                                                                ? "bg-[#224483] w-[20px] h-[12px]"
-                                                                : "bg-[#22448366] w-[12px] h-[12px]"
-                                                        }`}
-                                                        whileHover={{
-                                                            scale: 1.2,
-                                                        }}
-                                                        whileTap={{
-                                                            scale: 0.9,
-                                                        }}
-                                                    />
-                                                );
-                                            })}
-                                    </motion.div>
-                                </motion.div>
-                            </motion.div>
+        {/* Grid de Servicios */}
+        <section className="relative py-12 md:py-20 overflow-hidden bg-white">
+          <div className="w-full 2xl:max-w-7xl mx-auto px-4 md:px-8 2xl:px-0 relative z-10">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {services.map((service, index) => {
+                const colorScheme = colorSchemes[index % colorSchemes.length];
+                
+                return (
+                  <div
+                    key={service.id}
+                    className={`group relative bg-white rounded-3xl border-2 border-gray-100 ${colorScheme.hover} transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 cursor-pointer overflow-hidden`}
+                    onClick={() => setSelectedService(service)}
+                  >
+                    <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                    
+                    <div className="relative p-8">
+                      <div className="mb-6">
+                        <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${colorScheme.gradient} shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                          <img
+                            src={`/api/service/media/${service.icon}`}
+                            alt={service.title}
+                            className="w-10 h-10 object-contain filter brightness-0 invert"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                            }}
+                          />
                         </div>
-                    </motion.section>
+                      </div>
 
-            <ModalAppointment
-                linkWhatsApp={linkWhatsApp}
-                randomImage={randomImage}
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-            />
-            <Footer />
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-gray-700 transition-colors">
+                        {service.title}
+                      </h3>
+
+                      <p className="text-gray-600 leading-relaxed mb-6 line-clamp-3">
+                        {service.description}
+                      </p>
+
+                      {service.characteristics && service.characteristics.length > 0 && (
+                        <ul className="space-y-2 mb-6">
+                          {service.characteristics.slice(0, 3).map((char, idx) => (
+                            <li key={idx} className="flex items-start text-sm text-gray-600">
+                              <svg className={`w-5 h-5 ${colorScheme.text} mr-2 flex-shrink-0 mt-0.5`} fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                              {char}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      <button className={`inline-flex items-center ${colorScheme.text} font-semibold group/btn`}>
+                        <span>Ver detalles</span>
+                        <svg className="w-5 h-5 ml-2 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </button>
+
+                      <div className="absolute top-6 right-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <span className="text-7xl font-bold text-gray-900">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-16 text-center">
+              <div className="inline-flex flex-col sm:flex-row gap-4">
+                <a
+                  href="/contact"
+                  className="bg-gradient-to-r from-hd-cerise to-hd-cerise/90 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                >
+                  Solicitar Cotización
+                </a>
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white border-2 border-green-500 text-green-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-green-500 hover:text-white hover:shadow-xl transition-all duration-300 inline-flex items-center justify-center gap-2"
+                >
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                  </svg>
+                  Escríbenos por WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Modal */}
+      {selectedService && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedService(null)}
+        >
+          <div 
+            className="bg-white rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedService(null)}
+              className="absolute top-6 right-6 p-3 bg-white rounded-full text-gray-600 hover:bg-gray-100 transition-colors z-50 shadow-lg"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div className="grid md:grid-cols-2 gap-0">
+              <div className="relative bg-gray-100 min-h-[400px] md:min-h-[600px] rounded-tl-3xl md:rounded-bl-3xl overflow-hidden">
+                {selectedService.image ? (
+                  <img
+                    src={`/api/service/media/${selectedService.image}`}
+                    alt={selectedService.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.src = '/api/cover/thumbnail/null';
+                    }}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-hd-android via-hd-cerulean to-hd-cerise flex items-center justify-center">
+                    <svg className="w-32 h-32 text-white/30" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              </div>
+
+              <div className="p-8 md:p-10 flex flex-col">
+                <h3 
+                  className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+                  }}
+                >
+                  {selectedService.title}
+                </h3>
+
+                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                  {selectedService.description}
+                </p>
+
+                {selectedService.characteristics && selectedService.characteristics.length > 0 && (
+                  <div className="mb-8">
+                    <h4 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                      <svg className="w-6 h-6 text-hd-android mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Características
+                    </h4>
+                    <ul className="space-y-3">
+                      {selectedService.characteristics.map((char, idx) => (
+                        <li key={idx} className="flex items-start text-gray-700 group">
+                          <svg className="w-6 h-6 text-hd-android mr-3 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          <span className="text-base leading-relaxed">{char}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <a
+                    href="/contact"
+                    onClick={() => setSelectedService(null)}
+                    className="block text-center bg-gradient-to-r from-hd-cerise to-hd-cerise/90 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                  >
+                    Solicitar este servicio
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    );
+      )}
+
+      <Footer generals={generals} socials={socials} />
+      <WhatsAppButton socials={socials} generals={generals} />
+    </div>
+  );
 };
 
 CreateReactScript((el, properties) => {
-    createRoot(el).render(
-        <CarritoProvider>
-            <Base {...properties}>
-                <ServiciosPage {...properties} />
-            </Base>
-        </CarritoProvider>
-    );
+  createRoot(el).render(<ServiciosPage {...properties} />);
 });
+
+export default ServiciosPage;

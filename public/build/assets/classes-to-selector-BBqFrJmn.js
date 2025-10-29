@@ -1,1 +1,0 @@
-import{e as i,c as r}from"./swiper-react-CDKmla4x.js";function m(e,f,l,a){return e.params.createElements&&Object.keys(a).forEach(t=>{if(!l[t]&&l.auto===!0){let n=i(e.el,`.${a[t]}`)[0];n||(n=r("div",a[t]),n.className=a[t],e.el.append(n)),l[t]=n,f[t]=n}}),l}function c(e){return e===void 0&&(e=""),`.${e.trim().replace(/([\.:!+\/])/g,"\\$1").replace(/ /g,".")}`}export{c as a,m as c};
