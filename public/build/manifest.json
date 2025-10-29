@@ -346,6 +346,21 @@
       "swiper.css"
     ]
   },
+  "_WhatsAppButton-!~{03N}~.js": {
+    "file": "WhatsAppButton.css",
+    "src": "_WhatsAppButton-!~{03N}~.js"
+  },
+  "_WhatsAppButton-BCsanCsV.js": {
+    "file": "assets/WhatsAppButton-BCsanCsV.js",
+    "name": "WhatsAppButton",
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/components/TrackingPixels.jsx"
+    ],
+    "css": [
+      "WhatsAppButton.css"
+    ]
+  },
   "____vite-browser-external_commonjs-proxy-DjIx6Adb.js": {
     "file": "assets/___vite-browser-external_commonjs-proxy-DjIx6Adb.js",
     "name": "___vite-browser-external_commonjs-proxy",
@@ -517,9 +532,9 @@
       "resources/js/components/TrackingPixels.jsx"
     ]
   },
-  "_swiper-!~{03I}~.js": {
+  "_swiper-!~{03J}~.js": {
     "file": "swiper.css",
-    "src": "_swiper-!~{03I}~.js"
+    "src": "_swiper-!~{03J}~.js"
   },
   "_swiper-react-CDKmla4x.js": {
     "file": "assets/swiper-react-CDKmla4x.js",
@@ -528,9 +543,9 @@
       "resources/js/components/TrackingPixels.jsx"
     ]
   },
-  "_tippy-!~{03A}~.js": {
+  "_tippy-!~{03B}~.js": {
     "file": "tippy.css",
-    "src": "_tippy-!~{03A}~.js"
+    "src": "_tippy-!~{03B}~.js"
   },
   "_tippy-react.esm-CIcmk6y-.js": {
     "file": "assets/tippy-react.esm-CIcmk6y-.js",
@@ -655,8 +670,40 @@
       "tippy.css"
     ]
   },
+  "resources/js/AboutPage.jsx": {
+    "file": "assets/AboutPage-04Y689G7.js",
+    "name": "AboutPage",
+    "src": "resources/js/AboutPage.jsx",
+    "isEntry": true,
+    "imports": [
+      "resources/js/Admin/FileViewer.jsx",
+      "resources/js/Utils/ReactAppend.jsx",
+      "_CreateReactScript-BEktg6JA.js",
+      "resources/js/components/TrackingPixels.jsx",
+      "_WhatsAppButton-BCsanCsV.js",
+      "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
+      "_proxy-Ci5QcTMU.js",
+      "_index-CbrplguO.js",
+      "_index.esm-Duzu12F9.js",
+      "_axios-B4uVmeYG.js",
+      "____vite-browser-external_commonjs-proxy-DjIx6Adb.js",
+      "_main-D1ujSG59.js",
+      "_index-DkSDNEBT.js",
+      "_index-CZSDX33M.js",
+      "_HtmlContent-C_QQVIf4.js",
+      "_GeneralRest-DRwja8Cw.js",
+      "resources/js/components/Blog/Results.jsx",
+      "_index-DJI-j85T.js",
+      "_x-DwxZ1MqR.js",
+      "_createLucideIcon-B31oCQao.js"
+    ],
+    "css": [
+      "swiper.css",
+      "tippy.css"
+    ]
+  },
   "resources/js/Admin/About.jsx": {
-    "file": "assets/About-C8Yz9I4M.js",
+    "file": "assets/About-BIbS8Qeb.js",
     "name": "About",
     "src": "resources/js/Admin/About.jsx",
     "isEntry": true,
@@ -664,7 +711,8 @@
       "resources/js/Admin/FileViewer.jsx",
       "_Base-qkus41MS.js",
       "_SwitchFormGroup-COj39dTx.js",
-      "_TextareaFormGroup-BncP5wW3.js",
+      "_QuillFormGroup-z_DnzjWe.js",
+      "_ImageFormGroup-yZTAH_8o.js",
       "resources/js/components/TrackingPixels.jsx",
       "resources/js/Utils/ReactAppend.jsx",
       "resources/js/components/Blog/Results.jsx",
@@ -2537,7 +2585,7 @@
     ]
   },
   "resources/js/HomeDeliveryPage.jsx": {
-    "file": "assets/HomeDeliveryPage-DaVppZJl.js",
+    "file": "assets/HomeDeliveryPage-DZLsI6ip.js",
     "name": "HomeDeliveryPage",
     "src": "resources/js/HomeDeliveryPage.jsx",
     "isEntry": true,
@@ -2546,6 +2594,7 @@
       "resources/js/Utils/ReactAppend.jsx",
       "_CreateReactScript-BEktg6JA.js",
       "resources/js/components/TrackingPixels.jsx",
+      "_WhatsAppButton-BCsanCsV.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "_index-CbrplguO.js",
       "_index.esm-Duzu12F9.js",
@@ -2562,7 +2611,6 @@
       "_createLucideIcon-B31oCQao.js"
     ],
     "css": [
-      "HomeDeliveryPage.css",
       "swiper.css",
       "tippy.css"
     ]
@@ -3405,7 +3453,7 @@
     ]
   },
   "resources/js/components/Adminto/Modal.jsx": {
-    "file": "assets/Modal-COKCz9DG.js",
+    "file": "assets/Modal-BM6_LCjb.js",
     "name": "Modal",
     "src": "resources/js/components/Adminto/Modal.jsx",
     "isEntry": true,
@@ -3473,7 +3521,7 @@
     ]
   },
   "resources/js/components/Adminto/form/InputFormGroup.jsx": {
-    "file": "assets/InputFormGroup-BM6_LCjb.js",
+    "file": "assets/InputFormGroup-COKCz9DG.js",
     "name": "InputFormGroup",
     "src": "resources/js/components/Adminto/form/InputFormGroup.jsx",
     "isEntry": true,
@@ -3493,7 +3541,7 @@
     ]
   },
   "resources/js/components/Adminto/form/QuillFormGroup.jsx": {
-    "file": "assets/QuillFormGroup-BM6_LCjb.js",
+    "file": "assets/QuillFormGroup-COKCz9DG.js",
     "name": "QuillFormGroup",
     "src": "resources/js/components/Adminto/form/QuillFormGroup.jsx",
     "isEntry": true,
@@ -3515,7 +3563,7 @@
     ]
   },
   "resources/js/components/Adminto/form/SelectFormGroup.jsx": {
-    "file": "assets/SelectFormGroup-BM6_LCjb.js",
+    "file": "assets/SelectFormGroup-COKCz9DG.js",
     "name": "SelectFormGroup",
     "src": "resources/js/components/Adminto/form/SelectFormGroup.jsx",
     "isEntry": true,
@@ -3535,7 +3583,7 @@
     ]
   },
   "resources/js/components/Adminto/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
+    "file": "assets/TextareaFormGroup-COKCz9DG.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/Adminto/form/TextareaFormGroup.jsx",
     "isEntry": true,
@@ -4183,7 +4231,7 @@
     ]
   },
   "resources/js/components/Modal.jsx": {
-    "file": "assets/Modal-BM6_LCjb.js",
+    "file": "assets/Modal-COKCz9DG.js",
     "name": "Modal",
     "src": "resources/js/components/Modal.jsx",
     "isEntry": true,
@@ -4264,7 +4312,7 @@
     ]
   },
   "resources/js/components/Table.jsx": {
-    "file": "assets/Table-BM6_LCjb.js",
+    "file": "assets/Table-COKCz9DG.js",
     "name": "Table",
     "src": "resources/js/components/Table.jsx",
     "isEntry": true,
@@ -4452,7 +4500,7 @@
     ]
   },
   "resources/js/components/Tailwind/Table.jsx": {
-    "file": "assets/Table-COKCz9DG.js",
+    "file": "assets/Table-BM6_LCjb.js",
     "name": "Table",
     "src": "resources/js/components/Tailwind/Table.jsx",
     "isEntry": true,
@@ -4604,10 +4652,10 @@
     ]
   },
   "resources/js/components/Test/HairType.jsx": {
-    "file": "assets/HairType-DWnGOmiA.js",
+    "file": "assets/HairType-W2tboi8x.js",
     "name": "HairType",
     "src": "resources/js/components/Test/HairType.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx",
@@ -4640,10 +4688,10 @@
     ]
   },
   "resources/js/components/Test/Treatment.jsx": {
-    "file": "assets/Treatment-BM6_LCjb.js",
+    "file": "assets/Treatment-0DU8BCXm.js",
     "name": "Treatment",
     "src": "resources/js/components/Test/Treatment.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx"
@@ -4754,7 +4802,7 @@
     ]
   },
   "resources/js/components/form/InputFormGroup.jsx": {
-    "file": "assets/InputFormGroup-COKCz9DG.js",
+    "file": "assets/InputFormGroup-BM6_LCjb.js",
     "name": "InputFormGroup",
     "src": "resources/js/components/form/InputFormGroup.jsx",
     "isEntry": true,
@@ -4774,7 +4822,7 @@
     ]
   },
   "resources/js/components/form/QuillFormGroup.jsx": {
-    "file": "assets/QuillFormGroup-COKCz9DG.js",
+    "file": "assets/QuillFormGroup-BM6_LCjb.js",
     "name": "QuillFormGroup",
     "src": "resources/js/components/form/QuillFormGroup.jsx",
     "isEntry": true,
@@ -4796,7 +4844,7 @@
     ]
   },
   "resources/js/components/form/SelectFormGroup.jsx": {
-    "file": "assets/SelectFormGroup-COKCz9DG.js",
+    "file": "assets/SelectFormGroup-BM6_LCjb.js",
     "name": "SelectFormGroup",
     "src": "resources/js/components/form/SelectFormGroup.jsx",
     "isEntry": true,
@@ -4806,7 +4854,7 @@
     ]
   },
   "resources/js/components/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-COKCz9DG.js",
+    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/form/TextareaFormGroup.jsx",
     "isEntry": true,

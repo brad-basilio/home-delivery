@@ -1,6 +1,7 @@
 import BaseAdminto from '@Adminto/Base';
 import SwitchFormGroup from '@Adminto/form/SwitchFormGroup';
-import TextareaFormGroup from '@Adminto/form/TextareaFormGroup';
+import QuillFormGroup from '@Adminto/form/QuillFormGroup';
+import ImageFormGroup from '@Adminto/form/ImageFormGroup';
 import React, { useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import AboutusRest from '../Actions/Admin/AboutusRest';
@@ -20,8 +21,11 @@ const About = () => {
 
   // Form elements ref
   const idRef = useRef()
+  const correlativeRef = useRef()
   const nameRef = useRef()
+  const titleRef = useRef()
   const descriptionRef = useRef()
+  const imageRef = useRef()
 
   const [isEditing, setIsEditing] = useState(false)
 
@@ -30,8 +34,12 @@ const About = () => {
     else setIsEditing(false)
 
     idRef.current.value = data?.id ?? ''
+    correlativeRef.current.value = data?.correlative ?? ''
     nameRef.current.value = data?.name ?? ''
-    descriptionRef.current.value = data?.description ?? ''
+    titleRef.current.value = data?.title ?? ''
+    descriptionRef.editor.root.innerHTML = data?.description ?? ''
+    imageRef.image.src = `/api/aboutus/media/${data?.image}`
+    imageRef.current.value = null
 
     $(modalRef.current).modal('show')
   }
@@ -41,11 +49,24 @@ const About = () => {
 
     const request = {
       id: idRef.current.value || undefined,
+      correlative: correlativeRef.current.value,
       name: nameRef.current.value,
+      title: titleRef.current.value,
       description: descriptionRef.current.value,
     }
 
-    const result = await aboutusRest.save(request)
+    const formData = new FormData()
+    for (const key in request) {
+      if (request[key] !== undefined && request[key] !== '') {
+        formData.append(key, request[key])
+      }
+    }
+    const file = imageRef.current.files[0]
+    if (file) {
+      formData.append('image', file)
+    }
+
+    const result = await aboutusRest.save(formData)
     if (!result) return
 
     $(gridRef.current).dxDataGrid('instance').refresh()
@@ -92,13 +113,47 @@ const About = () => {
           visible: false
         },
         {
+          dataField: 'correlative',
+          caption: 'Correlativo',
+          visible: false
+        },
+        {
+          dataField: 'image',
+          caption: 'Imagen',
+          width: '80px',
+          allowFiltering: false,
+          cellTemplate: (container, { data }) => {
+            ReactAppend(
+              container,
+              <img
+                src={`/api/aboutus/media/${data.image}`}
+                onError={(e) => e.target.src = '/api/cover/thumbnail/null'}
+                style={{
+                  width: '60px',
+                  height: '40px',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                  borderRadius: '4px',
+                }}
+              />
+            );
+          },
+        },
+        {
           dataField: 'name',
-          caption: 'Titulo',
+          caption: 'Nombre',
+          width: '20%'
+        },
+        {
+          dataField: 'title',
+          caption: 'Título',
+          width: '40%'
         },
         {
           dataField: 'visible',
           caption: 'Visible',
           dataType: 'boolean',
+          width: '10%',
           cellTemplate: (container, { data }) => {
             $(container).empty()
             ReactAppend(container, <SwitchFormGroup checked={data.visible == 1} onChange={() => onVisibleChange({
@@ -145,11 +200,20 @@ const About = () => {
           allowExporting: false
         }
       ]} />
-    <Modal modalRef={modalRef} title={isEditing ? 'Editar about' : 'Agregar about'} onSubmit={onModalSubmit} size='md'>
-      <div className='row' id='benefits-container'>
+    <Modal modalRef={modalRef} title={isEditing ? 'Editar Sección' : 'Agregar Sección'} onSubmit={onModalSubmit} size='lg'>
+      <div className='row' id='about-container'>
         <input ref={idRef} type='hidden' />
-        <InputFormGroup eRef={nameRef} label='Titulo' col='col-12' rows={2} required disabled />
-        <TextareaFormGroup eRef={descriptionRef} label='Descripción' rows={3} />
+        <input ref={correlativeRef} type='hidden' />
+        <InputFormGroup eRef={nameRef} label='Nombre' col='col-md-6' required />
+        <InputFormGroup eRef={titleRef} label='Título' col='col-md-6' required />
+        <ImageFormGroup 
+          eRef={imageRef} 
+          label='Imagen (Opcional)' 
+          col='col-md-12'
+          aspect={16/9}
+          fit='cover'
+        />
+        <QuillFormGroup eRef={descriptionRef} label='Descripción' col='col-12' />
       </div>
     </Modal>
   </>

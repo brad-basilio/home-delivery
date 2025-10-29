@@ -106,7 +106,7 @@ Route::get('/', [HomeDeliveryController::class, 'reactView'])->name('HomeDeliver
 // ============================================================================
 // Route::get('/', [HomeController::class, 'reactView'])->name('Home.jsx');
 
-Route::get('/about', [AboutController::class, 'reactView'])->name('FisioTerapiaPage.jsx');
+Route::get('/about', [AboutController::class, 'reactView'])->name('AboutPage.jsx');
 Route::get('/contact', [ContactController::class, 'reactView'])->name('Contacto.jsx');
 Route::get('/offices', [FacilityController::class, 'reactView'])->name('InstalacionesPage.jsx');
 Route::get('/services', [ServiceController::class, 'reactView'])->name('ServiciosPage.jsx');

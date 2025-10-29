@@ -15,33 +15,47 @@ class StrengthSeeder extends Seeder
     {
         $strengths = [
             [
-                'name' => 'Compromiso con el bienestar',
-                'description' => 'Nos enfocamos en promover hábitos que mejoren la calidad de vida, motivando a cada persona a cuidar de su salud física y mental.'
+                'name' => 'Entrega Rápida y Confiable',
+                'description' => 'Garantizamos entregas puntuales con un sistema de seguimiento en tiempo real para que tus clientes siempre sepan dónde está su pedido.',
+                'visible' => true,
+                'status' => true,
             ],
             [
-                'name' => 'Enfoque integral',
-                'description' => 'Ofrecemos una metodología que abarca el desarrollo personal, profesional y emocional para lograr una transformación completa.'
+                'name' => 'Cobertura Nacional',
+                'description' => 'Llegamos a todas las regiones del país con una red de distribución robusta y eficiente que no conoce límites.',
+                'visible' => true,
+                'status' => true,
             ],
             [
-                'name' => 'Crecimiento sostenido',
-                'description' => 'Promovemos el crecimiento a través de cambios progresivos y sostenibles, generando resultados que perduran en el tiempo.'
+                'name' => 'Tecnología de Vanguardia',
+                'description' => 'Plataforma digital intuitiva que facilita la gestión de pedidos, tracking en vivo y reportes detallados para tu negocio.',
+                'visible' => true,
+                'status' => true,
             ],
             [
-                'name' => 'Resiliencia y superación',
-                'description' => 'Enseñamos a enfrentar y superar los desafíos, desarrollando una mentalidad fuerte y resiliente ante cualquier adversidad.'
+                'name' => 'Atención al Cliente 24/7',
+                'description' => 'Soporte dedicado disponible en todo momento para resolver cualquier inquietud o necesidad de manera inmediata.',
+                'visible' => true,
+                'status' => true,
             ],
             [
-                'name' => 'Inspiración constante',
-                'description' => 'Motivamos a nuestros estudiantes a mantenerse inspirados y enfocados en sus metas, creando un ambiente de constante superación.'
+                'name' => 'Soluciones Personalizadas',
+                'description' => 'Adaptamos nuestros servicios a las necesidades específicas de tu negocio con planes flexibles y escalables.',
+                'visible' => true,
+                'status' => true,
+            ],
+            [
+                'name' => 'Compromiso con la Sostenibilidad',
+                'description' => 'Implementamos prácticas ecológicas en nuestras operaciones para reducir el impacto ambiental y construir un futuro más verde.',
+                'visible' => true,
+                'status' => true,
             ]
         ];
 
         foreach ($strengths as $strength) {
             Strength::updateOrCreate([
                 'name' => $strength['name']
-            ], [
-                'description' => $strength['description']
-            ]);
+            ], $strength);
         }
     }
 }

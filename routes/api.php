@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AdController;
 use Illuminate\Support\Facades\Route;
 
@@ -122,6 +123,8 @@ Route::get('/testimony/media/{uuid}', [TestimonyController::class, 'media']);
 Route::get('/staff/media/{uuid}', [StaffController::class, 'media']);
 Route::get('/speciality/media/{uuid}', [SpecialityController::class, 'media']);
 Route::get('/lang/media/{uuid}', [LangController::class, 'media']);
+
+Route::get('/aboutus/media/{uuid}', [AboutUsController::class, 'media']);
 
 Route::get('/posts/media/{uuid}', [AdminPostController::class, 'media']);
 Route::get('/items/media/{uuid}', [ItemController::class, 'media']);

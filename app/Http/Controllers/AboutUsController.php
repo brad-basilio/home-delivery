@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 class AboutUsController extends BasicController
 {
+    public $model = Aboutus::class;
     public $reactView = 'About';
     public $reactRootView = 'public';
 
