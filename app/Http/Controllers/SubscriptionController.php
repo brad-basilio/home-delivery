@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subscription;
+use App\Notifications\SubscriptionNotification;
 use Illuminate\Http\Request;
 use SoDe\Extend\Text;
 
@@ -19,5 +20,12 @@ class SubscriptionController extends BasicController
             'name' => $provider,
             'description' => $request->email
         ];
+    }
+
+    public function afterSave(Request $request, object $jpa)
+    {
+        // Enviar notificación de bienvenida al suscriptor
+        $jpa->notify(new SubscriptionNotification());
+        return null;
     }
 }

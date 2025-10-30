@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
-import { X } from 'lucide-react';
+import { X, CheckCircle } from 'lucide-react';
 import HtmlContent from '../../Utils/HtmlContent';
 import GeneralRest from '../../actions/GeneralRest';
+import SubscriptionsRest from '../../actions/SubscriptionsRest';
 import {
   FaFacebook,
   FaTwitter,
@@ -43,9 +44,12 @@ const getSocialIcon = (social) => {
 
 const Footer = ({ generals = [], socials = [] }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalSubscribeOpen, setModalSubscribeOpen] = useState(false);
   const [email, setEmail] = useState('');
+  const [saving, setSaving] = useState(false);
   const [aboutuses, setAboutuses] = useState(null);
   const generalRest = new GeneralRest();
+  const subscriptionsRest = new SubscriptionsRest();
 
   const openModal = (index) => setModalOpen(index);
   const closeModal = () => setModalOpen(false);
@@ -73,12 +77,26 @@ const Footer = ({ generals = [], socials = [] }) => {
   const contactEmail = getGeneralValue('email');
   const address = getGeneralValue('address');
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
-    // TODO: Implementar lógica de suscripción
-    console.log('Suscribirse:', email);
-    alert('¡Gracias por suscribirte! Recibirás nuestras últimas novedades.');
-    setEmail('');
+    setSaving(true);
+
+    try {
+      const request = {
+        email: email,
+      };
+      
+      const result = await subscriptionsRest.save(request);
+      
+      if (result) {
+        setModalSubscribeOpen(true);
+        setEmail('');
+      }
+    } catch (error) {
+      console.error('Error al suscribirse:', error);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const policyItems = {
@@ -277,13 +295,15 @@ const Footer = ({ generals = [], socials = [] }) => {
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="tu@email.com"
                       required
-                      className="w-full pl-4 pr-28 py-3.5 rounded-full bg-white/95 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-hd-android focus:bg-white text-sm font-medium shadow-lg transition-all duration-300"
+                      disabled={saving}
+                      className="w-full pl-4 pr-28 py-3.5 rounded-full bg-white/95 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-hd-android focus:bg-white text-sm font-medium shadow-lg transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                     />
                     <button
                       type="submit"
-                      className="absolute right-1.5 top-1/2 -translate-y-1/2 px-5 py-2.5 bg-gradient-to-r from-hd-android to-hd-android/90 hover:from-hd-android/90 hover:to-hd-android text-white rounded-full font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
+                      disabled={saving}
+                      className="absolute right-1.5 top-1/2 -translate-y-1/2 px-5 py-2.5 bg-gradient-to-r from-hd-android to-hd-android/90 hover:from-hd-android/90 hover:to-hd-android text-white rounded-full font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
-                      Enviar
+                      {saving ? 'Enviando...' : 'Enviar'}
                     </button>
                   </div>
                
@@ -411,6 +431,59 @@ const Footer = ({ generals = [], socials = [] }) => {
           </ReactModal>
         );
       })}
+
+      {/* Modal de Suscripción Exitosa */}
+      <ReactModal
+        isOpen={modalSubscribeOpen}
+        onRequestClose={() => setModalSubscribeOpen(false)}
+        contentLabel="Suscripción Exitosa"
+        className="modal-content-hidden"
+        overlayClassName="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        shouldCloseOnOverlayClick={true}
+      >
+        <div 
+          className="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header con gradiente */}
+          <div 
+            className="px-8 py-6 text-center"
+            style={{
+              background: 'linear-gradient(135deg, rgba(132, 188, 40, 0.1) 0%, rgba(35, 84, 184, 0.1) 50%, rgba(222, 52, 100, 0.1) 100%)'
+            }}
+          >
+            {/* Icono de éxito */}
+            <div className="flex justify-center mb-4">
+              <div className="p-3 rounded-full bg-green-100">
+                <CheckCircle className="w-16 h-16 text-green-600" strokeWidth={2.5} />
+              </div>
+            </div>
+
+            <h2 
+              className="text-3xl font-bold bg-clip-text text-transparent mb-3"
+              style={{
+                backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+              }}
+            >
+              ¡Gracias por suscribirte!
+            </h2>
+            
+            <p className="text-gray-600 text-lg leading-relaxed">
+              Recibirás nuestras últimas novedades y ofertas exclusivas en tu correo electrónico.
+            </p>
+          </div>
+
+          {/* Botón de cerrar */}
+          <div className="px-8 pb-8 pt-4 flex justify-center">
+            <button
+              onClick={() => setModalSubscribeOpen(false)}
+              className="px-10 py-3 bg-gradient-to-r from-hd-android to-hd-android/90 text-white rounded-full font-bold text-base hover:shadow-xl hover:scale-105 transition-all duration-300"
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      </ReactModal>
     </>
   );
 };
