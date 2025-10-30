@@ -58,6 +58,13 @@ const ContactoPage = (props) => {
   const telefonoSoporte = generals?.find(g => g.correlative === 'phone_contact')?.description || '';
   const whatsappNumber = generals?.find(g => g.correlative === 'whatsapp_phone')?.description || '';
 
+  // Debug: Verificar estructura de generals
+  useEffect(() => {
+    console.log('Generals data:', generals);
+    const openingHours = generals?.find(g => g.correlative === 'opening_hours');
+    console.log('Opening hours found:', openingHours);
+  }, [generals]);
+
   // Cerrar dropdowns al hacer click fuera
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -906,6 +913,77 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        </section>
+
+        {/* Sección de Horarios de Atención */}
+        <section className="py-12 md:py-16 bg-white">
+          <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0">
+            <div className="bg-gradient-to-br from-gray-50 via-white to-gray-50 rounded-3xl p-8 md:p-12 border-2 border-gray-100">
+              <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                {/* Columna Izquierda - Título */}
+                <div>
+                  <div 
+                    className="inline-block px-4 py-2 rounded-full mb-4"
+                    style={{
+                      background: 'linear-gradient(90deg, rgba(143, 189, 68, 0.1) 0%, rgba(35, 84, 184, 0.1) 50%, rgba(222, 52, 100, 0.1) 100%)'
+                    }}
+                  >
+                    <span className="text-hd-cerulean font-bold text-sm uppercase tracking-wider">Atención</span>
+                  </div>
+                  
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Horarios de{' '}
+                    <span 
+                      className="bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+                      }}
+                    >
+                      Atención
+                    </span>
+                  </h2>
+                  
+                  <p className="text-gray-600 text-lg leading-relaxed">
+                    Estamos disponibles para atenderte en los siguientes horarios. Contáctanos y un asesor te responderá a la brevedad.
+                  </p>
+                </div>
+
+                {/* Columna Derecha - Horarios */}
+                <div className="space-y-4">
+                  {(() => {
+                    const openingHours = generals?.find(g => g.correlative === 'opening_hours')?.description;
+                    if (!openingHours) {
+                      return (
+                        <div className="bg-white rounded-2xl p-6 border-2 border-gray-100">
+                          <p className="text-gray-600">No hay horarios configurados</p>
+                        </div>
+                      );
+                    }
+                    
+                    return openingHours.split('\n').map((horario, index) => (
+                      <div 
+                        key={index}
+                        className="bg-white rounded-2xl p-6 border-2 border-gray-100 hover:border-hd-android hover:shadow-lg transition-all duration-300 group"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="p-3 rounded-xl bg-gradient-to-br from-hd-android to-hd-android/80 group-hover:scale-110 transition-transform duration-300">
+                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-gray-900 font-semibold text-lg">{horario}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ));
+                  })()}
+
+                
+                </div>
+              </div>
             </div>
           </div>
         </section>

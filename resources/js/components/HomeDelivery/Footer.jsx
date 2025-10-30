@@ -177,14 +177,37 @@ const Footer = ({ generals = [], socials = [] }) => {
                 Horario de Atención
               </h3>
               <div className="space-y-4 text-sm">
-                <div>
-                  <p className="font-semibold text-white mb-1">Lunes a viernes:</p>
-                  <p className="text-white/80">8:00 am a 8:00 pm</p>
-                </div>
-                <div>
-                  <p className="font-semibold text-white mb-1">Sábados:</p>
-                  <p className="text-white/80">8:00 am a 2:00 pm</p>
-                </div>
+                {(() => {
+                  const openingHours = generals?.find(g => g.correlative === 'opening_hours')?.description;
+                  if (!openingHours) {
+                    return (
+                      <div>
+                        <p className="font-semibold text-white mb-1">Lunes a viernes:</p>
+                        <p className="text-white/80">8:00 am a 8:00 pm</p>
+                      </div>
+                    );
+                  }
+                  
+                  return openingHours.split('\n').map((horario, index) => {
+                    // Separar el día del horario
+                    const parts = horario.split(':');
+                    if (parts.length >= 2) {
+                      const dia = parts[0].trim();
+                      const hora = parts.slice(1).join(':').trim();
+                      return (
+                        <div key={index}>
+                          <p className="font-semibold text-white mb-1">{dia}:</p>
+                          <p className="text-white/80">{hora}</p>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div key={index}>
+                        <p className="text-white/80">{horario}</p>
+                      </div>
+                    );
+                  });
+                })()}
               </div>
             </div>
 
