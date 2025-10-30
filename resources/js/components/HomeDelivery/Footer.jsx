@@ -320,17 +320,71 @@ const Footer = ({ generals = [], socials = [] }) => {
             isOpen={modalOpen === index}
             onRequestClose={closeModal}
             contentLabel={title}
-            className="fixed top-[5%] left-1/2 -translate-x-1/2 bg-white p-6 rounded-3xl shadow-lg w-[95%] max-w-4xl max-h-[90vh] mb-10 overflow-y-auto scrollbar-hide"
-            overlayClassName="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-auto scrollbar-hide"
+            className="modal-content-hidden"
+            overlayClassName="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            shouldCloseOnOverlayClick={true}
           >
-            <button
-              onClick={closeModal}
-              className="float-right text-red-500 hover:text-red-700 transition-all duration-300"
+            <div 
+              className="bg-white lg:min-w-[600px] rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl relative"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X width="2rem" strokeWidth="4px" />
-            </button>
-            <h2 className="text-2xl font-bold mb-4">{title}</h2>
-            <HtmlContent className="prose" html={content} />
+              {/* Header FIJO con título y botón cerrar */}
+              <div 
+                className="sticky top-0 z-10 px-8 py-6 border-b border-gray-100 flex items-center justify-between"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(132, 188, 40, 0.05) 0%, rgba(35, 84, 184, 0.05) 50%, rgba(222, 52, 100, 0.05) 100%)'
+                }}
+              >
+                <h2 
+                  className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+                  }}
+                >
+                  {title}
+                </h2>
+                
+                {/* Botón cerrar */}
+                <button
+                  onClick={closeModal}
+                  className="p-2 rounded-full text-gray-600 hover:bg-gray-100 hover:text-gray-800 transition-all duration-300 hover:scale-110"
+                  aria-label="Cerrar"
+                >
+                  <X className="w-6 h-6" strokeWidth={2.5} />
+                </button>
+              </div>
+
+              {/* Contenido con scroll */}
+              <div className="px-8 py-6 overflow-y-auto max-h-[calc(90vh-100px)]">
+                <HtmlContent 
+                  className="prose prose-lg max-w-none
+                    prose-headings:bg-clip-text prose-headings:text-transparent prose-headings:font-bold
+                    prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
+                    prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-4
+                    prose-a:text-hd-cerulean prose-a:no-underline hover:prose-a:text-hd-android prose-a:transition-colors
+                    prose-strong:text-gray-900 prose-strong:font-bold
+                    prose-ul:list-disc prose-ul:ml-6 prose-ul:space-y-2
+                    prose-ol:list-decimal prose-ol:ml-6 prose-ol:space-y-2
+                    prose-li:text-gray-700
+                    prose-blockquote:border-l-4 prose-blockquote:border-hd-android prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-600
+                  "
+                  html={content}
+                  style={{
+                    '--tw-prose-headings': 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)',
+                  }}
+                />
+
+                {/* Botón de cerrar inferior */}
+                <div className="mt-8 pt-6 border-t border-gray-200 flex justify-center">
+                  <button
+                    onClick={closeModal}
+                    className="px-8 py-3 bg-gradient-to-r from-hd-cerise to-hd-cerise/90 text-white rounded-full font-bold text-base hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
+                    Entendido
+                  </button>
+                </div>
+              </div>
+            </div>
           </ReactModal>
         );
       })}
