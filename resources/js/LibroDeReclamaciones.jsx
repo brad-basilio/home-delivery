@@ -18,15 +18,17 @@ import { CarritoProvider } from "./context/CarritoContext";
 import Base from "./Components/Tailwind/Base";
 import CreateReactScript from "./Utils/CreateReactScript";
 import { createRoot } from "react-dom/client";
-import Footer from "./components/Tailwind/Footer";
-import Header from "./components/Tailwind/Header";
+import Footer from "./components/HomeDelivery/Footer";
+import Header from "./components/HomeDelivery/Header";
+import WhatsAppButton from "./components/HomeDelivery/WhatsAppButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { Cookies } from "sode-extend-react";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import HtmlContent from "./Utils/HtmlContent";
+import '../css/homedelivery.css';
 
-const LibroDeReclamaciones = ({ sedes, servicios, terms }) => {
+const LibroDeReclamaciones = ({ sedes, servicios, terms, generals = [], socials = [] }) => {
     const [formData, setFormData] = useState({
         // Datos del consumidor
         nombre: "",
@@ -558,9 +560,10 @@ const LibroDeReclamaciones = ({ sedes, servicios, terms }) => {
 
     if (submitted) {
         return (
-            <>
+            <div className="min-h-screen bg-white font-aeonik" style={{ fontFamily: 'Aeonik, sans-serif' }}>
                 <Header />
-                <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-lg border border-gray-200">
+                <main className="pt-20 md:pt-24">
+                    <div className="max-w-4xl mx-auto px-[5%] py-12 md:py-16 bg-white rounded-lg shadow-lg border border-gray-200">
                     <div className="text-center py-10">
                         <div className="flex justify-center mb-6">
                             <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center">
@@ -735,17 +738,20 @@ const LibroDeReclamaciones = ({ sedes, servicios, terms }) => {
                         </div>
                     </div>
                 </div>
-                <Footer />
-            </>
+                </main>
+                <Footer generals={generals} socials={socials} />
+                <WhatsAppButton socials={socials} generals={generals} />
+            </div>
         );
     }
 
     return (
-        <div>
+        <div className="min-h-screen bg-white font-aeonik" style={{ fontFamily: 'Aeonik, sans-serif' }}>
             <Header />
-            <div className="max-w-4xl px-[5%] py-[5%] mx-auto  bg-white  shadow-2xl rounded-3xl font-poppins ">
-                {/* Encabezado */}
-                <div className="flex flex-col md:flex-row justify-between items-center border-b border-gray-200 pb-6 mb-6">
+            <main className="pt-20 md:pt-32 pb-16 md:pb-24">
+                <div className="max-w-4xl px-[5%] py-12 md:py-16 mx-auto bg-white shadow-2xl rounded-3xl">
+                    {/* Encabezado */}
+                    <div className="flex flex-col md:flex-row justify-between items-center border-b border-gray-200 pb-6 mb-6">
                     <div className="flex items-center mb-4 md:mb-0">
                         <div>
                             <h1 className="text-2xl font-bold text-gray-800">
@@ -1765,7 +1771,9 @@ const LibroDeReclamaciones = ({ sedes, servicios, terms }) => {
                     </button>
                 </form>
             </div>
-            <Footer />
+            </main>
+            <Footer generals={generals} socials={socials} />
+            <WhatsAppButton socials={socials} generals={generals} />
         </div>
     );
 };
