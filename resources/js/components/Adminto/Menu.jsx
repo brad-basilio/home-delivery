@@ -158,6 +158,19 @@ const Menu = ({
 
                                     {t("admin.sidebar.messages", "Mensajes")}
                                 </MenuItem>
+                                  <MenuItem
+                                    href="/admin/complaints"
+                                    icon="mdi mdi-book-open-page-variant"
+                                >
+                                    <span className="badge bg-primary float-end">
+                                        {reclamosCount}
+                                    </span>
+
+                                    {t(
+                                        "admin.sidebar.complaints",
+                                        "Reclamaciones"
+                                    )}
+                                </MenuItem> 
                            {/*     <MenuItem
                                     href="/admin/appointments"
                                     icon="mdi mdi-android-messages"

@@ -21,7 +21,7 @@ class Complaint extends Model
         'telefono',
         'email',
         'direccion',
-
+        'office_id',
         'sede',
         'servicio',
         'tipo_reclamo',
@@ -47,6 +47,11 @@ class Complaint extends Model
         'fecha_incidente' => 'date',
         'fecha_respuesta' => 'datetime',
     ];
+
+    public function office()
+    {
+        return $this->belongsTo(Office::class);
+    }
 
     public function attachments()
     {

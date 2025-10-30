@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\NotificationHelper;
 use App\Models\Complaint;
 use App\Models\ComplaintAttachment;
 use App\Models\Facility;
 use App\Models\General;
 use App\Models\LandingHome;
+use App\Models\Office;
 use App\Models\Service;
 use App\Models\Social;
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use SoDe\Extend\Crypto;
 use SoDe\Extend\Text;
@@ -25,13 +28,13 @@ class ComplaintController extends BasicController
     public function setReactViewProperties(Request $request)
     {
         $landing = LandingHome::where('correlative', 'like', 'page_contact%')->get();
-        $sedes = Facility::where('visible', true)->where('status', true)->get();
+        $offices = Office::where('visible', true)->where('status', true)->get();
         $terms = General::where('correlative', '=', 'terms_conditions')->first();
         $services = Service::where('status', true)->where('visible', true)->get();
         $whatsapp = Social::where('status', true)->where('visible', true)->where('description', '=', 'WhatsApp')->first();
         return [
             'landing' => $landing,
-            'sedes' => $sedes,
+            'offices' => $offices,
             'whatsapp' => $whatsapp,
             'servicios' => $services,
             'terms' => $terms,
@@ -48,7 +51,7 @@ class ComplaintController extends BasicController
             'telefono' => 'required|string|max:20',
             'email' => 'required|email|max:100',
             'direccion' => 'required|string|max:255',
-            'sede' => 'required|string|max:100',
+            'office_id' => 'required|exists:offices,id',
             'servicio' => 'required|string|max:100',
             'tipoReclamo' => 'required|in:queja,reclamo',
             'fechaIncidente' => 'required|date',
@@ -58,6 +61,9 @@ class ComplaintController extends BasicController
         ]);
 
         try {
+            // Obtener el nombre de la oficina para guardar en sede (retrocompatibilidad)
+            $office = Office::find($validated['office_id']);
+            
             // Crear el reclamo
             $complaint = Complaint::create([
                 'nombre' => $validated['nombre'],
@@ -67,7 +73,8 @@ class ComplaintController extends BasicController
                 'telefono' => $validated['telefono'],
                 'email' => $validated['email'],
                 'direccion' => $validated['direccion'],
-                'sede' => $validated['sede'],
+                'office_id' => $validated['office_id'],
+                'sede' => $office ? $office->name : '',
                 'servicio' => $validated['servicio'],
                 'tipo_reclamo' => $validated['tipoReclamo'],
                 'fecha_incidente' => $validated['fechaIncidente'],
@@ -100,6 +107,28 @@ class ComplaintController extends BasicController
                         ]);
                     }
                 }
+            }
+
+            // Enviar notificaciones al usuario y al administrador
+            try {
+                Log::info('ComplaintController - Iniciando envío de notificaciones', [
+                    'complaint_id' => $complaint->id,
+                    'numero_reclamo' => $complaint->numero_reclamo,
+                    'client_email' => $complaint->email,
+                    'tipo_reclamo' => $complaint->tipo_reclamo
+                ]);
+
+                NotificationHelper::sendClaimNotification($complaint);
+
+                Log::info('ComplaintController - Notificaciones enviadas exitosamente');
+            } catch (\Exception $e) {
+                Log::error('ComplaintController - Error al enviar notificaciones de reclamo', [
+                    'complaint_id' => $complaint->id,
+                    'numero_reclamo' => $complaint->numero_reclamo,
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                // No lanzamos la excepción para que el reclamo se registre aunque falle el email
             }
 
             return response()->json([
