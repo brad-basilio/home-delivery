@@ -125,8 +125,8 @@ const ContactoPage = (props) => {
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-hd-cerise rounded-full blur-3xl" />
           </div>
 
-          <div className="w-full 2xl:max-w-7xl mx-auto px-4 md:px-8 2xl:px-0 relative z-10">
-            <div className="text-center mb-12">
+          <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0 relative z-10">
+            <div className="text-center ">
               <div 
                 className="inline-block px-6 py-2 rounded-full mb-6"
                 style={{
@@ -156,8 +156,8 @@ const ContactoPage = (props) => {
         </section>
 
         {/* Formulario y Datos de Contacto */}
-        <section className="py-12 md:py-20 bg-white">
-          <div className="w-full 2xl:max-w-7xl mx-auto px-4 md:px-8 2xl:px-0">
+        <section className="py-12 md:pb-20 bg-white">
+          <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0">
             <div className="grid md:grid-cols-5 gap-8 md:gap-12">
               {/* Columna Izquierda - Datos de Contacto */}
               <div className="md:col-span-2 space-y-6">
@@ -370,7 +370,7 @@ const ContactoPage = (props) => {
 
         {/* Sección de Ubicaciones con Mapa */}
         <section className="py-12 md:py-20 bg-gray-50">
-          <div className="w-full 2xl:max-w-7xl mx-auto px-4 md:px-8 2xl:px-0">
+          <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Nuestras Ubicaciones
