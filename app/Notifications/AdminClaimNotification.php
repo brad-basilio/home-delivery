@@ -72,7 +72,7 @@ class AdminClaimNotification extends Notification
                 'departamento' => $this->complaint->departamento,
                 'provincia' => $this->complaint->provincia,
                 'distrito' => $this->complaint->distrito,
-                'sede' => $this->complaint->sede ?? 'No especificada',
+                'sede' => $this->complaint->sede ?? ($this->complaint->office ? $this->complaint->office->name : 'No especificada'),
                 'servicio' => $this->complaint->servicio,
                 'tipo_reclamo' => ucfirst($this->complaint->tipo_reclamo),
                 'fecha_incidente' => $this->complaint->fecha_incidente
