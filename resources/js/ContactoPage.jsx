@@ -24,6 +24,11 @@ const ContactoPage = (props) => {
   const [showRubroDropdown, setShowRubroDropdown] = useState(false);
   const rubroDropdownRef = useRef(null);
   
+  // Estados para la sección de ubicaciones
+  const [searchOffice, setSearchOffice] = useState('');
+  const [showOfficesList, setShowOfficesList] = useState(true); // Abierto por defecto
+  const officesListRef = useRef(null);
+  
   const [formData, setFormData] = useState({
     nombre: '',
     empresa: '',
@@ -58,6 +63,9 @@ const ContactoPage = (props) => {
     const handleClickOutside = (event) => {
       if (rubroDropdownRef.current && !rubroDropdownRef.current.contains(event.target)) {
         setShowRubroDropdown(false);
+      }
+      if (officesListRef.current && !officesListRef.current.contains(event.target)) {
+        setShowOfficesList(false);
       }
     };
 
@@ -171,6 +179,13 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
     return selected ? `${selected.icon} ${selected.label}` : 'Selecciona tu rubro';
   };
 
+  // Filtrar oficinas por búsqueda
+  const filteredOffices = offices.filter(office => 
+    office.name?.toLowerCase().includes(searchOffice.toLowerCase()) ||
+    office.address?.toLowerCase().includes(searchOffice.toLowerCase()) ||
+    office.type?.toLowerCase().includes(searchOffice.toLowerCase())
+  );
+
   // Manejar click en marcador del mapa
   const handleMarkerClick = (office) => {
     setSelectedOffice(office);
@@ -178,43 +193,22 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
       lat: parseFloat(office.latitude),
       lng: parseFloat(office.longitude)
     });
-    setMapZoom(15);
+    setMapZoom(16);
   };
 
-  // Manejar click en card de oficina
-  const handleOfficeCardClick = (office) => {
+  // Manejar click en item de oficina
+  const handleOfficeItemClick = (office) => {
     setSelectedOffice(office);
     if (office.latitude && office.longitude) {
       setMapCenter({
         lat: parseFloat(office.latitude),
         lng: parseFloat(office.longitude)
       });
-      setMapZoom(15);
-      
-      // Scroll al mapa
-      const mapElement = document.getElementById('google-map-section');
-      if (mapElement) {
-        mapElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      setMapZoom(16);
     }
   };
 
-  // Configuración del mapa
-  const mapContainerStyle = {
-    width: '100%',
-    height: '500px',
-    borderRadius: '0.75rem'
-  };
-
-  const mapOptions = {
-    disableDefaultUI: false,
-    zoomControl: true,
-    mapTypeControl: false,
-    scaleControl: true,
-    streetViewControl: true,
-    rotateControl: false,
-    fullscreenControl: true
-  };
+  // Configuración del mapa (ya no se usa mapContainerStyle como objeto separado)
 
   return (
     <div className="min-h-screen bg-white font-aeonik" style={{ fontFamily: 'Aeonik, sans-serif' }}>
@@ -611,166 +605,301 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
         </section>
 
         {/* Sección de Ubicaciones con Mapa */}
-        <section className="py-12 md:py-20 bg-gray-50">
-          <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0">
+        <section className="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+          {/* Decoración de fondo */}
+          <div className="absolute inset-0 opacity-[0.03]">
+            <div className="absolute top-1/4 left-0 w-96 h-96 bg-hd-cerulean rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-hd-android rounded-full blur-3xl" />
+          </div>
+
+          <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0 relative z-10">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Nuestras Ubicaciones
+              <div 
+                className="inline-block px-6 py-2 rounded-full mb-6"
+                style={{
+                  background: 'linear-gradient(90deg, rgba(143, 189, 68, 0.1) 0%, rgba(35, 84, 184, 0.1) 50%, rgba(222, 52, 100, 0.1) 100%)'
+                }}
+              >
+                <span className="text-hd-cerulean font-bold text-sm uppercase tracking-wider">Ubicaciones</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
+                Nuestras{' '}
+                <span 
+                  className="bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+                  }}
+                >
+                  Oficinas
+                </span>
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Encuentra nuestras oficinas y almacenes más cercanos
+                Encuentra nuestras oficinas y almacenes a nivel nacional
               </p>
             </div>
 
-            {/* Lista de Oficinas */}
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              {offices.map((office) => (
-                <div
-                  key={office.id}
-                  onClick={() => handleOfficeCardClick(office)}
-                  className={`bg-white p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:shadow-lg ${
-                    selectedOffice?.id === office.id
-                      ? 'border-hd-android shadow-lg'
-                      : 'border-gray-100'
-                  }`}
-                >
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className={`p-2 rounded-lg ${
-                      office.type === 'oficina_principal'
-                        ? 'bg-hd-android/10 text-hd-android'
-                        : office.type === 'oficina'
-                        ? 'bg-hd-cerulean/10 text-hd-cerulean'
-                        : 'bg-hd-cerise/10 text-hd-cerise'
-                    }`}>
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                      </svg>
+            {/* Contenedor del Mapa con Lista Flotante */}
+            <div className="relative">
+              {/* Panel Lateral Flotante - Lista de Oficinas */}
+              <div 
+                ref={officesListRef}
+                className="absolute top-4 left-4 z-20 w-80 md:w-96"
+                style={{ height: '670px' }}
+              >
+                <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden backdrop-blur-sm bg-white/95 h-full flex flex-col">
+                  {/* Header con Buscador */}
+                  <div className="p-6 border-b border-gray-200 bg-gradient-to-br from-white to-gray-50 flex-shrink-0">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                        <svg className="w-6 h-6 text-hd-android" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Ubicaciones
+                      </h3>
+                      <button
+                        onClick={() => setShowOfficesList(!showOfficesList)}
+                        className="p-2 rounded-xl hover:bg-gray-100 transition-colors duration-200"
+                      >
+                        <svg 
+                          className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${showOfficesList ? 'rotate-180' : ''}`} 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
                     </div>
-                    <div className="flex-1">
-                      <span className={`text-xs font-semibold uppercase tracking-wider ${
-                        office.type === 'oficina_principal'
-                          ? 'text-hd-android'
-                          : office.type === 'oficina'
-                          ? 'text-hd-cerulean'
-                          : 'text-hd-cerise'
-                      }`}>
-                        {office.type === 'oficina_principal' ? 'Principal' : office.type === 'oficina' ? 'Oficina' : 'Almacén'}
-                      </span>
-                      <h3 className="font-bold text-gray-900 mt-1">{office.name}</h3>
+                    
+                    {/* Buscador */}
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </div>
+                      <input
+                        type="text"
+                        value={searchOffice}
+                        onChange={(e) => setSearchOffice(e.target.value)}
+                        placeholder="Buscar ubicación..."
+                        className="w-full pl-12 pr-4 py-3 bg-white border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-hd-android/20 focus:border-hd-android transition-all duration-300 text-gray-900 placeholder-gray-400"
+                      />
+                      {searchOffice && (
+                        <button
+                          onClick={() => setSearchOffice('')}
+                          className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                        >
+                          <svg className="w-5 h-5 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      )}
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{office.address}</p>
-                  {office.phone && (
-                    <p className="text-sm text-gray-500 flex items-center gap-1">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                      </svg>
-                      {office.phone}
-                    </p>
+
+                  {/* Lista de Oficinas con Scroll */}
+                  {showOfficesList && (
+                    <div className="flex-1 overflow-y-auto">
+                      {filteredOffices.length > 0 ? (
+                        <div className="p-4 space-y-2">
+                          {filteredOffices.map((office) => (
+                            <button
+                              key={office.id}
+                              onClick={() => handleOfficeItemClick(office)}
+                              className={`w-full text-left p-4 rounded-2xl transition-all duration-300 border-2 ${
+                                selectedOffice?.id === office.id
+                                  ? 'bg-gradient-to-br from-hd-android/10 to-hd-android/5 border-hd-android shadow-lg scale-[1.02]'
+                                  : 'bg-white border-gray-100 hover:border-gray-200 hover:shadow-md'
+                              }`}
+                            >
+                              <div className="flex items-start gap-3">
+                                <div className={`p-2.5 rounded-xl flex-shrink-0 ${
+                                  office.type === 'oficina_principal'
+                                    ? 'bg-hd-android/20 text-hd-android'
+                                    : office.type === 'oficina'
+                                    ? 'bg-hd-cerulean/20 text-hd-cerulean'
+                                    : 'bg-hd-cerise/20 text-hd-cerise'
+                                }`}>
+                                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                                  </svg>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className={`text-xs font-bold uppercase tracking-wider ${
+                                      office.type === 'oficina_principal'
+                                        ? 'text-hd-android'
+                                        : office.type === 'oficina'
+                                        ? 'text-hd-cerulean'
+                                        : 'text-hd-cerise'
+                                    }`}>
+                                      {office.type === 'oficina_principal' ? 'Principal' : office.type === 'oficina' ? 'Oficina' : 'Almacén'}
+                                    </span>
+                                    {selectedOffice?.id === office.id && (
+                                      <svg className="w-4 h-4 text-hd-android ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                      </svg>
+                                    )}
+                                  </div>
+                                  <h4 className="font-bold text-gray-900 mb-1 truncate">{office.name}</h4>
+                                  <p className="text-sm text-gray-600 line-clamp-2">{office.address}</p>
+                                  {office.phone && (
+                                    <p className="text-xs text-gray-500 mt-2 flex items-center gap-1">
+                                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                      </svg>
+                                      {office.phone}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="p-8 text-center">
+                          <svg className="w-16 h-16 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                          <p className="text-gray-500 font-medium">No se encontraron ubicaciones</p>
+                          <p className="text-sm text-gray-400 mt-1">Intenta con otra búsqueda</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Contador de resultados */}
+                  {!showOfficesList && (
+                    <div className="px-6 py-4 bg-gradient-to-br from-gray-50 to-white flex-shrink-0">
+                      <p className="text-sm text-gray-600 font-medium text-center">
+                        {filteredOffices.length} {filteredOffices.length === 1 ? 'ubicación disponible' : 'ubicaciones disponibles'}
+                      </p>
+                    </div>
                   )}
                 </div>
-              ))}
-            </div>
+              </div>
 
-            {/* Mapa de Google Maps */}
-            <div id="google-map-section" className="bg-white p-4 rounded-2xl border border-gray-200 shadow-lg">
-              <LoadScript googleMapsApiKey={Global.GMAPS_API_KEY || ''}>
-                <GoogleMap
-                  ref={mapRef}
-                  mapContainerStyle={mapContainerStyle}
-                  center={mapCenter}
-                  zoom={mapZoom}
-                  options={mapOptions}
-                >
-                  {offices.map((office) => {
-                    if (!office.latitude || !office.longitude) return null;
-                    
-                    return (
-                      <Marker
-                        key={office.id}
-                        position={{
-                          lat: parseFloat(office.latitude),
-                          lng: parseFloat(office.longitude)
-                        }}
-                        title={office.name}
-                        onClick={() => handleMarkerClick(office)}
-                        icon={{
-                          path: window.google?.maps?.SymbolPath?.CIRCLE || 0,
-                          fillColor: office.type === 'oficina_principal' 
-                            ? '#8FBD44' // hd-android
-                            : office.type === 'oficina'
-                            ? '#2354B8' // hd-cerulean
-                            : '#DE3464', // hd-cerise
-                          fillOpacity: 1,
-                          strokeColor: '#FFFFFF',
-                          strokeWeight: 3,
-                          scale: office.id === selectedOffice?.id ? 12 : 8,
-                        }}
-                      />
-                    );
-                  })}
-                </GoogleMap>
-              </LoadScript>
-              
-              {/* Info de oficina seleccionada */}
+              {/* Mapa de Google Maps - Ancho Completo */}
+              <div className="rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-200">
+                <LoadScript googleMapsApiKey={Global.GMAPS_API_KEY || ''}>
+                  <GoogleMap
+                    ref={mapRef}
+                    mapContainerStyle={{ width: '100%', height: '700px' }}
+                    center={mapCenter}
+                    zoom={mapZoom}
+                    options={{
+                      disableDefaultUI: false,
+                      zoomControl: true,
+                      mapTypeControl: false,
+                      scaleControl: true,
+                      streetViewControl: true,
+                      rotateControl: false,
+                      fullscreenControl: true,
+                      styles: [
+                        {
+                          featureType: 'poi',
+                          elementType: 'labels',
+                          stylers: [{ visibility: 'off' }]
+                        }
+                      ]
+                    }}
+                  >
+                    {offices.map((office) => {
+                      if (!office.latitude || !office.longitude) return null;
+                      
+                      return (
+                        <Marker
+                          key={office.id}
+                          position={{
+                            lat: parseFloat(office.latitude),
+                            lng: parseFloat(office.longitude)
+                          }}
+                          title={office.name}
+                          onClick={() => handleMarkerClick(office)}
+                          icon={{
+                            path: window.google?.maps?.SymbolPath?.CIRCLE || 0,
+                            fillColor: office.type === 'oficina_principal' 
+                              ? '#8FBD44' // hd-android
+                              : office.type === 'oficina'
+                              ? '#2354B8' // hd-cerulean
+                              : '#DE3464', // hd-cerise
+                            fillOpacity: 1,
+                            strokeColor: '#FFFFFF',
+                            strokeWeight: 3,
+                            scale: office.id === selectedOffice?.id ? 14 : 10,
+                          }}
+                        />
+                      );
+                    })}
+                  </GoogleMap>
+                </LoadScript>
+              </div>
+
+              {/* Panel de Información de Oficina Seleccionada - Flotante Abajo */}
               {selectedOffice && (
-                <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="flex items-start gap-4">
-                    <div className={`p-3 rounded-lg ${
-                      selectedOffice.type === 'oficina_principal'
-                        ? 'bg-hd-android/10 text-hd-android'
-                        : selectedOffice.type === 'oficina'
-                        ? 'bg-hd-cerulean/10 text-hd-cerulean'
-                        : 'bg-hd-cerise/10 text-hd-cerise'
-                    }`}>
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className={`text-xs font-semibold uppercase tracking-wider px-2 py-1 rounded ${
+                <div className="absolute bottom-4 right-4 left-4 md:left-auto md:w-96 z-20 animate-fadeIn">
+                  <div className="bg-white rounded-3xl shadow-2xl border-2 border-gray-200 overflow-hidden backdrop-blur-sm bg-white/95">
+                    <div className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className={`p-3 rounded-2xl flex-shrink-0 ${
                           selectedOffice.type === 'oficina_principal'
-                            ? 'bg-hd-android/20 text-hd-android'
+                            ? 'bg-gradient-to-br from-hd-android to-hd-android/80 text-white'
                             : selectedOffice.type === 'oficina'
-                            ? 'bg-hd-cerulean/20 text-hd-cerulean'
-                            : 'bg-hd-cerise/20 text-hd-cerise'
+                            ? 'bg-gradient-to-br from-hd-cerulean to-hd-cerulean/80 text-white'
+                            : 'bg-gradient-to-br from-hd-cerise to-hd-cerise/80 text-white'
                         }`}>
-                          {selectedOffice.type === 'oficina_principal' ? 'Oficina Principal' : selectedOffice.type === 'oficina' ? 'Oficina' : 'Almacén'}
-                        </span>
+                          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className={`inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2 ${
+                            selectedOffice.type === 'oficina_principal'
+                              ? 'bg-hd-android/20 text-hd-android'
+                              : selectedOffice.type === 'oficina'
+                              ? 'bg-hd-cerulean/20 text-hd-cerulean'
+                              : 'bg-hd-cerise/20 text-hd-cerise'
+                          }`}>
+                            {selectedOffice.type === 'oficina_principal' ? 'Oficina Principal' : selectedOffice.type === 'oficina' ? 'Oficina' : 'Almacén'}
+                          </span>
+                          <h3 className="text-lg font-bold text-gray-900 mb-2">{selectedOffice.name}</h3>
+                          <div className="space-y-2 text-sm">
+                            <p className="text-gray-600 flex items-start gap-2">
+                              <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                              </svg>
+                              <span>{selectedOffice.address}</span>
+                            </p>
+                            {selectedOffice.phone && (
+                              <p className="text-gray-600 flex items-center gap-2">
+                                <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                </svg>
+                                <span className="font-medium">{selectedOffice.phone}</span>
+                              </p>
+                            )}
+                            {selectedOffice.email && (
+                              <p className="text-gray-600 flex items-center gap-2">
+                                <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                </svg>
+                                <span>{selectedOffice.email}</span>
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => setSelectedOffice(null)}
+                          className="p-2 rounded-xl hover:bg-gray-100 transition-colors duration-200 flex-shrink-0"
+                        >
+                          <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{selectedOffice.name}</h3>
-                      <p className="text-gray-600 mb-2">
-                        <svg className="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                        </svg>
-                        {selectedOffice.address}
-                      </p>
-                      {selectedOffice.phone && (
-                        <p className="text-gray-600 mb-2">
-                          <svg className="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                          </svg>
-                          {selectedOffice.phone}
-                        </p>
-                      )}
-                      {selectedOffice.email && (
-                        <p className="text-gray-600 mb-2">
-                          <svg className="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                          </svg>
-                          {selectedOffice.email}
-                        </p>
-                      )}
-                      {selectedOffice.description && (
-                        <p className="text-gray-500 text-sm mt-3">{selectedOffice.description}</p>
-                      )}
-                      {selectedOffice.manager && (
-                        <p className="text-gray-600 text-sm mt-2">
-                          <span className="font-semibold">Encargado:</span> {selectedOffice.manager}
-                        </p>
-                      )}
                     </div>
                   </div>
                 </div>
