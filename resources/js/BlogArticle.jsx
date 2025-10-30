@@ -13,13 +13,15 @@ import { createRoot } from "react-dom/client";
 import Base from "./Components/Tailwind/Base";
 import HtmlContent from "./Utils/HtmlContent";
 import Tippy from "@tippyjs/react";
-import Header from "./components/Tailwind/Header";
-import Footer from "./components/Tailwind/Footer";
+import Header from "./components/HomeDelivery/Header";
+import Footer from "./components/HomeDelivery/Footer";
+import WhatsAppButton from "./components/HomeDelivery/WhatsAppButton";
 import { CarritoProvider } from "./context/CarritoContext";
 import PostCard from "./Components/Blog/PostCard";
 import TextWithHighlight from "./Utils/TextWithHighlight";
 import { AnimatePresence } from "framer-motion";
 import { Check } from "lucide-react";
+import '../css/homedelivery.css';
 
 // Animaciones reutilizables
 const fadeInUp = {
@@ -63,7 +65,7 @@ const Toast = ({ show, message }) => {
                     className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex items-center justify-center pointer-events-none z-50"
                 >
                     <motion.div
-                        className="bg-azul text-white px-6 py-3 rounded-lg shadow-xl flex items-center gap-2"
+                        className="bg-gradient-to-r from-hd-android to-hd-android/90 text-white px-6 py-3 rounded-full shadow-xl flex items-center gap-2"
                         initial={{ scale: 0.8 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0.8 }}
@@ -90,7 +92,7 @@ const Toast = ({ show, message }) => {
     );
 };
 
-const BlogArticle = ({ article, posts, landing }) => {
+const BlogArticle = ({ article, posts, landing, generals = [], socials = [] }) => {
     const shareUrl = encodeURIComponent(window.location.href);
     const shareTitle = encodeURIComponent(article.name);
     const shareText = encodeURIComponent(
@@ -121,204 +123,223 @@ const BlogArticle = ({ article, posts, landing }) => {
     };
 
     return (
-        <>
+        <div className="min-h-screen bg-white font-aeonik" style={{ fontFamily: 'Aeonik, sans-serif' }}>
             <Header />
-            <motion.section
-                initial="hidden"
-                animate="visible"
-                variants={staggerContainer}
-                className="p-[5%] bg-white mt-16"
-            >
-                <div className="max-w-4xl mx-auto">
-                    <motion.div
-                        variants={fadeInUp}
-                        className="mb-8 text-center"
-                    >
-                        <motion.span
-                            className="inline-block px-3 py-1 text-xs font-medium text-white uppercase bg-azul rounded-full"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            {article.category.name}
-                        </motion.span>
-                        <motion.h1
-                            className="mt-4 text-4xl font-bold leading-tight text-negro"
-                            variants={fadeInUp}
-                        >
-                            <TextWithHighlight text={article.name} />
-                        </motion.h1>
+            <main className="pt-20 md:pt-24">
+                <motion.section
+                    initial="hidden"
+                    animate="visible"
+                    variants={staggerContainer}
+                    className="py-16 md:py-20 bg-gradient-to-b from-gray-50 to-white"
+                >
+                    <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0">
                         <motion.div
-                            className="flex items-center justify-center mt-2 text-sm text-negro gap-2"
                             variants={fadeInUp}
+                            className="mb-8 text-center"
                         >
-                            <CalendarClockIcon className="h-4 w-4" />
-                            {moment(article.post_date).format("LL")}
+                            <motion.span
+                                className="inline-block px-4 py-2 text-sm font-semibold text-hd-cerise uppercase bg-hd-cerise/10 rounded-full"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                {article.category.name}
+                            </motion.span>
+                            <motion.h1
+                                className="mt-6 text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900"
+                                variants={fadeInUp}
+                            >
+                                <TextWithHighlight text={article.name} />
+                            </motion.h1>
+                            <motion.div
+                                className="flex items-center justify-center mt-4 text-sm text-hd-cerise font-medium gap-2"
+                                variants={fadeInUp}
+                            >
+                                <CalendarClockIcon className="h-5 w-5" />
+                                {moment(article.post_date).format("LL")}
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
 
-                    <motion.div
-                        variants={scaleUp}
-                        className="mb-8 overflow-hidden rounded-lg shadow-lg"
-                        whileHover={{ scale: 1.01 }}
-                        transition={{ type: "spring", stiffness: 400 }}
-                    >
-                        <motion.img
-                            src={`/api/posts/media/${article.image}`}
-                            alt="Article main image"
-                            className="w-full h-auto object-cover object-center aspect-video"
-                            initial={{ opacity: 0, scale: 1.1 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                        />
-                    </motion.div>
-
-                    <motion.div
-                        variants={fadeInUp}
-                        transition={{ delay: 0.4 }}
-                        className="prose max-w-none ql-editor"
-                    >
-                        <HtmlContent html={article.description} />
-                    </motion.div>
-
-                    <motion.div
-                        variants={fadeInUp}
-                        transition={{ delay: 0.6 }}
-                        className="mt-12 pt-6 border-t border-slate-200"
-                    >
-                        <div className="flex justify-between items-center text-sm text-negro">
-                            <Toast
-                                show={showToast}
-                                message="Enlace copiado al portapapeles"
+                        <motion.div
+                            variants={scaleUp}
+                            className="mb-12 overflow-hidden rounded-2xl shadow-2xl"
+                            whileHover={{ scale: 1.01 }}
+                            transition={{ type: "spring", stiffness: 400 }}
+                        >
+                            <motion.img
+                                src={`/api/posts/media/${article.image}`}
+                                alt="Article main image"
+                                className="w-full h-auto object-cover object-center aspect-video"
+                                initial={{ opacity: 0, scale: 1.1 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
                             />
-                            <div className="flex flex-col items-start gap-2">
-                                <motion.span
-                                    className="mr-2 text-bold text-negro"
-                                    whileHover={{ x: 2 }}
-                                >
-                                    Compartir
-                                </motion.span>
-                                <div className="flex gap-4">
-                                    {[
-                                        "copy",
-                                        "linkedin",
-                                        "twitter",
-                                        "facebook",
-                                    ].map((type) => (
-                                        <motion.div
-                                            key={type}
-                                            whileHover={{ y: -3 }}
-                                            whileTap={{ scale: 0.9 }}
-                                            onHoverStart={() =>
-                                                setHoveredShare(type)
-                                            }
-                                            onHoverEnd={() =>
-                                                setHoveredShare(null)
-                                            }
-                                        >
-                                            <Tippy
-                                                content={`Compartir ${
-                                                    type === "copy"
-                                                        ? "URL"
-                                                        : "en " + type
-                                                }`}
+                        </motion.div>
+
+                        <motion.div
+                            variants={fadeInUp}
+                            transition={{ delay: 0.4 }}
+                            className="prose prose-lg max-w-none ql-editor text-gray-700"
+                        >
+                            <HtmlContent html={article.description} />
+                        </motion.div>
+
+                        <motion.div
+                            variants={fadeInUp}
+                            transition={{ delay: 0.6 }}
+                            className="mt-12 pt-6 border-t border-gray-200"
+                        >
+                            <div className="flex justify-between items-center text-sm text-gray-700">
+                                <Toast
+                                    show={showToast}
+                                    message="Enlace copiado al portapapeles"
+                                />
+                                <div className="flex flex-col items-start gap-2">
+                                    <motion.span
+                                        className="mr-2 font-bold text-gray-900"
+                                        whileHover={{ x: 2 }}
+                                    >
+                                        Compartir
+                                    </motion.span>
+                                    <div className="flex gap-4">
+                                        {[
+                                            "copy",
+                                            "linkedin",
+                                            "twitter",
+                                            "facebook",
+                                        ].map((type) => (
+                                            <motion.div
+                                                key={type}
+                                                whileHover={{ y: -3 }}
+                                                whileTap={{ scale: 0.9 }}
+                                                onHoverStart={() =>
+                                                    setHoveredShare(type)
+                                                }
+                                                onHoverEnd={() =>
+                                                    setHoveredShare(null)
+                                                }
                                             >
-                                                <a
-                                                    href={
-                                                        type !== "copy"
-                                                            ? socialShareLinks[
-                                                                  type
-                                                              ]
-                                                            : undefined
-                                                    }
-                                                    onClick={
+                                                <Tippy
+                                                    content={`Compartir ${
                                                         type === "copy"
-                                                            ? copyToClipboard
-                                                            : undefined
-                                                    }
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className={`text-azul rounded-full p-2 block transition-colors ${
-                                                        hoveredShare === type
-                                                            ? "bg-azul/30"
-                                                            : "bg-azul/20"
+                                                            ? "URL"
+                                                            : "en " + type
                                                     }`}
                                                 >
-                                                    {type === "copy" && (
-                                                        <Link className="h-5 w-5" />
-                                                    )}
-                                                    {type === "linkedin" && (
-                                                        <Linkedin className="h-5 w-5" />
-                                                    )}
-                                                    {type === "twitter" && (
-                                                        <Twitter className="h-5 w-5" />
-                                                    )}
-                                                    {type === "facebook" && (
-                                                        <Facebook className="h-5 w-5" />
-                                                    )}
-                                                </a>
-                                            </Tippy>
-                                        </motion.div>
-                                    ))}
+                                                    <a
+                                                        href={
+                                                            type !== "copy"
+                                                                ? socialShareLinks[
+                                                                      type
+                                                                  ]
+                                                                : undefined
+                                                        }
+                                                        onClick={
+                                                            type === "copy"
+                                                                ? copyToClipboard
+                                                                : undefined
+                                                        }
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className={`text-hd-cerise rounded-full p-2 block transition-colors ${
+                                                            hoveredShare === type
+                                                                ? "bg-hd-cerise/30"
+                                                                : "bg-hd-cerise/10"
+                                                        }`}
+                                                    >
+                                                        {type === "copy" && (
+                                                            <Link className="h-5 w-5" />
+                                                        )}
+                                                        {type === "linkedin" && (
+                                                            <Linkedin className="h-5 w-5" />
+                                                        )}
+                                                        {type === "twitter" && (
+                                                            <Twitter className="h-5 w-5" />
+                                                        )}
+                                                        {type === "facebook" && (
+                                                            <Facebook className="h-5 w-5" />
+                                                        )}
+                                                    </a>
+                                                </Tippy>
+                                            </motion.div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </motion.div>
-                </div>
-            </motion.section>
-
-            <motion.section
-                initial="hidden"
-                animate="visible"
-                variants={staggerContainer}
-                className="mt-8 pt-6 border-slate-200 text-sm font-medium lg:max-w-[82rem] 2xl:max-w-[92rem]  px-[5%] py-8 md:py-12  text-negro mx-auto"
-            >
-                <motion.h2
-                    className="w-full  text-[32px] mt-8 lg:mt-0 text-center lg:px-0 lg:text-start leading-[34px] lg:text-5xl lg:leading-[102%]"
-                    variants={fadeInUp}
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                >
-                    <TextWithHighlight text={landing?.title} />
-                </motion.h2>
-
-                <motion.p
-                    className="hidden lg:flex mt-8 text-center lg:text-left"
-                    variants={fadeInUp}
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                >
-                    {landing?.description}
-                </motion.p>
+                        </motion.div>
+                    </div>
+                </motion.section>
 
                 <motion.section
-                    className="py-[5%] pt-0 grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:px-0 lg:max-w-[82rem] 2xl:max-w-[92rem] mx-auto"
-                    variants={{
-                        hidden: { opacity: 0 },
-                        visible: {
-                            opacity: 1,
-                            transition: {
-                                staggerChildren: 0.1,
-                                delayChildren: 0.3,
-                            },
-                        },
-                    }}
+                    initial="hidden"
+                    animate="visible"
+                    variants={staggerContainer}
+                    className="py-16 md:py-20 bg-white"
                 >
-                    {posts.map((item, index) => (
-                        <motion.div
-                            key={index}
+                    <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0">
+                        <motion.h2
+                            className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-center lg:text-left"
                             variants={fadeInUp}
-                            whileHover={{ y: -5 }}
-                            transition={{ type: "spring" }}
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-100px" }}
                         >
-                            <PostCard {...item} firstImage />
-                        </motion.div>
-                    ))}
-                </motion.section>
-            </motion.section>
+                            {landing?.title ? (
+                                <TextWithHighlight text={landing.title} />
+                            ) : (
+                                <>
+                                    Artículos{' '}
+                                    <span 
+                                        className="bg-clip-text text-transparent"
+                                        style={{
+                                            backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+                                        }}
+                                    >
+                                        Relacionados
+                                    </span>
+                                </>
+                            )}
+                        </motion.h2>
 
-            <Footer />
-        </>
+                        {landing?.description && (
+                            <motion.p
+                                className="text-lg text-gray-600 mb-12 text-center lg:text-left leading-relaxed"
+                                variants={fadeInUp}
+                                whileInView="visible"
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.2 }}
+                            >
+                                {landing.description}
+                            </motion.p>
+                        )}
+
+                        <motion.div
+                            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+                            variants={{
+                                hidden: { opacity: 0 },
+                                visible: {
+                                    opacity: 1,
+                                    transition: {
+                                        staggerChildren: 0.1,
+                                        delayChildren: 0.3,
+                                    },
+                                },
+                            }}
+                        >
+                            {posts.map((item, index) => (
+                                <motion.div
+                                    key={index}
+                                    variants={fadeInUp}
+                                >
+                                    <PostCard {...item} index={index} />
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    </div>
+                </motion.section>
+            </main>
+
+            <Footer generals={generals} socials={socials} />
+            <WhatsAppButton socials={socials} generals={generals} />
+        </div>
     );
 };
 

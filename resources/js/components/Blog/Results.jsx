@@ -39,17 +39,23 @@ const Results = ({ filter }) => {
 
     return (
         <>
-            <section className="p-[5%] pt-0 grid md:grid-cols-2 lg:grid-cols-3  gap-8  lg:max-w-[82rem] 2xl:max-w-[92rem] mx-auto">
-                {results.map((item, index) => {
-                    return <PostCard key={index} {...item} firstImage />;
-                })}
+            <section className="py-12 md:py-16 bg-gradient-to-b from-white to-gray-50">
+                <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {results.map((item, index) => {
+                            return <PostCard key={index} {...item} index={index} />;
+                        })}
+                    </div>
+                </div>
             </section>
-            <div className="p-[5%]">
-                <FilterPagination
-                    pages={pages}
-                    current={currentPage}
-                    setCurrent={setCurrentPage}
-                />
+            <div className="pb-12 bg-gradient-to-b from-gray-50 to-white">
+                <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0">
+                    <FilterPagination
+                        pages={pages}
+                        current={currentPage}
+                        setCurrent={setCurrentPage}
+                    />
+                </div>
             </div>
         </>
     );

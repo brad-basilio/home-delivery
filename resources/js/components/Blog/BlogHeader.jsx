@@ -203,51 +203,133 @@ const BlogHeader = ({ categories, postRecent, landing }) => {
     };
 
     return (
-        <motion.div
-            className="lg:max-w-[82rem] 2xl:max-w-[92rem] mx-auto px-[5%] py-8 md:py-12 text-negro"
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-        >
-            {/* Header Section */}
-            <motion.div className="mb-10" variants={itemVariants}>
-                <motion.h2
-                    className="w-full text-[32px] mt-8 lg:mt-0 text-center lg:text-start leading-[34px] lg:text-5xl lg:leading-[102%]"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                            duration: 0.8,
-                            ease: "backOut",
-                        },
-                    }}
-                >
-                    <TextWithHighlight
-                        text={landingHero?.title}
-                        split_dos_puntos={true}
-                    />
-                </motion.h2>
-            </motion.div>
+        <div className="py-16 md:py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+            {/* Decoración de fondo */}
+            <div className="absolute inset-0 opacity-[0.02]">
+                <div className="absolute top-0 left-1/4 w-96 h-96 bg-hd-cerulean rounded-full blur-3xl" />
+                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-hd-android rounded-full blur-3xl" />
+            </div>
 
-            {/* Featured Posts Section */}
-            <motion.div
-                className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-16"
-                variants={containerVariants}
-            >
-                {renderMainPost()}
-                
-                {/* Secondary Featured Posts */}
-                <motion.div
-                    className="md:col-span-6 space-y-6"
-                    variants={containerVariants}
-                >
-                    {postRecent.slice(1, 3).map((post, index) => 
-                        renderSecondaryPost(post, index)
-                    )}
-                </motion.div>
-            </motion.div>
-        </motion.div>
+            <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0 relative z-10">
+                {/* Header Section */}
+                <div className="text-center mb-16">
+                    <div 
+                        className="inline-block px-6 py-2 rounded-full mb-6"
+                        style={{
+                            background: 'linear-gradient(90deg, rgba(143, 189, 68, 0.1) 0%, rgba(35, 84, 184, 0.1) 50%, rgba(222, 52, 100, 0.1) 100%)'
+                        }}
+                    >
+                        <span className="text-hd-cerulean font-bold text-sm uppercase tracking-wider">Blog</span>
+                    </div>
+                    
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                       
+                            <>
+                                Descubre lo mejor
+Publicaciones sobre el {" "}
+                                <span 
+                                    className="bg-clip-text text-transparent"
+                                    style={{
+                                        backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+                                    }}
+                                >
+                                    mundo de la logistica
+                                </span>
+                            </>
+                        
+                    </h1>
+                    
+                    <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                        {landingHero?.description || 'Mantente informado sobre las últimas tendencias en logística'}
+                    </p>
+                </div>
+
+                {/* Featured Posts Section */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    {/* Main Post */}
+                    <div className="md:col-span-6">
+                        <a
+                            href={`/blog/${postRecent[0].slug}`}
+                            className="block bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group h-full"
+                        >
+                            {/* Imagen principal */}
+                            <div className="relative h-80 md:h-64 overflow-hidden">
+                                <img
+                                    src={postRecent[0].image ? `/api/posts/media/${postRecent[0].image}` : "/api/cover/thumbnail/null"}
+                                    alt={postRecent[0].name}
+                                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                                    onError={(e) => (e.target.src = "/api/cover/thumbnail/null")}
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </div>
+
+                            {/* Contenido */}
+                            <div className="p-6">
+                                <div className="flex items-center gap-3 mb-3 text-sm">
+                                   
+                                    <span className="text-hd-cerise font-medium">
+                                        {moment(postRecent[0].post_date).format("ll")}
+                                    </span>
+                                </div>
+
+                                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 group-hover:text-hd-android transition-colors duration-300">
+                                    <TextWithHighlight text={postRecent[0].name} />
+                                </h2>
+
+                                <div className="text-gray-600 line-clamp-3 leading-relaxed">
+                                    <HtmlContent html={postRecent[0].description} />
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    {/* Secondary Posts */}
+                    <div className="md:col-span-6 space-y-6">
+                        {postRecent.slice(1, 3).map((post, index) => {
+                            if (!post) return null;
+                            
+                            return (
+                                <a
+                                    key={post.id}
+                                    href={`/blog/${post.slug}`}
+                                    className="flex bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
+                                >
+                                    {/* Imagen secundaria */}
+                                    <div className="w-2/5 relative overflow-hidden">
+                                        <img
+                                            src={post.image ? `/api/posts/media/${post.image}` : "/api/cover/thumbnail/null"}
+                                            alt={post.name}
+                                            className="w-full h-full object-cover aspect-square transform group-hover:scale-110 transition-transform duration-500"
+                                            onError={(e) => (e.target.src = "/api/cover/thumbnail/null")}
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    </div>
+
+                                    {/* Contenido secundario */}
+                                    <div className="w-3/5 p-4">
+                                        <div className="text-xs text-hd-cerulean font-bold mb-2 uppercase tracking-wide">
+                                            {post.category?.name}
+                                        </div>
+
+                                        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-hd-android transition-colors duration-300">
+                                            <TextWithHighlight text={post.name} />
+                                        </h3>
+
+                                        <div className="text-sm text-gray-600 mb-3 line-clamp-2">
+                                            <HtmlContent html={post.description} />
+                                        </div>
+
+                                        <span className="text-xs text-hd-cerise font-medium">
+                                            {moment(post.post_date).format("ll")}
+                                        </span>
+                                    </div>
+                                </a>
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 
