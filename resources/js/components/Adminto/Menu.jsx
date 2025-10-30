@@ -187,6 +187,21 @@ const Menu = ({
                                 >
                                     {t("admin.sidebar.services", "Servicios")}
                                 </MenuItem>
+                                   <MenuItem
+                                    href="/admin/categories"
+                                    icon="mdi mdi-clipboard-list-outline"
+                                >
+                                    {t(
+                                        "admin.sidebar.categories",
+                                        "Categorias"
+                                    )}
+                                </MenuItem>
+                                <MenuItem
+                                    href="/admin/posts"
+                                    icon="mdi mdi-book-open-page-variant"
+                                >
+                                    {t("admin.sidebar.posts", "Posts")}
+                                </MenuItem> 
                            {/*     <MenuItem
                                     href="/admin/specialities"
                                     icon="mdi mdi-tag-faces"
@@ -299,21 +314,7 @@ const Menu = ({
                                         "Testimonios"
                                     )}
                                 </MenuItem>
-                                <MenuItem
-                                    href="/admin/categories"
-                                    icon="mdi mdi-clipboard-list-outline"
-                                >
-                                    {t(
-                                        "admin.sidebar.categories",
-                                        "Categorias"
-                                    )}
-                                </MenuItem>
-                                <MenuItem
-                                    href="/admin/posts"
-                                    icon="mdi mdi-book-open-page-variant"
-                                >
-                                    {t("admin.sidebar.posts", "Posts")}
-                                </MenuItem> 
+                             
                              
                               {/*  <MenuItem
                                     href="/admin/translations"

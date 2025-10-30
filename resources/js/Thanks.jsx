@@ -92,18 +92,18 @@ const Thanks = ({ session }) => {
                 <div
                     className="absolute inset-0 bg-cover bg-center bg-fixed"
                     style={{
-                        backgroundImage: `linear-gradient(rgba(94, 96, 140, 0.85), rgba(94, 96, 140, 0.85)), url('/assets/img/home/slide1.webp')`,
+                        backgroundImage: `linear-gradient(135deg, rgba(132, 188, 40, 0.85) 0%, rgba(15, 102, 167, 0.75) 10%, rgba(96, 71, 150, 0.7) 25%, rgba(171, 48, 126, 0.75) 45%, rgba(212, 48, 112, 0.8) 65%, rgba(228, 51, 103, 0.85) 85%, rgba(231, 22, 100, 0.9) 100%), url('/assets/img/login.webp')`,
                         transform: `translateY(${scrollY * 0.5}px)`
                     }}
                 ></div>
 
                 {/* Animated Background Elements */}
                 <div className="absolute inset-0">
-                    <div className="absolute top-20 left-10 w-20 h-20 bg-tertiary rounded-full animate-pulse"></div>
-                    <div className="absolute top-40 right-20 w-32 h-32 bg-tertiary/30 rounded-full animate-bounce" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-tertiary/15 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
-                    <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-tertiary/25 rounded-full animate-pulse" style={{ animationDelay: '3s' }}></div>
-                    <div className="absolute bottom-40 right-10 w-12 h-12 bg-tertiary/30 rounded-full animate-bounce" style={{ animationDelay: '4s' }}></div>
+                    <div className="absolute top-20 left-10 w-20 h-20 bg-white/20 rounded-full animate-pulse"></div>
+                    <div className="absolute top-40 right-20 w-32 h-32 bg-white/10 rounded-full animate-bounce" style={{ animationDelay: '1s' }}></div>
+                    <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-white/15 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
+                    <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-white/10 rounded-full animate-pulse" style={{ animationDelay: '3s' }}></div>
+                    <div className="absolute bottom-40 right-10 w-12 h-12 bg-white/15 rounded-full animate-bounce" style={{ animationDelay: '4s' }}></div>
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10">
@@ -149,14 +149,14 @@ const Thanks = ({ session }) => {
                             transition={{ delay: 0.5, duration: 0.8 }}
                         >
                             <h1 className="text-4xl md:text-7xl font-bold mb-8 leading-tight text-white drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
-                                ¡<span className="text-[#1a252f]">Gracias</span> por{' '}
+                                ¡<span className="text-white">Gracias</span> por{' '}
                                 <span className="text-white relative drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
                                     Contactarnos!
                                     <motion.div 
                                         initial={{ scaleX: 0 }}
                                         animate={{ scaleX: 1 }}
                                         transition={{ delay: 1, duration: 1 }}
-                                        className="absolute -bottom-2 left-0 w-full h-1 bg-green-400"
+                                        className="absolute -bottom-2 left-0 w-full h-1 bg-white"
                                     ></motion.div>
                                 </span>
                             </h1>
@@ -180,13 +180,13 @@ const Thanks = ({ session }) => {
                             transition={{ delay: 1.1, duration: 0.8 }}
                             className="mb-10"
                         >
-                            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 max-w-md mx-auto">
+                            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-6 max-w-md mx-auto border-2 border-white/40">
                                 <div className="flex items-center justify-center space-x-2 mb-2">
                                     <Star className="h-5 w-5 text-yellow-300" />
-                                    <span className="text-lg font-semibold">Tiempo de Respuesta</span>
+                                    <span className="text-lg font-semibold text-white">Tiempo de Respuesta</span>
                                     <Star className="h-5 w-5 text-yellow-300" />
                                 </div>
-                                <p className="text-2xl font-bold text-[#1a252f]">24-48 horas hábiles</p>
+                                <p className="text-2xl font-bold text-white">24-48 horas hábiles</p>
                             </div>
                         </motion.div>
 
@@ -204,7 +204,7 @@ const Thanks = ({ session }) => {
                                 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={handleReturnHome}
-                                className="group bg-white text-primary px-10 py-5 rounded-full text-lg font-semibold hover:bg-gray-50 transform transition-all duration-300 shadow-2xl flex items-center justify-center space-x-3"
+                                className="group bg-white text-gray-800 px-10 py-5 rounded-full text-lg font-semibold hover:bg-gray-50 transform transition-all duration-300 shadow-2xl flex items-center justify-center space-x-3"
                             >
                                 <HomeIcon className="h-6 w-6 group-hover:-translate-x-1 transition-transform duration-300" />
                                 <span>Volver al Inicio</span>
