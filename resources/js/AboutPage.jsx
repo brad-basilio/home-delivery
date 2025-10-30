@@ -76,7 +76,7 @@ const AboutPage = (props) => {
             <img
               src={sectionOne?.image ? `/api/aboutus/media/${sectionOne.image}` : '/assets/img/about/bg-about.png'}
               onError={(e) => {
-                e.target.src = '/assets/img/about/bg-about.png';
+               e.target.src = '/api/cover/thumbnail/null';
               }}
               alt={sectionOne?.title || 'Home Delivery'}
               className="w-full h-[300px] md:h-[400px] object-cover"
@@ -89,33 +89,108 @@ const AboutPage = (props) => {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
-          className="w-full py-12 md:py-16 bg-gray-50"
+          className="relative py-16 md:py-20 overflow-hidden bg-gradient-to-br from-gray-50 to-white"
         >
-          <div className="px-4 md:px-8 2xl:px-0 2xl:max-w-7xl mx-auto">
-            <motion.h2 
-              variants={fadeInUp}
-              className="text-2xl md:text-[40px] font-bold text-hd-onyx-dark text-center md:text-left"
+          {/* Decoración de fondo */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute top-10 right-10 w-72 h-72 bg-hd-android rounded-full blur-3xl" />
+            <div className="absolute bottom-10 left-10 w-72 h-72 bg-hd-cerise rounded-full blur-3xl" />
+          </div>
+
+          <div className="w-full 2xl:max-w-7xl mx-auto px-[5%] 2xl:px-0 relative z-10">
+            {/* Título */}
+            <motion.div variants={fadeInUp} className="text-center mb-12 md:mb-16">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                {sectionTwo?.title || (
+                  <>
+                    Nuestras{' '}
+                    <span 
+                      className="bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+                      }}
+                    >
+                      Fortalezas
+                    </span>
+                  </>
+                )}
+              </h2>
+              {sectionTwo?.description && (
+                <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                  {sectionTwo.description}
+                </p>
+              )}
+            </motion.div>
+
+            {/* Grid de fortalezas */}
+            <div 
+              className="grid gap-6 md:gap-8"
+              style={{
+                gridTemplateColumns: `repeat(auto-fit, minmax(280px, 1fr))`,
+              }}
             >
-              {sectionTwo?.title || 'Nuestras Fortalezas'}
-            </motion.h2>
-            <motion.div 
-              variants={fadeInUp}
-              className="mt-8 md:mt-12 grid sm:grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
-            >
-            {strengths?.map(
-              (item, index) =>
-                item.visible &&
-                item.status && (
-                  <FeatureCard
+              {strengths?.map((item, index) => {
+                if (!item.visible || !item.status) return null;
+
+                const colors = [
+                  { bg: 'bg-hd-android', text: 'text-white', icon: 'brightness-0 invert' },
+                  { bg: 'bg-hd-cerise', text: 'text-white', icon: 'brightness-0 invert' },
+                  { bg: 'bg-hd-cerulean', text: 'text-white', icon: 'brightness-0 invert' },
+                  { bg: 'bg-hd-spanish', text: 'text-white', icon: 'brightness-0 invert' }
+                ];
+                const colorScheme = colors[index % colors.length];
+
+                return (
+                  <motion.div
                     key={item.id}
-                    icon={item.image}
-                    title={item.name}
-                    description={item.description}
-                    delay={index * 0.2}
-                  />
-                )
-            )}
-          </motion.div>
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className={`group relative ${colorScheme.bg} rounded-3xl p-8 transition-all duration-500 hover:scale-105 hover:shadow-2xl cursor-default`}
+                  >
+                    {/* Efecto de brillo en hover */}
+                    <div className="absolute inset-0 rounded-3xl bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
+                    
+                    <div className="relative flex flex-col items-center text-center space-y-4">
+                      {/* Ícono */}
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-white/20 rounded-full blur-xl scale-150 group-hover:scale-175 transition-transform duration-500" />
+                        <div className="relative bg-white/20 backdrop-blur-sm p-5 rounded-full border-2 border-white/30 group-hover:border-white/50 transition-all duration-500 group-hover:rotate-12">
+                          <img
+                            src={item.image ? `/api/strength/media/${item.image}` : '/api/cover/thumbnail/null'}
+                            onError={(e) => {
+                              e.target.src = '/api/cover/thumbnail/null';
+                            }}
+                            alt={item.name}
+                            className={`w-12 h-12 md:w-14 md:h-14 object-contain filter ${colorScheme.icon} transition-transform duration-500 group-hover:scale-110`}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Título */}
+                      <div className={`text-2xl md:text-3xl font-bold ${colorScheme.text} leading-tight`}>
+                        {item.name}
+                      </div>
+
+                      {/* Descripción */}
+                      {item.description && (
+                        <div className={`text-sm md:text-base ${colorScheme.text} opacity-95 leading-relaxed`}>
+                          {item.description}
+                        </div>
+                      )}
+
+                      {/* Línea decorativa */}
+                      <div className="w-16 h-1 bg-white/40 rounded-full group-hover:w-24 transition-all duration-500" />
+                    </div>
+
+                    {/* Efecto de esquina */}
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute bottom-0 left-0 w-20 h-20 bg-white/10 rounded-tr-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
         </motion.section>
 
@@ -125,7 +200,7 @@ const AboutPage = (props) => {
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
-            className="px-4 py-12 md:py-16 md:px-6 lg:px-8"
+            className=" py-12 md:py-16 px-[5%] 2xl:max-w-7xl"
           >
             <div className="max-w-7xl mx-auto">
               <motion.div variants={fadeInUp} className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -135,7 +210,7 @@ const AboutPage = (props) => {
                     e.target.src = '/api/cover/thumbnail/null';
                   }}
                   alt={sectionThree.title}
-                  className="w-full h-[300px] md:h-auto object-cover rounded-2xl"
+                  className="w-full h-[300px] md:h-[400px] object-cover rounded-2xl"
                 />
                 <div className="space-y-4 md:space-y-6">
                   <h2 className="text-2xl md:text-4xl font-bold text-hd-onyx-dark">
@@ -159,7 +234,7 @@ const AboutPage = (props) => {
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
-            className="px-4 py-12 md:py-16 md:px-6 lg:px-8 bg-gray-50"
+            className="px-[5%] py-12 md:py-16  2xl:px-0 bg-gray-50"
           >
             <div className="max-w-7xl mx-auto">
               <motion.div variants={fadeInUp} className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -180,7 +255,7 @@ const AboutPage = (props) => {
                     e.target.src = '/api/cover/thumbnail/null';
                   }}
                   alt={sectionFour.title}
-                  className="w-full h-[300px] md:h-auto object-cover rounded-2xl order-1 md:order-2"
+                  className="w-full h-[300px] md:h-[400px] object-cover rounded-2xl order-1 md:order-2"
                 />
               </motion.div>
             </div>
@@ -196,41 +271,6 @@ const AboutPage = (props) => {
     </div>
   );
 };
-
-/**
- * FeatureCard - Componente para mostrar cada fortaleza
- */
-function FeatureCard({ icon, title, description, delay }) {
-  return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      viewport={{ once: true }}
-      className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group hover:-translate-y-1"
-    >
-      <motion.div 
-        whileHover={{ scale: 1.1 }}
-        className="bg-gradient-to-br from-hd-green/10 to-hd-blue/10 w-14 h-14 md:w-16 md:h-16 rounded-lg flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300"
-      >
-        <img
-          src={icon ? `/api/strength/media/${icon}` : '/api/cover/thumbnail/null'}
-          onError={(e) => {
-            e.target.src = '/api/cover/thumbnail/null';
-          }}
-          alt={title}
-          className="w-7 h-7 md:w-8 md:h-8 object-contain"
-        />
-      </motion.div>
-      <h3 className="text-xl font-bold text-hd-onyx mb-2 group-hover:text-hd-green transition-colors duration-300">
-        {title}
-      </h3>
-      <p className="text-hd-gray leading-relaxed text-sm md:text-base">
-        {description}
-      </p>
-    </motion.div>
-  );
-}
 
 // Registrar el script React
 CreateReactScript((el, properties) => {
