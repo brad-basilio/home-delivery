@@ -563,7 +563,7 @@
     ]
   },
   "node_modules/canvg/lib/index.es.js": {
-    "file": "assets/index.es-CO14ho5Y.js",
+    "file": "assets/index.es-YaI5vq4f.js",
     "name": "index.es",
     "src": "node_modules/canvg/lib/index.es.js",
     "isDynamicEntry": true,
@@ -665,7 +665,7 @@
     ]
   },
   "resources/js/AboutPage.jsx": {
-    "file": "assets/AboutPage-DGUsXAjO.js",
+    "file": "assets/AboutPage-EupibWRw.js",
     "name": "AboutPage",
     "src": "resources/js/AboutPage.jsx",
     "isEntry": true,
@@ -2117,7 +2117,7 @@
     ]
   },
   "resources/js/Blog.jsx": {
-    "file": "assets/Blog-Bu_DvjgX.js",
+    "file": "assets/Blog-CLV-0Kzh.js",
     "name": "Blog",
     "src": "resources/js/Blog.jsx",
     "isEntry": true,
@@ -2159,7 +2159,7 @@
     ]
   },
   "resources/js/BlogArticle.jsx": {
-    "file": "assets/BlogArticle-qI867UfQ.js",
+    "file": "assets/BlogArticle-DrRszFga.js",
     "name": "BlogArticle",
     "src": "resources/js/BlogArticle.jsx",
     "isEntry": true,
@@ -2373,7 +2373,7 @@
     ]
   },
   "resources/js/ContactoPage.jsx": {
-    "file": "assets/ContactoPage-DQPbNlSc.js",
+    "file": "assets/ContactoPage-D7dkf99d.js",
     "name": "ContactoPage",
     "src": "resources/js/ContactoPage.jsx",
     "isEntry": true,
@@ -2628,7 +2628,7 @@
     ]
   },
   "resources/js/HomeDeliveryPage.jsx": {
-    "file": "assets/HomeDeliveryPage-JZYaA7NG.js",
+    "file": "assets/HomeDeliveryPage-oMxiJWUi.js",
     "name": "HomeDeliveryPage",
     "src": "resources/js/HomeDeliveryPage.jsx",
     "isEntry": true,
@@ -2783,7 +2783,7 @@
     ]
   },
   "resources/js/LibroDeReclamaciones.jsx": {
-    "file": "assets/LibroDeReclamaciones-DZhBnUZb.js",
+    "file": "assets/LibroDeReclamaciones-IkiQO_xy.js",
     "name": "LibroDeReclamaciones",
     "src": "resources/js/LibroDeReclamaciones.jsx",
     "isEntry": true,
@@ -3059,7 +3059,7 @@
     ]
   },
   "resources/js/ServiciosPage.jsx": {
-    "file": "assets/ServiciosPage-D01kKAFQ.js",
+    "file": "assets/ServiciosPage-DtB32T_O.js",
     "name": "ServiciosPage",
     "src": "resources/js/ServiciosPage.jsx",
     "isEntry": true,
@@ -3618,7 +3618,7 @@
     ]
   },
   "resources/js/components/Adminto/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-COKCz9DG.js",
+    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/Adminto/form/TextareaFormGroup.jsx",
     "isEntry": true,
@@ -4132,7 +4132,7 @@
     ]
   },
   "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx": {
-    "file": "assets/HomeDeliveryPage-CCTn8H1c.js",
+    "file": "assets/HomeDeliveryPage-9Np_ADYR.js",
     "name": "HomeDeliveryPage",
     "src": "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
     "isEntry": true,
@@ -4655,10 +4655,10 @@
     ]
   },
   "resources/js/components/Test/Email.jsx": {
-    "file": "assets/Email-xZLZruGf.js",
+    "file": "assets/Email-DtB6xgHv.js",
     "name": "Email",
     "src": "resources/js/components/Test/Email.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx",
@@ -4725,10 +4725,10 @@
     ]
   },
   "resources/js/components/Test/Treatment.jsx": {
-    "file": "assets/Treatment-BM6_LCjb.js",
+    "file": "assets/Treatment-0DU8BCXm.js",
     "name": "Treatment",
     "src": "resources/js/components/Test/Treatment.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx"
@@ -4891,7 +4891,7 @@
     ]
   },
   "resources/js/components/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
+    "file": "assets/TextareaFormGroup-COKCz9DG.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/form/TextareaFormGroup.jsx",
     "isEntry": true,

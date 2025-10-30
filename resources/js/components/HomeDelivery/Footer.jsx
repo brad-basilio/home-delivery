@@ -121,7 +121,7 @@ const Footer = ({ generals = [], socials = [] }) => {
               <div className="mb-6">
                 <img 
                   src="/assets/img/logo-white.png" 
-                  alt="Home Delivery" 
+                  alt="Home Delivery Logistics" 
                   className="h-12 w-auto grayscale invert brightness-0"
                   onError={(e) => {
                     e.target.style.display = 'none';
@@ -130,7 +130,7 @@ const Footer = ({ generals = [], socials = [] }) => {
                 />
                 <img 
                   src="/assets/img/logo.png" 
-                  alt="Home Delivery" 
+                  alt="Home Delivery Logistics" 
                   className="h-12 w-auto filter invert brightness-0"
                   style={{display: 'none'}}
                 />
@@ -317,8 +317,8 @@ const Footer = ({ generals = [], socials = [] }) => {
           {/* Copyright */}
           <div className="border-t border-white/10 mt-4 pt-4">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-sm text-white/80">
-                &copy; {new Date().getFullYear()} <span className="text-white font-medium">Home Delivery</span>. Todos los derechos reservados.
+              <p className="text-sm text-center lg:text-start text-white/80">
+                &copy; {new Date().getFullYear()} <span className="text-white font-medium">Home Delivery Logistics</span>. Todos los derechos reservados. Powered by <a className="text-white font-medium" href='https://mundoweb.pe/' target='_blank' >MundoWeb</a>.
               </p>
                  {/* Redes sociales mejoradas */}
               {visibleSocials && visibleSocials.length > 0 && (
