@@ -28,6 +28,13 @@ const ContactoPage = (props) => {
   const [searchOffice, setSearchOffice] = useState('');
   const [showOfficesList, setShowOfficesList] = useState(true); // Abierto por defecto
   const officesListRef = useRef(null);
+
+  // Auto-abrir lista cuando se escribe en el buscador
+  useEffect(() => {
+    if (searchOffice.length > 0) {
+      setShowOfficesList(true);
+    }
+  }, [searchOffice]);
   
   const [formData, setFormData] = useState({
     nombre: '',
@@ -633,15 +640,16 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
               {/* Panel Lateral Flotante - Lista de Oficinas */}
               <div 
                 ref={officesListRef}
-                className="absolute top-4 left-4 z-20 w-80 md:w-96"
-                style={{ height: '670px' }}
+                className="absolute top-4 left-4 right-4 md:right-auto z-20 md:w-96 max-w-md"
               >
-                <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden backdrop-blur-sm bg-white/95 h-full flex flex-col">
-                  {/* Header con Buscador */}
-                  <div className="p-6 border-b border-gray-200 bg-gradient-to-br from-white to-gray-50 flex-shrink-0">
+                <div className={`bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden backdrop-blur-sm bg-white/95 flex flex-col ${
+                  showOfficesList ? 'max-h-[500px] md:max-h-[670px]' : 'h-auto'
+                }`}>
+                  {/* Header con Buscador - Siempre Visible */}
+                  <div className="p-4 md:p-6 border-b border-gray-200 bg-gradient-to-br from-white to-gray-50 flex-shrink-0">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                        <svg className="w-6 h-6 text-hd-android" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <h3 className="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
+                        <svg className="w-5 md:w-6 h-5 md:h-6 text-hd-android" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
@@ -662,7 +670,7 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
                       </button>
                     </div>
                     
-                    {/* Buscador */}
+                    {/* Buscador - Siempre Visible */}
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -674,7 +682,7 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
                         value={searchOffice}
                         onChange={(e) => setSearchOffice(e.target.value)}
                         placeholder="Buscar ubicación..."
-                        className="w-full pl-12 pr-4 py-3 bg-white border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-hd-android/20 focus:border-hd-android transition-all duration-300 text-gray-900 placeholder-gray-400"
+                        className="w-full pl-12 pr-10 py-3 bg-white border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-hd-android/20 focus:border-hd-android transition-all duration-300 text-gray-900 placeholder-gray-400"
                       />
                       {searchOffice && (
                         <button
@@ -762,9 +770,9 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
 
                   {/* Contador de resultados */}
                   {!showOfficesList && (
-                    <div className="px-6 py-4 bg-gradient-to-br from-gray-50 to-white flex-shrink-0">
+                    <div className="px-4 md:px-6 py-3 md:py-4 bg-gradient-to-br from-gray-50 to-white flex-shrink-0 border-t border-gray-200">
                       <p className="text-sm text-gray-600 font-medium text-center">
-                        {filteredOffices.length} {filteredOffices.length === 1 ? 'ubicación disponible' : 'ubicaciones disponibles'}
+                        {filteredOffices.length} {filteredOffices.length === 1 ? 'ubicación' : 'ubicaciones'}
                       </p>
                     </div>
                   )}
@@ -777,6 +785,7 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
                   <GoogleMap
                     ref={mapRef}
                     mapContainerStyle={{ width: '100%', height: '700px' }}
+                    mapContainerClassName="!h-[700px] md:!h-[700px]"
                     center={mapCenter}
                     zoom={mapZoom}
                     options={{
@@ -846,9 +855,9 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
                 </LoadScript>
               </div>
 
-              {/* Panel de Información de Oficina Seleccionada - Flotante Abajo */}
+              {/* Panel de Información de Oficina Seleccionada - Flotante Abajo (Solo Desktop) */}
               {selectedOffice && (
-                <div className="absolute bottom-4 right-4 left-4 md:left-auto md:w-96 z-20 animate-fadeIn">
+                <div className="hidden md:block absolute bottom-4 right-4 md:w-96 z-20 animate-fadeIn">
                   <div className="bg-white rounded-3xl shadow-2xl border-2 border-gray-200 overflow-hidden backdrop-blur-sm bg-white/95">
                     <div className="p-6">
                       <div className="flex items-start gap-4">
