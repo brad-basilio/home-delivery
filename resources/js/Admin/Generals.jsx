@@ -724,7 +724,7 @@ const Generals = ({ generals }) => {
                                 }
                             />
                         </div>
-                       {/* <div className="mb-3">
+                       <div className="mb-3">
                             <QuillFormGroup
                                 label="Políticas de cambio"
                                 value={formData.exchangePolicy}
@@ -735,7 +735,7 @@ const Generals = ({ generals }) => {
                                     })
                                 }
                             />
-                        </div> */}
+                        </div>
                         <div className="mb-3">
                             <InputFormGroup
                                 label="Email Corporativo (para notificaciones)"
