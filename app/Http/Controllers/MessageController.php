@@ -23,7 +23,12 @@ class MessageController extends BasicController
             'subject.required' => 'El asunto es obligatorio.',
             'subject.string' => 'El asunto debe ser una cadena de texto.',
             'description.required' => 'El mensaje es obligatorio.',
-            'description.string' => 'El mensaje debe ser una cadena de texto.'
+            'description.string' => 'El mensaje debe ser una cadena de texto.',
+            'phone.string' => 'El teléfono debe ser una cadena de texto.',
+            'company.string' => 'La empresa debe ser una cadena de texto.',
+            'business_sector.string' => 'El rubro debe ser una cadena de texto.',
+            'daily_shipments.string' => 'La cantidad de envíos debe ser una cadena de texto.',
+            'location_type.string' => 'El tipo de ubicación debe ser una cadena de texto.',
         ];
 
         // Validación de los datos
@@ -32,6 +37,11 @@ class MessageController extends BasicController
             'email' => 'nullable|email|max:320',
             'subject' => 'required|string',
             'description' => 'required|string',
+            'phone' => 'nullable|string|max:20',
+            'company' => 'nullable|string|max:255',
+            'business_sector' => 'nullable|string|max:255',
+            'daily_shipments' => 'nullable|string|max:255',
+            'location_type' => 'nullable|string|max:255',
             'service_id' => 'nullable|exists:services,id',
         ], $messages);
 

@@ -29,6 +29,10 @@ class AdminContactNotification extends Notification
             'nombre' => 'Nombre del remitente',
             'email' => 'Correo electrónico del remitente',
             'telefono' => 'Teléfono del remitente',
+            'empresa' => 'Nombre de la empresa',
+            'rubro' => 'Rubro o sector de negocio',
+            'envios_diarios' => 'Cantidad de envíos diarios/mensuales',
+            'ubicacion' => 'Ubicación (Lima/Provincia)',
             'tipo_contacto' => 'Tipo de contacto (empresa/cliente)',
             'asunto' => 'Asunto del mensaje',
             'descripcion' => 'Descripción del mensaje',
@@ -50,13 +54,17 @@ class AdminContactNotification extends Notification
         $body = $template
             ? \App\Helpers\Text::replaceData($template->description, [
                 'customer_name' => $this->message->name,
-                'customer_email' => $this->message->email,
-                'customer_phone' => $this->message->subject ?? 'No especificado',
+                'customer_email' => $this->message->email ?? 'No especificado',
+                'customer_phone' => $this->message->phone ?? 'No especificado',
+                'customer_company' => $this->message->company ?? 'No especificado',
+                'customer_business_sector' => $this->message->business_sector ?? 'No especificado',
+                'customer_daily_shipments' => $this->message->daily_shipments ?? 'No especificado',
+                'customer_location' => $this->message->location_type ?? 'No especificado',
                 'tipo_contacto' => $this->message->contact_type ?? 'No especificado',
                 'message_subject' => $this->message->subject,
                 'message_content' => $this->message->description,
                 'ruc' => $this->message->ruc ?? 'No especificado',
-                'nombre_servicio' => $this->message->service_id ? $this->message->service->title : 'No especificado',
+                'nombre_servicio' => $this->message->service_id ? $this->message->service->title : 'Consulta General',
                 'year' => date('Y'),
                 'fecha_contacto' => $this->message->created_at
                     ? $this->message->created_at->translatedFormat('d \d\e F \d\e\l Y')

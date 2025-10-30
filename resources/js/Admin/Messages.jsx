@@ -198,89 +198,153 @@ const Messages = () => {
                     },
                 ]}
             />
-            <Modal modalRef={modalRef} title="Mensaje" hideFooter>
-                <div className="row">
-                    <div className="col-md-6">
-                        <p>
-                            <b>Nombre</b>:
-                            <span className="ms-1">{dataLoaded?.name}</span>
-                        </p>
-                    </div>
-                    <div className="col-md-6">
-                        <p>
-                            <b>Correo</b>:
-                            <span className="ms-1">
-                                {dataLoaded?.email || (
-                                    <i className="text-muted">- Sin correo -</i>
-                                )}
-                            </span>
-                        </p>
-                    </div>
-                    <div className="col-md-6">
-                        <p>
-                            <b>Teléfono</b>:
-                            <span className="ms-1">
-                                {dataLoaded?.phone || (
-                                    <i className="text-muted">- Sin teléfono -</i>
-                                )}
-                            </span>
-                        </p>
-                    </div>
-                    <div className="col-md-6">
-                        <p>
-                            <b>Empresa</b>:
-                            <span className="ms-1">
-                                {dataLoaded?.company || (
-                                    <i className="text-muted">- Sin empresa -</i>
-                                )}
-                            </span>
-                        </p>
-                    </div>
-                    <div className="col-md-6">
-                        <p>
-                            <b>Rubro</b>:
-                            <span className="ms-1">
-                                {dataLoaded?.business_sector || (
-                                    <i className="text-muted">- Sin rubro -</i>
-                                )}
-                            </span>
-                        </p>
-                    </div>
-                    <div className="col-md-6">
-                        <p>
-                            <b>Envíos diarios/mensuales</b>:
-                            <span className="ms-1">
-                                {dataLoaded?.daily_shipments || (
-                                    <i className="text-muted">- Sin especificar -</i>
-                                )}
-                            </span>
-                        </p>
-                    </div>
-                    <div className="col-md-6">
-                        <p>
-                            <b>Ubicación</b>:
-                            <span className="ms-1">
-                                {dataLoaded?.location_type || (
-                                    <i className="text-muted">- Sin especificar -</i>
-                                )}
-                            </span>
-                        </p>
-                    </div>
-                    <div className="col-md-6">
-                        <p>
-                            <b>Servicio</b>:
-                            <span className="ms-1">
-                                {dataLoaded?.service?.title || (
-                                    <i className="text-muted">- Consulta General -</i>
-                                )}
-                            </span>
-                        </p>
-                    </div>
+            <Modal modalRef={modalRef} title="Detalle del Mensaje" hideFooter size="lg">
+                <div className="row g-3">
+                    {/* Sección: Información del Cliente */}
                     <div className="col-12">
-                        <p>
-                            <b>Mensaje</b>:
-                            <span className="ms-1">{dataLoaded?.description}</span>
-                        </p>
+                        <div className="bg-light p-3 rounded">
+                            <h6 className="text-primary mb-3">
+                                <i className="mdi mdi-account-circle me-2"></i>
+                                Información del Cliente
+                            </h6>
+                            <div className="row g-2">
+                                <div className="col-md-6">
+                                    <p className="mb-2">
+                                        <strong>Nombre:</strong>
+                                        <span className="ms-2">{dataLoaded?.name}</span>
+                                    </p>
+                                </div>
+                                <div className="col-md-6">
+                                    <p className="mb-2">
+                                        <strong>Correo:</strong>
+                                        <span className="ms-2">
+                                            {dataLoaded?.email || (
+                                                <i className="text-muted">- Sin correo -</i>
+                                            )}
+                                        </span>
+                                    </p>
+                                </div>
+                                <div className="col-md-6">
+                                    <p className="mb-2">
+                                        <strong>Teléfono:</strong>
+                                        <span className="ms-2">
+                                            {dataLoaded?.phone || (
+                                                <i className="text-muted">- Sin teléfono -</i>
+                                            )}
+                                        </span>
+                                    </p>
+                                </div>
+                                <div className="col-md-6">
+                                    <p className="mb-2">
+                                        <strong>Empresa:</strong>
+                                        <span className="ms-2">
+                                            {dataLoaded?.company || (
+                                                <i className="text-muted">- Sin empresa -</i>
+                                            )}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Sección: Detalles de la Solicitud */}
+                    <div className="col-12">
+                        <div className="bg-light p-3 rounded">
+                            <h6 className="text-success mb-3">
+                                <i className="mdi mdi-package-variant me-2"></i>
+                                Detalles de la Solicitud
+                            </h6>
+                            <div className="row g-2">
+                                <div className="col-md-6">
+                                    <p className="mb-2">
+                                        <strong>Rubro:</strong>
+                                        <span className="ms-2">
+                                            {dataLoaded?.business_sector || (
+                                                <i className="text-muted">- Sin rubro -</i>
+                                            )}
+                                        </span>
+                                    </p>
+                                </div>
+                                <div className="col-md-6">
+                                    <p className="mb-2">
+                                        <strong>Envíos diarios/mensuales:</strong>
+                                        <span className="ms-2">
+                                            {dataLoaded?.daily_shipments || (
+                                                <i className="text-muted">- Sin especificar -</i>
+                                            )}
+                                        </span>
+                                    </p>
+                                </div>
+                                <div className="col-md-6">
+                                    <p className="mb-2">
+                                        <strong>Ubicación:</strong>
+                                        <span className="ms-2">
+                                            {dataLoaded?.location_type || (
+                                                <i className="text-muted">- Sin especificar -</i>
+                                            )}
+                                        </span>
+                                    </p>
+                                </div>
+                                <div className="col-md-6">
+                                    <p className="mb-2">
+                                        <strong>Servicio:</strong>
+                                        <span className="ms-2">
+                                            {dataLoaded?.service?.title || (
+                                                <span className="badge bg-info">Consulta General</span>
+                                            )}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Sección: Asunto */}
+                    {dataLoaded?.subject && (
+                        <div className="col-12">
+                            <div className="bg-light p-3 rounded">
+                                <h6 className="text-warning mb-2">
+                                    <i className="mdi mdi-email-outline me-2"></i>
+                                    Asunto
+                                </h6>
+                                <p className="mb-0">{dataLoaded.subject}</p>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Sección: Mensaje */}
+                    <div className="col-12">
+                        <div className="bg-light p-3 rounded">
+                            <h6 className="text-info mb-2">
+                                <i className="mdi mdi-message-text me-2"></i>
+                                Mensaje
+                            </h6>
+                            <div className="p-2 bg-white rounded" style={{ whiteSpace: 'pre-line' }}>
+                                {dataLoaded?.description}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Sección: Metadata */}
+                    <div className="col-12">
+                        <div className="d-flex justify-content-between align-items-center text-muted small">
+                            <span>
+                                <i className="mdi mdi-clock-outline me-1"></i>
+                                Recibido: {dataLoaded?.created_at ? new Date(dataLoaded.created_at).toLocaleString('es-PE') : '-'}
+                            </span>
+                            <span>
+                                {dataLoaded?.seen ? (
+                                    <span className="badge bg-success">
+                                        <i className="mdi mdi-check-all me-1"></i>Leído
+                                    </span>
+                                ) : (
+                                    <span className="badge bg-danger">
+                                        <i className="mdi mdi-email-alert me-1"></i>No leído
+                                    </span>
+                                )}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </Modal>

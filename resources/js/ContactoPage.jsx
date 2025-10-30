@@ -7,6 +7,8 @@ import Footer from './components/HomeDelivery/Footer';
 import WhatsAppButton from './components/HomeDelivery/WhatsAppButton';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Global from './Utils/Global';
+import MessagesRest from './actions/MessagesRest';
+import Swal from 'sweetalert2';
 
 const ContactoPage = (props) => {
   const { offices = [], generals = [], socials = [] } = props;
@@ -15,6 +17,8 @@ const ContactoPage = (props) => {
   const [selectedOffice, setSelectedOffice] = useState(null);
   const [mapCenter, setMapCenter] = useState({ lat: -12.0464, lng: -77.0428 }); // Lima Centro por defecto
   const [mapZoom, setMapZoom] = useState(12);
+  const [sending, setSending] = useState(false);
+  const messagesRest = new MessagesRest();
   
   const [formData, setFormData] = useState({
     nombre: '',
@@ -57,8 +61,67 @@ const ContactoPage = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Aquí iría la lógica para enviar el formulario
+    setSending(true);
+
+    // Construir el mensaje con todos los datos del formulario
+    const descripcion = `
+SOLICITUD DE COTIZACIÓN
+
+Empresa: ${formData.empresa}
+Rubro: ${formData.rubro}
+Cantidad de envíos: ${formData.cantidad_envios}
+Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
+    `.trim();
+
+    const request = {
+      name: formData.nombre,
+      email: formData.correo,
+      phone: formData.celular,
+      subject: 'Solicitud de Cotización', // Asunto por defecto
+      company: formData.empresa,
+      business_sector: formData.rubro,
+      daily_shipments: formData.cantidad_envios,
+      location_type: formData.ubicacion === 'lima' ? 'Lima' : 'Provincia',
+      description: descripcion,
+      service_id: null, // Cotización general, no ligada a un servicio específico
+    };
+
+    try {
+      const result = await messagesRest.save(request);
+      setSending(false);
+
+      if (result) {
+        // Mostrar mensaje de éxito
+        await Swal.fire({
+          icon: 'success',
+          title: '¡Solicitud Enviada!',
+          text: 'Gracias por contactarnos. Nos pondremos en contacto contigo pronto.',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#8FBD44',
+        });
+
+        // Limpiar formulario
+        setFormData({
+          nombre: '',
+          empresa: '',
+          correo: '',
+          celular: '',
+          rubro: '',
+          cantidad_envios: '',
+          ubicacion: 'lima'
+        });
+      }
+    } catch (error) {
+      setSending(false);
+      console.error('Error enviando solicitud:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un problema al enviar tu solicitud. Por favor, inténtalo de nuevo.',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#DE3464',
+      });
+    }
   };
 
   const handleChange = (e) => {
@@ -357,9 +420,20 @@ const ContactoPage = (props) => {
 
                     <button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-hd-cerise to-hd-cerise/90 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                      disabled={sending}
+                      className="w-full bg-gradient-to-r from-hd-cerise to-hd-cerise/90 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
-                      Enviar Solicitud
+                      {sending ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Enviando...
+                        </span>
+                      ) : (
+                        'Enviar Solicitud'
+                      )}
                     </button>
                   </form>
                 </div>

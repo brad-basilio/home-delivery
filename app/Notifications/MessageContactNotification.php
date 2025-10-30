@@ -30,6 +30,10 @@ class MessageContactNotification extends Notification
             'nombre' => 'Nombre del remitente',
             'email' => 'Correo electrónico del remitente',
             'telefono' => 'Teléfono del remitente',
+            'empresa' => 'Nombre de la empresa',
+            'rubro' => 'Rubro o sector de negocio',
+            'envios_diarios' => 'Cantidad de envíos diarios/mensuales',
+            'ubicacion' => 'Ubicación (Lima/Provincia)',
             'descripcion' => 'Descripción del mensaje',
             'fecha_contacto' => 'Fecha de contacto',
             'year' => 'Año actual',
@@ -48,10 +52,14 @@ class MessageContactNotification extends Notification
         $body = $template
             ? \App\Helpers\Text::replaceData($template->description, [
                 'nombre' => $this->message->name,
-                'email' => $this->message->email,
-                'telefono' => $this->message->phone ?? $this->message->subject ?? 'No especificado',
+                'email' => $this->message->email ?? 'No especificado',
+                'telefono' => $this->message->phone ?? 'No especificado',
+                'empresa' => $this->message->company ?? 'No especificado',
+                'rubro' => $this->message->business_sector ?? 'No especificado',
+                'envios_diarios' => $this->message->daily_shipments ?? 'No especificado',
+                'ubicacion' => $this->message->location_type ?? 'No especificado',
                 'descripcion' => $this->message->description,
-                'nombre_servicio' => $this->message->service_id ? $this->message->service->title : 'No especificado',
+                'nombre_servicio' => $this->message->service_id ? $this->message->service->title : 'Consulta General',
                 'year' => date('Y'),
                 'fecha_contacto' => $this->message->created_at
                     ? $this->message->created_at->translatedFormat('d \d\e F \d\e\l Y')
