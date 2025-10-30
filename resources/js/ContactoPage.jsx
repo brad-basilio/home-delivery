@@ -20,6 +20,10 @@ const ContactoPage = (props) => {
   const [sending, setSending] = useState(false);
   const messagesRest = new MessagesRest();
   
+  // Estados para los dropdowns personalizados
+  const [showRubroDropdown, setShowRubroDropdown] = useState(false);
+  const rubroDropdownRef = useRef(null);
+  
   const [formData, setFormData] = useState({
     nombre: '',
     empresa: '',
@@ -30,6 +34,17 @@ const ContactoPage = (props) => {
     ubicacion: 'lima'
   });
 
+  // Opciones para el dropdown de rubro
+  const rubrosOptions = [
+    { value: 'ecommerce', label: 'E-commerce', icon: '🛒' },
+    { value: 'retail', label: 'Retail', icon: '🏪' },
+    { value: 'alimentos', label: 'Alimentos y Bebidas', icon: '🍔' },
+    { value: 'farmaceutico', label: 'Farmacéutico', icon: '💊' },
+    { value: 'tecnologia', label: 'Tecnología', icon: '💻' },
+    { value: 'moda', label: 'Moda y Textil', icon: '👔' },
+    { value: 'otro', label: 'Otro', icon: '📦' }
+  ];
+
   // Obtener oficina principal
   const oficinaPrincipal = offices?.find(o => o.type === 'oficina_principal');
 
@@ -37,6 +52,18 @@ const ContactoPage = (props) => {
   const emailSoporte = generals?.find(g => g.correlative === 'email_contact')?.description || '';
   const telefonoSoporte = generals?.find(g => g.correlative === 'phone_contact')?.description || '';
   const whatsappNumber = generals?.find(g => g.correlative === 'whatsapp_phone')?.description || '';
+
+  // Cerrar dropdowns al hacer click fuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (rubroDropdownRef.current && !rubroDropdownRef.current.contains(event.target)) {
+        setShowRubroDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Configurar centro del mapa basado en oficina principal
   useEffect(() => {
@@ -129,6 +156,19 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleRubroSelect = (value) => {
+    setFormData({
+      ...formData,
+      rubro: value
+    });
+    setShowRubroDropdown(false);
+  };
+
+  const getSelectedRubroLabel = () => {
+    const selected = rubrosOptions.find(opt => opt.value === formData.rubro);
+    return selected ? `${selected.icon} ${selected.label}` : 'Selecciona tu rubro';
   };
 
   // Manejar click en marcador del mapa
@@ -283,159 +323,287 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
 
               {/* Columna Derecha - Formulario */}
               <div className="md:col-span-3">
-                <div className="bg-white p-6 md:p-10 rounded-2xl border-2 border-gray-100 shadow-lg">
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Solicita tu Cotización</h2>
+                <div className="relative bg-gradient-to-br from-white via-gray-50 to-white p-8 md:p-12 rounded-3xl border border-gray-200 shadow-xl overflow-hidden">
+                  {/* Decoración de fondo */}
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-hd-android/5 to-transparent rounded-full blur-3xl" />
+                  <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-hd-cerulean/5 to-transparent rounded-full blur-3xl" />
                   
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Nombre Completo <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="nombre"
-                          value={formData.nombre}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hd-android focus:border-transparent transition-all duration-300"
-                          placeholder="Juan Pérez"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Empresa <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="empresa"
-                          value={formData.empresa}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hd-android focus:border-transparent transition-all duration-300"
-                          placeholder="Mi Empresa SAC"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Correo Electrónico <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="email"
-                          name="correo"
-                          value={formData.correo}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hd-android focus:border-transparent transition-all duration-300"
-                          placeholder="juan@empresa.com"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Celular <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="tel"
-                          name="celular"
-                          value={formData.celular}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hd-android focus:border-transparent transition-all duration-300"
-                          placeholder="999 999 999"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Rubro <span className="text-red-500">*</span>
-                      </label>
-                      <select
-                        name="rubro"
-                        value={formData.rubro}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hd-android focus:border-transparent transition-all duration-300"
-                      >
-                        <option value="">Selecciona tu rubro</option>
-                        <option value="ecommerce">E-commerce</option>
-                        <option value="retail">Retail</option>
-                        <option value="alimentos">Alimentos y Bebidas</option>
-                        <option value="farmaceutico">Farmacéutico</option>
-                        <option value="tecnologia">Tecnología</option>
-                        <option value="moda">Moda y Textil</option>
-                        <option value="otro">Otro</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Cantidad de envíos (diarios o mensuales) <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        name="cantidad_envios"
-                        value={formData.cantidad_envios}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hd-android focus:border-transparent transition-all duration-300"
-                        placeholder="Ej: 50 diarios o 1000 mensuales"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Ubicación <span className="text-red-500">*</span>
-                      </label>
-                      <div className="flex gap-4">
-                        <label className="flex items-center cursor-pointer">
-                          <input
-                            type="radio"
-                            name="ubicacion"
-                            value="lima"
-                            checked={formData.ubicacion === 'lima'}
-                            onChange={handleChange}
-                            className="w-4 h-4 text-hd-android focus:ring-hd-android"
-                          />
-                          <span className="ml-2 text-gray-700">Lima</span>
-                        </label>
-                        <label className="flex items-center cursor-pointer">
-                          <input
-                            type="radio"
-                            name="ubicacion"
-                            value="provincia"
-                            checked={formData.ubicacion === 'provincia'}
-                            onChange={handleChange}
-                            className="w-4 h-4 text-hd-android focus:ring-hd-android"
-                          />
-                          <span className="ml-2 text-gray-700">Provincia</span>
-                        </label>
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={sending}
-                      className="w-full bg-gradient-to-r from-hd-cerise to-hd-cerise/90 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-                    >
-                      {sending ? (
-                        <span className="flex items-center justify-center gap-2">
-                          <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          Enviando...
+                  <div className="relative z-10">
+                    <div className="text-center mb-10">
+                      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+                        Solicita tu{' '}
+                        <span 
+                          className="bg-clip-text text-transparent"
+                          style={{
+                            backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+                          }}
+                        >
+                          Cotización
                         </span>
-                      ) : (
-                        'Enviar Solicitud'
-                      )}
-                    </button>
-                  </form>
+                      </h2>
+                      <p className="text-gray-600">Completa el formulario y nos pondremos en contacto contigo</p>
+                    </div>
+                    
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="group">
+                          <label className="block text-sm font-bold text-gray-700 mb-3">
+                            Nombre Completo <span className="text-hd-cerise">*</span>
+                          </label>
+                          <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                              <svg className="w-5 h-5 text-gray-400 group-focus-within:text-hd-android transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                              </svg>
+                            </div>
+                            <input
+                              type="text"
+                              name="nombre"
+                              value={formData.nombre}
+                              onChange={handleChange}
+                              required
+                              className="w-full pl-12 pr-4 py-4 bg-white border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-hd-android/20 focus:border-hd-android transition-all duration-300 text-gray-900 placeholder-gray-400"
+                              placeholder="Juan Pérez"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="group">
+                          <label className="block text-sm font-bold text-gray-700 mb-3">
+                            Empresa <span className="text-hd-cerise">*</span>
+                          </label>
+                          <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                              <svg className="w-5 h-5 text-gray-400 group-focus-within:text-hd-android transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                              </svg>
+                            </div>
+                            <input
+                              type="text"
+                              name="empresa"
+                              value={formData.empresa}
+                              onChange={handleChange}
+                              required
+                              className="w-full pl-12 pr-4 py-4 bg-white border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-hd-android/20 focus:border-hd-android transition-all duration-300 text-gray-900 placeholder-gray-400"
+                              placeholder="Mi Empresa SAC"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="group">
+                          <label className="block text-sm font-bold text-gray-700 mb-3">
+                            Correo Electrónico <span className="text-hd-cerise">*</span>
+                          </label>
+                          <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                              <svg className="w-5 h-5 text-gray-400 group-focus-within:text-hd-android transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                              </svg>
+                            </div>
+                            <input
+                              type="email"
+                              name="correo"
+                              value={formData.correo}
+                              onChange={handleChange}
+                              required
+                              className="w-full pl-12 pr-4 py-4 bg-white border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-hd-android/20 focus:border-hd-android transition-all duration-300 text-gray-900 placeholder-gray-400"
+                              placeholder="juan@empresa.com"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="group">
+                          <label className="block text-sm font-bold text-gray-700 mb-3">
+                            Celular <span className="text-hd-cerise">*</span>
+                          </label>
+                          <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                              <svg className="w-5 h-5 text-gray-400 group-focus-within:text-hd-android transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                              </svg>
+                            </div>
+                            <input
+                              type="tel"
+                              name="celular"
+                              value={formData.celular}
+                              onChange={handleChange}
+                              required
+                              className="w-full pl-12 pr-4 py-4 bg-white border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-hd-android/20 focus:border-hd-android transition-all duration-300 text-gray-900 placeholder-gray-400"
+                              placeholder="999 999 999"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Dropdown Personalizado para Rubro */}
+                      <div className="group">
+                        <label className="block text-sm font-bold text-gray-700 mb-3">
+                          Rubro <span className="text-hd-cerise">*</span>
+                        </label>
+                        <div className="relative" ref={rubroDropdownRef}>
+                          <button
+                            type="button"
+                            onClick={() => setShowRubroDropdown(!showRubroDropdown)}
+                            className={`w-full pl-12 pr-4 py-4 bg-white border-2 rounded-2xl transition-all duration-300 text-left flex items-center justify-between ${
+                              showRubroDropdown 
+                                ? 'border-hd-android ring-4 ring-hd-android/20' 
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}
+                          >
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                              <svg className="w-5 h-5 text-gray-400 group-focus-within:text-hd-android transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                              </svg>
+                            </div>
+                            <span className={formData.rubro ? 'text-gray-900' : 'text-gray-400'}>
+                              {getSelectedRubroLabel()}
+                            </span>
+                            <svg 
+                              className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${showRubroDropdown ? 'rotate-180' : ''}`} 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          
+                          {/* Dropdown Menu */}
+                          {showRubroDropdown && (
+                            <div className="absolute z-50 w-full mt-2 bg-white border-2 border-gray-200 rounded-2xl shadow-2xl overflow-hidden animate-fadeIn">
+                              <div className="max-h-80 overflow-y-auto">
+                                {rubrosOptions.map((option) => (
+                                  <button
+                                    key={option.value}
+                                    type="button"
+                                    onClick={() => handleRubroSelect(option.value)}
+                                    className={`w-full px-6 py-4 text-left flex items-center gap-3 transition-all duration-200 ${
+                                      formData.rubro === option.value
+                                        ? 'bg-gradient-to-r from-hd-android/10 to-hd-android/5 text-hd-android font-bold border-l-4 border-hd-android'
+                                        : 'hover:bg-gray-50 text-gray-700'
+                                    }`}
+                                  >
+                                    <span className="text-2xl">{option.icon}</span>
+                                    <span>{option.label}</span>
+                                    {formData.rubro === option.value && (
+                                      <svg className="w-5 h-5 ml-auto text-hd-android" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                      </svg>
+                                    )}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="group">
+                        <label className="block text-sm font-bold text-gray-700 mb-3">
+                          Cantidad de envíos (diarios o mensuales) <span className="text-hd-cerise">*</span>
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg className="w-5 h-5 text-gray-400 group-focus-within:text-hd-android transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                            </svg>
+                          </div>
+                          <input
+                            type="text"
+                            name="cantidad_envios"
+                            value={formData.cantidad_envios}
+                            onChange={handleChange}
+                            required
+                            className="w-full pl-12 pr-4 py-4 bg-white border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-hd-android/20 focus:border-hd-android transition-all duration-300 text-gray-900 placeholder-gray-400"
+                            placeholder="Ej: 50 diarios o 1000 mensuales"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-4">
+                          Ubicación <span className="text-hd-cerise">*</span>
+                        </label>
+                        <div className="grid grid-cols-2 gap-4">
+                          <button
+                            type="button"
+                            onClick={() => handleChange({ target: { name: 'ubicacion', value: 'lima' } })}
+                            className={`relative px-6 py-4 rounded-2xl border-2 font-bold transition-all duration-300 ${
+                              formData.ubicacion === 'lima'
+                                ? 'border-hd-android bg-gradient-to-br from-hd-android/10 to-hd-android/5 text-hd-android shadow-lg scale-105'
+                                : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:shadow-md'
+                            }`}
+                          >
+                            {formData.ubicacion === 'lima' && (
+                              <div className="absolute top-2 right-2">
+                                <svg className="w-5 h-5 text-hd-android" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                            )}
+                            <div className="flex items-center justify-center gap-2">
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                              </svg>
+                              Lima
+                            </div>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handleChange({ target: { name: 'ubicacion', value: 'provincia' } })}
+                            className={`relative px-6 py-4 rounded-2xl border-2 font-bold transition-all duration-300 ${
+                              formData.ubicacion === 'provincia'
+                                ? 'border-hd-android bg-gradient-to-br from-hd-android/10 to-hd-android/5 text-hd-android shadow-lg scale-105'
+                                : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:shadow-md'
+                            }`}
+                          >
+                            {formData.ubicacion === 'provincia' && (
+                              <div className="absolute top-2 right-2">
+                                <svg className="w-5 h-5 text-hd-android" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                            )}
+                            <div className="flex items-center justify-center gap-2">
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              Provincia
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={sending}
+                        className="w-full relative group overflow-hidden bg-gradient-to-r from-hd-cerise via-hd-cerise to-hd-android text-white px-8 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-hd-android via-hd-cerulean to-hd-cerise opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <span className="relative z-10 flex items-center justify-center gap-3">
+                          {sending ? (
+                            <>
+                              <svg className="animate-spin h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                              Enviando solicitud...
+                            </>
+                          ) : (
+                            <>
+                              <svg className="w-6 h-6 rotate-90 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                              </svg>
+                              Enviar Solicitud
+                            </>
+                          )}
+                        </span>
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
