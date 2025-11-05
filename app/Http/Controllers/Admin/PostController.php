@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BasicController;
+use App\Jobs\SendPostEmailsJob;
 use App\Models\Post;
 use App\Models\PostTag;
 use App\Models\Tag;
@@ -22,9 +23,9 @@ class PostController extends BasicController
         return $model::with(['category', 'tags']);
     }
 
-    /* public function afterSave(Request $request, object $jpa, bool $isNew)
+  public function afterSave(Request $request, object $jpa, ?bool $isNew)
     {
-        $tags = \explode(',', $request->tags ?? '');
+       /* $tags = \explode(',', $request->tags ?? '');
 
         DB::transaction(function () use ($jpa, $tags) {
             // Eliminar tags que ya no están asociados
@@ -36,7 +37,10 @@ class PostController extends BasicController
                     $tagId = $tag;
                 } else {
                     // Es un nuevo tag
-                    $tagJpa = Tag::firstOrCreate(['name' => $tag]);
+                    $tagJpa = Tag::firstOrCreate(
+                        ['name' => $tag, 'tag_type' => 'post'],
+                        ['tag_type' => 'post']
+                    );
                     $tagId = $tagJpa->id;
                 }
 
@@ -45,6 +49,15 @@ class PostController extends BasicController
                     'tag_id' => $tagId
                 ]);
             }
-        });
-    }*/
+        });*/
+
+        // Notificar a los suscriptores si es nuevo blog (usando colas)
+        //Crear un jobs
+        if ($isNew) {
+           SendPostEmailsJob::dispatchAfterResponse(
+                $jpa
+            );
+
+        }
+    }
 }

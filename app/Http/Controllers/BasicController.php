@@ -360,8 +360,10 @@ class BasicController extends Controller
       if (!$jpa) {
         $body['slug'] = Crypto::randomUUID();
         $jpa = $this->model::create($body);
+        $isNew = true;
       } else {
         $jpa->update($body);
+        $isNew = false;
       }
 
       // Generar slug único si el modelo tiene columna 'slug'
@@ -378,7 +380,7 @@ class BasicController extends Controller
       }
 
       // Post-guardado
-      $data = $this->afterSave($request, $jpa);
+      $data = $this->afterSave($request, $jpa, $isNew);
       if ($data) {
         $response->data = $data;
       }
@@ -397,7 +399,7 @@ class BasicController extends Controller
   }
 
 
-  public function afterSave(Request $request, object $jpa)
+ public function afterSave(Request $request, object $jpa, ?bool $isNew)
   {
     return null;
   }
