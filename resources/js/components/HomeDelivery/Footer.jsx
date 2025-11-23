@@ -25,7 +25,7 @@ ReactModal.setAppElement('#app');
 const getSocialIcon = (social) => {
   const name = (social.description || social.name || '').toLowerCase();
   const icon = (social.icon || '').toLowerCase();
-  
+
   if (name.includes('facebook') || icon.includes('facebook')) return FaFacebook;
   if (name.includes('instagram') || icon.includes('instagram')) return FaInstagram;
   if (name.includes('twitter') || name.includes('x') || icon.includes('twitter')) return FaTwitter;
@@ -38,7 +38,7 @@ const getSocialIcon = (social) => {
   if (name.includes('snapchat') || icon.includes('snapchat')) return FaSnapchat;
   if (name.includes('pinterest') || icon.includes('pinterest')) return FaPinterest;
   if (name.includes('reddit') || icon.includes('reddit')) return FaReddit;
-  
+
   return null;
 };
 
@@ -85,9 +85,9 @@ const Footer = ({ generals = [], socials = [] }) => {
       const request = {
         email: email,
       };
-      
+
       const result = await subscriptionsRest.save(request);
-      
+
       if (result) {
         setModalSubscribeOpen(true);
         setEmail('');
@@ -119,24 +119,24 @@ const Footer = ({ generals = [], socials = [] }) => {
             {/* Logo y descripción */}
             <div className="lg:col-span-3">
               <div className="mb-6">
-                <img 
-                  src="/assets/img/logo-white.png" 
-                  alt="Home Delivery Logistics" 
+                <img
+                  src="/assets/img/logo.png"
+                  alt="Home Delivery Logistics"
                   className="h-12 w-auto grayscale invert brightness-0"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextSibling.style.display = 'block';
                   }}
                 />
-                <img 
-                  src="/assets/img/logo.png" 
-                  alt="Home Delivery Logistics" 
+                <img
+                  src="/assets/img/logo.png"
+                  alt="Home Delivery Logistics"
                   className="h-12 w-auto filter invert brightness-0"
-                  style={{display: 'none'}}
+                  style={{ display: 'none' }}
                 />
               </div>
               <p className="text-white/80 text-sm leading-relaxed mb-6">
-                Soluciones integrales de entrega a domicilio para tu negocio. 
+                Soluciones integrales de entrega a domicilio para tu negocio.
                 Optimiza tus envíos con tecnología de vanguardia.
               </p>
 
@@ -147,9 +147,9 @@ const Footer = ({ generals = [], socials = [] }) => {
                     <FaWhatsapp className="w-5 h-5 text-hd-android mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-white/60 text-xs mb-1">WhatsApp</p>
-                      <a 
-                        href={`https://wa.me/${whatsappPhone.replace(/\D/g, '')}`} 
-                        target="_blank" 
+                      <a
+                        href={`https://wa.me/${whatsappPhone.replace(/\D/g, '')}`}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-white hover:text-hd-android transition-colors font-medium"
                       >
@@ -165,7 +165,7 @@ const Footer = ({ generals = [], socials = [] }) => {
                     </svg>
                     <div>
                       <p className="text-white/60 text-xs mb-1">Email</p>
-                      <a 
+                      <a
                         href={`mailto:${contactEmail}`}
                         className="text-white hover:text-hd-android transition-colors font-medium break-all"
                       >
@@ -205,7 +205,7 @@ const Footer = ({ generals = [], socials = [] }) => {
                       </div>
                     );
                   }
-                  
+
                   return openingHours.split('\n').map((horario, index) => {
                     // Separar el día del horario
                     const parts = horario.split(':');
@@ -236,8 +236,8 @@ const Footer = ({ generals = [], socials = [] }) => {
               </h3>
               <ul className="space-y-3 text-sm">
                 <li>
-                  <a 
-                    onClick={() => openModal(0)} 
+                  <a
+                    onClick={() => openModal(0)}
                     className="text-white/80 hover:text-hd-android transition-colors cursor-pointer flex items-center group"
                   >
                     <span className="w-0 group-hover:w-2 h-0.5 bg-hd-android transition-all duration-300 mr-0 group-hover:mr-2"></span>
@@ -245,8 +245,8 @@ const Footer = ({ generals = [], socials = [] }) => {
                   </a>
                 </li>
                 <li>
-                  <a 
-                    onClick={() => openModal(1)} 
+                  <a
+                    onClick={() => openModal(1)}
                     className="text-white/80 hover:text-hd-android transition-colors cursor-pointer flex items-center group"
                   >
                     <span className="w-0 group-hover:w-2 h-0.5 bg-hd-android transition-all duration-300 mr-0 group-hover:mr-2"></span>
@@ -254,8 +254,8 @@ const Footer = ({ generals = [], socials = [] }) => {
                   </a>
                 </li>
                 <li>
-                  <a 
-                    onClick={() => openModal(2)} 
+                  <a
+                    onClick={() => openModal(2)}
                     className="text-white/80 hover:text-hd-android transition-colors cursor-pointer flex items-center group"
                   >
                     <span className="w-0 group-hover:w-2 h-0.5 bg-hd-android transition-all duration-300 mr-0 group-hover:mr-2"></span>
@@ -263,8 +263,8 @@ const Footer = ({ generals = [], socials = [] }) => {
                   </a>
                 </li>
                 <li>
-                  <a 
-                    href="/libro-de-reclamaciones" 
+                  <a
+                    href="/libro-de-reclamaciones"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white/80 hover:text-hd-android transition-colors flex items-center group"
@@ -281,7 +281,7 @@ const Footer = ({ generals = [], socials = [] }) => {
               <h3 className="text-lg font-bold mb-6 text-white">
                 Suscríbete
               </h3>
-              
+
               {/* Formulario de suscripción mejorado */}
               <div className="mb-8">
                 <p className="text-white/90 text-sm mb-4 leading-relaxed">
@@ -306,11 +306,11 @@ const Footer = ({ generals = [], socials = [] }) => {
                       {saving ? 'Enviando...' : 'Enviar'}
                     </button>
                   </div>
-               
+
                 </form>
               </div>
 
-           
+
             </div>
           </div>
 
@@ -320,14 +320,14 @@ const Footer = ({ generals = [], socials = [] }) => {
               <p className="text-sm text-center lg:text-start text-white/80">
                 &copy; {new Date().getFullYear()} <span className="text-white font-medium">Home Delivery Logistics</span>. Todos los derechos reservados. Powered by <a className="text-white font-medium" href='https://mundoweb.pe/' target='_blank' >MundoWeb</a>.
               </p>
-                 {/* Redes sociales mejoradas */}
+              {/* Redes sociales mejoradas */}
               {visibleSocials && visibleSocials.length > 0 && (
                 <div>
                   <div className="flex flex-wrap gap-3">
                     {visibleSocials.map((social) => {
                       const IconComponent = getSocialIcon(social);
                       if (!IconComponent) return null;
-                      
+
                       return (
                         <a
                           key={social.id}
@@ -339,7 +339,7 @@ const Footer = ({ generals = [], socials = [] }) => {
                           title={social.description || social.name}
                         >
                           <IconComponent className="w-5 h-5 text-white group-hover:text-hd-android transition-colors duration-300" />
-                          
+
                           {/* Efecto de brillo en hover */}
                           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-hd-android/0 via-hd-android/0 to-hd-android/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </a>
@@ -367,18 +367,18 @@ const Footer = ({ generals = [], socials = [] }) => {
             overlayClassName="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             shouldCloseOnOverlayClick={true}
           >
-            <div 
+            <div
               className="bg-white lg:min-w-[600px] rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl relative"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header FIJO con título y botón cerrar */}
-              <div 
+              <div
                 className="sticky top-0 z-10 px-8 py-6 border-b border-gray-100 flex items-center justify-between"
                 style={{
                   background: 'linear-gradient(135deg, rgba(132, 188, 40, 0.05) 0%, rgba(35, 84, 184, 0.05) 50%, rgba(222, 52, 100, 0.05) 100%)'
                 }}
               >
-                <h2 
+                <h2
                   className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent"
                   style={{
                     backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
@@ -386,7 +386,7 @@ const Footer = ({ generals = [], socials = [] }) => {
                 >
                   {title}
                 </h2>
-                
+
                 {/* Botón cerrar */}
                 <button
                   onClick={closeModal}
@@ -399,7 +399,7 @@ const Footer = ({ generals = [], socials = [] }) => {
 
               {/* Contenido con scroll */}
               <div className="px-8 py-6 overflow-y-auto max-h-[calc(90vh-100px)]">
-                <HtmlContent 
+                <HtmlContent
                   className="prose prose-lg max-w-none
                     prose-headings:bg-clip-text prose-headings:text-transparent prose-headings:font-bold
                     prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
@@ -441,12 +441,12 @@ const Footer = ({ generals = [], socials = [] }) => {
         overlayClassName="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
         shouldCloseOnOverlayClick={true}
       >
-        <div 
+        <div
           className="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header con gradiente */}
-          <div 
+          <div
             className="px-8 py-6 text-center"
             style={{
               background: 'linear-gradient(135deg, rgba(132, 188, 40, 0.1) 0%, rgba(35, 84, 184, 0.1) 50%, rgba(222, 52, 100, 0.1) 100%)'
@@ -459,7 +459,7 @@ const Footer = ({ generals = [], socials = [] }) => {
               </div>
             </div>
 
-            <h2 
+            <h2
               className="text-3xl font-bold bg-clip-text text-transparent mb-3"
               style={{
                 backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
@@ -467,7 +467,7 @@ const Footer = ({ generals = [], socials = [] }) => {
             >
               ¡Gracias por suscribirte!
             </h2>
-            
+
             <p className="text-gray-600 text-lg leading-relaxed">
               Recibirás nuestras últimas novedades y ofertas exclusivas en tu correo electrónico.
             </p>
