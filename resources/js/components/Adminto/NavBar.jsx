@@ -54,7 +54,7 @@ const NavBar = ({ session = {}, title = "Pagina", languagesSystem }) => {
                 <li className="dropdown notification-list topbar-dropdown ">
                     <div className=" ">
                         <div className="d-flex gap-0 align-items-center justify-content-center ">
-                         
+
                         </div>
                     </div>
                 </li>
@@ -89,9 +89,8 @@ const NavBar = ({ session = {}, title = "Pagina", languagesSystem }) => {
                         aria-expanded="false"
                     >
                         <img
-                            src={`/api/admin/profile/thumbnail/${
-                                session.relative_id
-                            }?v=${crypto.randomUUID()}`}
+                            src={`/api/admin/profile/thumbnail/${session.relative_id
+                                }?v=${crypto.randomUUID()}`}
                             alt="user-image"
                             className="rounded-circle"
                             style={{
@@ -165,16 +164,17 @@ const NavBar = ({ session = {}, title = "Pagina", languagesSystem }) => {
                     background: "#2354B8 ",
                 }}
             >
-                <a href="/" className="logo logo-light text-center " style={{filter: "invert(0)"}}>
+                <a href="/" className="logo logo-light text-center " style={{ filter: "invert(0)" }}>
                     <span className="logo-sm">
                         <img src="/assets/img/favicon.png" alt="" height="22" />
                     </span>
                     <span className="logo-lg">
                         <img
-                            src="/assets/img/logo-white.png"
+                            src="/assets/img/logo.png"
                             alt=""
                             height="36"
-                            
+                            style={{ filter: " brightness(0) grayscale(1) invert(1)" }}
+
                         />
                     </span>
                 </a>
