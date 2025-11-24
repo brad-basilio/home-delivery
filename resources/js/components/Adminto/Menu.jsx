@@ -37,9 +37,8 @@ const Menu = ({
             <div className="h-100" data-simplebar>
                 <div className="user-box text-center ">
                     <img
-                        src={`/api/admin/profile/thumbnail/${
-                            session.relative_id
-                        }?v=${new Date(session.updated_at).getTime()}`}
+                        src={`/api/admin/profile/thumbnail/${session.relative_id
+                            }?v=${new Date(session.updated_at).getTime()}`}
                         alt={session.name}
                         title={session.name}
                         className="rounded-circle img-thumbnail avatar-md"
@@ -134,8 +133,8 @@ const Menu = ({
                         <li className="menu-title">Navigation Panel</li>
                         {hasRole("Admin") && (
                             <>
-                              
-                              {/** 
+
+                                {/** 
                                *   <MenuItem
                                     href="/admin/home"
                                     icon="mdi mdi-home"
@@ -158,7 +157,7 @@ const Menu = ({
 
                                     {t("admin.sidebar.messages", "Mensajes")}
                                 </MenuItem>
-                                  <MenuItem
+                                <MenuItem
                                     href="/admin/complaints"
                                     icon="mdi mdi-book-open-page-variant"
                                 >
@@ -170,14 +169,14 @@ const Menu = ({
                                         "admin.sidebar.complaints",
                                         "Reclamaciones"
                                     )}
-                                </MenuItem> 
+                                </MenuItem>
                                 <MenuItem
                                     href="/admin/subscriptions"
                                     icon="mdi mdi-email-multiple"
                                 >
                                     Subscripciones
                                 </MenuItem>
-                           {/*     <MenuItem
+                                {/*     <MenuItem
                                     href="/admin/appointments"
                                     icon="mdi mdi-android-messages"
                                 >
@@ -187,7 +186,7 @@ const Menu = ({
 
                                     {t("admin.sidebar.appointments", "Citas")}
                                 </MenuItem> */}
-                           {/*     <MenuItem
+                                {/*     <MenuItem
                                     href="/admin/complaints"
                                     icon="mdi mdi-book-open-page-variant"
                                 >
@@ -206,7 +205,7 @@ const Menu = ({
                                 >
                                     {t("admin.sidebar.services", "Servicios")}
                                 </MenuItem>
-                                   <MenuItem
+                                <MenuItem
                                     href="/admin/categories"
                                     icon="mdi mdi-clipboard-list-outline"
                                 >
@@ -220,8 +219,8 @@ const Menu = ({
                                     icon="mdi mdi-book-open-page-variant"
                                 >
                                     {t("admin.sidebar.posts", "Posts")}
-                                </MenuItem> 
-                           {/*     <MenuItem
+                                </MenuItem>
+                                {/*     <MenuItem
                                     href="/admin/specialities"
                                     icon="mdi mdi-tag-faces"
                                 >
@@ -296,29 +295,29 @@ const Menu = ({
                                         Cupones
                                     </MenuItem>
                                 </MenuItemContainer>*/}
-                                
+
                                 <li className="menu-title">Landing Page</li>
-                                
+
                                 <MenuItem
                                     href="/admin/sliders"
                                     icon="mdi mdi-page-layout-body"
                                 >
                                     Sliders
                                 </MenuItem>
-                                 <MenuItem
+                                <MenuItem
                                     href="/admin/indicators"
                                     icon="mdi mdi-checkbox-marked-outline"
                                 >
-                                   Indicadores
+                                    Indicadores
                                 </MenuItem>
-                                 <MenuItem
+                                <MenuItem
                                     href="/admin/strengths"
                                     icon="mdi mdi-cards-heart"
                                 >
-                                    {t("admin.sidebar.benefits", "Beneficios")}
+                                    {t("admin.sidebar.benefits", "Fortalezas")}
                                 </MenuItem>
-                               
-                                   <MenuItem
+
+                                <MenuItem
                                     href="/admin/about"
                                     icon="mdi mdi-briefcase"
                                 >
@@ -333,9 +332,9 @@ const Menu = ({
                                         "Testimonios"
                                     )}
                                 </MenuItem>
-                             
-                             
-                              {/*  <MenuItem
+
+
+                                {/*  <MenuItem
                                     href="/admin/translations"
                                     icon="mdi mdi-translate"
                                 >
@@ -371,7 +370,7 @@ const Menu = ({
                                 >
                                     Nosotros
                                 </MenuItem>*/}
-                              {/* 
+                                {/* 
                                 <MenuItem
                                     href="/admin/strengths"
                                     icon="mdi mdi-cards-heart"
@@ -386,8 +385,8 @@ const Menu = ({
                                 </MenuItem>
                                
                                 */}
-                               
-                               {/* <MenuItem
+
+                                {/* <MenuItem
                                     href="/admin/categories"
                                     icon="mdi mdi-clipboard-list-outline"
                                 >
@@ -402,8 +401,8 @@ const Menu = ({
                                 >
                                     {t("admin.sidebar.posts", "Posts")}
                                 </MenuItem> */}
-                                
-                           {/*     <MenuItem
+
+                                {/*     <MenuItem
                                     href="/admin/faqs"
                                     icon="mdi mdi-frequently-asked-questions"
                                 >
@@ -419,7 +418,7 @@ const Menu = ({
                                     )}
                                 </MenuItem>
                                 <li className="menu-title">Configuraciones</li>
-                            {/*    <MenuItem
+                                {/*    <MenuItem
                                     href="/admin/users"
                                     icon="mdi mdi-account-multiple"
                                 >
