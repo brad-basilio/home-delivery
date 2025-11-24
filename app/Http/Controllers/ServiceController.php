@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LandingHome;
 use App\Models\Service;
 use App\Models\Specialty;
+use App\Models\Social;
 use Illuminate\Http\Request;
 
 class ServiceController extends BasicController
@@ -23,6 +24,7 @@ class ServiceController extends BasicController
         ->where('status', true)
         ->where('lang_id', $langId)
         ->get();
+        $socials = Social::where('status', true)->where('visible', true)->get();
         return [
 
 
@@ -31,6 +33,7 @@ class ServiceController extends BasicController
             'services' => $services,
 
            'specialities' => $specialities,
+           'socials' => $socials,
 
         ];
     }
