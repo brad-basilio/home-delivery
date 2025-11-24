@@ -348,11 +348,14 @@ class BasicController extends Controller
         $body[$field] = "{$uuid}.{$ext}";
       }
 
-      // Asignar lang_id si el modelo lo tiene y no fue enviado
+      // Asignar lang_id si el modelo lo tiene
       $langId = app('current_lang_id');
       $table = (new $this->model)->getTable();
-      if (Schema::hasColumn($table, 'lang_id') && !isset($body['lang_id'])) {
-        $body['lang_id'] = $langId;
+      if (Schema::hasColumn($table, 'lang_id')) {
+           // Si no viene lang_id o el que viene no es válido (ej: '1'), usar el actual
+           if (!isset($body['lang_id']) || !Lang::where('id', $body['lang_id'])->exists()) {
+               $body['lang_id'] = $langId;
+           }
       }
 
       // Crear o actualizar registro

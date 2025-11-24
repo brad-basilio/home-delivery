@@ -83,9 +83,9 @@ const Services = (props) => {
         idRef.current.value = data?.id || "";
         titleRef.current.value = data?.title || "";
         descriptionRef.current.value = data?.description || "";
-    // imageRef.current.value = null;
+        // imageRef.current.value = null;
         iconRef.current.value = null;
-        
+
         // Manejo del color (transparente o con valor)
         const hasColor = data?.color && data.color !== "transparent" && data.color !== "";
         setItemData({
@@ -93,14 +93,14 @@ const Services = (props) => {
             transparent_color: !hasColor,
             color: hasColor ? data?.color : "transparent"
         });
-        
-       /* if (hasColor) {
-            colorRef.current.value = data?.color;
-        } else {
-            colorRef.current.value = "#000000";
-            colorRef.current.dataset.prevColor = "#000000";
-        } */
-        
+
+        /* if (hasColor) {
+             colorRef.current.value = data?.color;
+         } else {
+             colorRef.current.value = "#000000";
+             colorRef.current.dataset.prevColor = "#000000";
+         } */
+
         if (data?.image) {
             try {
                 if (imageRef && imageRef.image) imageRef.image.src = `/api/service/media/${data.image}`;
@@ -113,9 +113,9 @@ const Services = (props) => {
 
         // lang id (hidden)
         try {
-            if (langIdRef && langIdRef.current) langIdRef.current.value = data?.lang_id ?? 1;
-        } catch (e) {}
-        
+            if (langIdRef && langIdRef.current) langIdRef.current.value = data?.lang_id ?? '';
+        } catch (e) { }
+
         if (data?.icon) {
             iconRef.image.src = `/api/service/media/${data.icon}`;
         }
@@ -152,7 +152,7 @@ const Services = (props) => {
         const formData = new FormData();
         formData.append("title", titleRef.current.value);
         formData.append("description", descriptionRef.current.value);
-        
+
         // Si el color es transparente, enviar valor especial, de lo contrario enviar el color seleccionado
         //formData.append("color", itemData?.transparent_color ? "transparent" : colorRef.current.value);
         // formData.append("link", linkRef.current.value);
@@ -167,8 +167,10 @@ const Services = (props) => {
             formData.append("image", imageRef.current.files[0]);
         }
 
-        // lang_id (por defecto 1 si no viene)
-        formData.append('lang_id', (langIdRef && langIdRef.current && langIdRef.current.value) ? langIdRef.current.value : 1);
+        // lang_id (si existe)
+        if (langIdRef && langIdRef.current && langIdRef.current.value) {
+            formData.append('lang_id', langIdRef.current.value);
+        }
 
         // Agregar icono si existe
         if (iconRef.current.files[0]) {
@@ -208,9 +210,9 @@ const Services = (props) => {
         $(modalRef.current).modal("hide");
         setGallery([]);
         setCharacteristics([{ value: "" }]);
-        
+
         // Resetear campos adicionales
-       // colorRef.current.value = "#000000";
+        // colorRef.current.value = "#000000";
         iconRef.current.value = null;
     };
 
@@ -323,8 +325,8 @@ const Services = (props) => {
                                             borderRadius: "4px",
                                         }}
                                         onError={(e) =>
-                                            (e.target.src =
-                                                "/images/default-image.png")
+                                        (e.target.src =
+                                            "/images/default-image.png")
                                         }
                                     />
                                 );
@@ -350,8 +352,8 @@ const Services = (props) => {
                                             borderRadius: "4px",
                                         }}
                                         onError={(e) =>
-                                            (e.target.src =
-                                                "/images/default-icon.png")
+                                        (e.target.src =
+                                            "/images/default-icon.png")
                                         }
                                         className="bg-secondary p-1"
                                     />
@@ -457,7 +459,7 @@ const Services = (props) => {
                             />
                         </div>
 
-                      {/*  <div className="mb-3">
+                        {/*  <div className="mb-3">
                             <label className="form-label">Color del servicio</label>
                             <div className="d-flex align-items-center">
                                 <input
@@ -552,7 +554,7 @@ const Services = (props) => {
                     </div>
 
                     <div className="col-md-4">
-                       
+
 
                         {/* Imagen principal - Aspecto 9:16 (vertical) */}
                         <ImageFormGroup
@@ -563,19 +565,19 @@ const Services = (props) => {
                             showColorOverlay={true}
                         />
 
-                      
+
                     </div>
-                   <div className="col-md-4">
-                      {/* Icono del servicio - Aspecto 1:1 (cuadrado pequeño) */}
+                    <div className="col-md-4">
+                        {/* Icono del servicio - Aspecto 1:1 (cuadrado pequeño) */}
                         <ImageFormGroup
                             eRef={iconRef}
                             label="Icono del servicio"
                             aspect={1 / 1}
                             className="p-2"
                         />
-                   </div>
-                   <div className="col-md-8">
-  {/* Galería de imágenes - Aspecto 1:1 (cuadrado) */}
+                    </div>
+                    <div className="col-md-8">
+                        {/* Galería de imágenes - Aspecto 1:1 (cuadrado) */}
                         <div className="mb-3">
                             <label className="form-label">Galería de imágenes</label>
                             <input
@@ -606,9 +608,9 @@ const Services = (props) => {
                                         <button
                                             type="button"
                                             className="btn btn-danger btn-xs position-absolute top-0 end-0 m-1"
-                                            style={{ 
-                                                width: "20px", 
-                                                height: "20px", 
+                                            style={{
+                                                width: "20px",
+                                                height: "20px",
                                                 padding: "0",
                                                 lineHeight: "18px",
                                                 fontSize: "14px"
@@ -627,7 +629,7 @@ const Services = (props) => {
                                 </small>
                             )}
                         </div>
-                   </div>
+                    </div>
                 </div>
             </Modal>
         </>
