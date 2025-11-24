@@ -11,7 +11,7 @@ class UserFormulasController extends BasicController
 {
     public $model = UserFormulas::class;
 
-    public function afterSave(Request $request, object $jpa, bool $isNew)
+    public function afterSave(Request $request, object $jpa, ?bool $isNew)
     {
         return $jpa;
     }

@@ -202,7 +202,7 @@ class LandingHomeController extends BasicController
         return $body;
     }
 
-    public function afterSave(Request $request, $landingHome)
+    public function afterSave(Request $request, object $jpa, ?bool $isNew)
     {
         // Eliminar archivos antiguos si se subieron nuevos
         if ($request->has('delete_existing_image') && $request->delete_existing_image) {
@@ -212,7 +212,7 @@ class LandingHomeController extends BasicController
             Storage::delete("videos/landing_home/{$request->delete_existing_video}");
         }
 
-        return $landingHome;
+        return $jpa;
     }
 
     /* public function setPaginationInstance(string $model)

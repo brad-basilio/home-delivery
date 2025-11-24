@@ -51,7 +51,7 @@ class UserFormulasController extends BasicController
 
         return $body;
     }
-    public function afterSave(Request $request, object $jpa, bool $isNew)
+    public function afterSave(Request $request, object $jpa, ?bool $isNew)
     {
         try {
             Subscription::updateOrCreate([

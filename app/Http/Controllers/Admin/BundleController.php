@@ -19,7 +19,7 @@ class BundleController extends BasicController
         return $model::with(['items']);
     }
 
-    public function afterSave(Request $request, object $jpa, bool $isNew)
+    public function afterSave(Request $request, object $jpa, ?bool $isNew)
     {
         $items = $request->items;
         BundleItem::where('bundle_id', $jpa->id)->whereNotIn('item_id', $items)->delete();

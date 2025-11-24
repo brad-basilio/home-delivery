@@ -53,9 +53,9 @@ class ServiceController extends BasicController
         return $body;
     }
 
-    public function afterSave(Request $request, $service)
+    public function afterSave(Request $request, object $jpa, ?bool $isNew)
     {
         // Eliminar imágenes marcadas para borrar (si implementas esta función)
-        return $service;
+        return $jpa;
     }
 }

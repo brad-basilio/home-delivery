@@ -65,7 +65,7 @@ class SaleController extends BasicController
             ->join('statuses AS status', 'status.id', 'sales.status_id');
     }
 
-    public function afterSave(Request $request, object $jpa)
+    public function afterSave(Request $request, object $jpa, ?bool $isNew)
     {
         $newJpa = Sale::with($this->with4get)->find($jpa->id);
         return $newJpa;

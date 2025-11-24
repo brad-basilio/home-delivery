@@ -22,7 +22,7 @@ class SubscriptionController extends BasicController
         ];
     }
 
-    public function afterSave(Request $request, object $jpa)
+    public function afterSave(Request $request, object $jpa, ?bool $isNew)
     {
         // Enviar notificación de bienvenida al suscriptor
         $jpa->notify(new SubscriptionNotification());

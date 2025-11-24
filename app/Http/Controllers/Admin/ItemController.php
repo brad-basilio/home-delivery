@@ -34,7 +34,7 @@ class ItemController extends BasicController
             ->leftJoin('categories AS category', 'category.id', 'items.category_id');
     }
 
-    public function afterSave(Request $request, object $jpa)
+    public function afterSave(Request $request, object $jpa, ?bool $isNew)
     {
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $file) {

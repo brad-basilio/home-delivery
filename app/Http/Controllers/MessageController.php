@@ -48,7 +48,7 @@ class MessageController extends BasicController
         return $validatedData;
     }
 
-    public function afterSave(Request $request, object $jpa)
+    public function afterSave(Request $request, object $jpa, ?bool $isNew)
     {
         try {
             Log::info('MessageController - Iniciando envío de notificaciones', [

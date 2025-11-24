@@ -373,7 +373,7 @@ class PublicController extends Controller
         }
     }
 
-    public function afterSave(Request $request, object $jpa)
+    public function afterSave(Request $request, object $jpa, ?bool $isNew)
     {
         return null;
     }
