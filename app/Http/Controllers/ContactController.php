@@ -22,8 +22,7 @@ class ContactController extends BasicController
 
         // Obtener generals y socials para footer y whatsapp
         $generals = General::all();
-        $socials = Social::where('status', true)->get();
-
+        $socials = Social::where('status', true)->where('visible', true)->get();
         return [
             'offices' => $offices,
             'generals' => $generals,

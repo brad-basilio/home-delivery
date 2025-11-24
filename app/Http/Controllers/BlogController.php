@@ -32,7 +32,7 @@ class BlogController extends PublicController
         
         // Agregar generals y socials para Header y Footer
         $generals = General::all();
-        $socials = Social::where('status', true)->get();
+        $socials = Social::where('status', true)->where('visible', true)->get();
         
         return [
             'categories' => $categories,
