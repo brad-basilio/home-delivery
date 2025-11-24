@@ -36,8 +36,7 @@ class AboutController extends BasicController
         $generals = General::where('status', true)->get();
 
         // SOCIALS - Redes sociales
-        $socials = Social::where('visible', true)->get();
-
+$socials = Social::where('status', true)->where('visible', true)->get();
         return [
             'aboutuses' => $aboutuses,
             'strengths' => $strengths,
