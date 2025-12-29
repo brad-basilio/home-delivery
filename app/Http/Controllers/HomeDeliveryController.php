@@ -28,7 +28,7 @@ class HomeDeliveryController extends BasicController
         
         $sliders = \App\Models\Slider::where('visible', true)
             ->where('status', true)
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('order', 'ASC')
             ->get();
         
         $indicators = \App\Models\Indicator::where('visible', true)
