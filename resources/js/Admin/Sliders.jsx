@@ -26,6 +26,7 @@ const Sliders = () => {
     const descriptionRef = useRef();
     const bgImageRef = useRef();
     const buttonTextRef = useRef();
+    const orderRef = useRef();
     //const buttonLinkRef = useRef();
 
     const [isEditing, setIsEditing] = useState(false);
@@ -39,9 +40,10 @@ const Sliders = () => {
         descriptionRef.current.value = data?.description ?? "";
         // Configurar imagen existente si estamos editando
         bgImageRef.image.src = `/api/sliders/media/${data?.image ?? "undefined"}`;
-        
+
         buttonTextRef.current.value = data?.button_text ?? "";
-       // buttonLinkRef.current.value = data?.button_link ?? "";
+        orderRef.current.value = data?.order ?? 0;
+        // buttonLinkRef.current.value = data?.button_link ?? "";
 
         $(modalRef.current).modal("show");
     };
@@ -54,7 +56,8 @@ const Sliders = () => {
             name: nameRef.current.value,
             description: descriptionRef.current.value,
             button_text: buttonTextRef.current.value,
-           button_link: "",//buttonLinkRef.current.value,
+            order: orderRef.current.value,
+            button_link: "",//buttonLinkRef.current.value,
         };
 
         const formData = new FormData();
@@ -100,12 +103,46 @@ const Sliders = () => {
         $(gridRef.current).dxDataGrid("instance").refresh();
     };
 
+    const onReorder = async (e) => {
+        const visibleRows = e.component.getVisibleRows();
+        const toIndex = visibleRows[e.toIndex].data.order;
+        const fromIndex = e.itemData.order;
+
+        // Obtener todos los items visibles y recalcular orden
+        const items = visibleRows.map((row, index) => ({
+            id: row.data.id,
+            order: index
+        }));
+
+        // Mover el item arrastrado a su nueva posición
+        const movedItem = items.find(item => item.id === e.itemData.id);
+        const oldIndex = items.indexOf(movedItem);
+        items.splice(oldIndex, 1);
+        items.splice(e.toIndex, 0, movedItem);
+
+        // Recalcular orden
+        const reorderedItems = items.map((item, index) => ({
+            id: item.id,
+            order: index
+        }));
+
+        const result = await slidersRest.reorder(reorderedItems);
+        if (result) {
+            $(gridRef.current).dxDataGrid("instance").refresh();
+        }
+    };
+
     return (
         <>
             <Table
                 gridRef={gridRef}
                 title="Sliders"
                 rest={slidersRest}
+                rowDragging={{
+                    allowReordering: true,
+                    onReorder: onReorder,
+                    showDragIcons: true,
+                }}
                 toolBar={(container) => {
                     container.unshift({
                         widget: "dxButton",
@@ -137,9 +174,16 @@ const Sliders = () => {
                         visible: false,
                     },
                     {
+                        dataField: "order",
+                        caption: "Orden",
+                        width: "80px",
+                        dataType: "number",
+                        sortOrder: "asc",
+                    },
+                    {
                         dataField: "name",
                         caption: "Titulo",
-                        width: "75%",
+                        width: "65%",
                         cellTemplate: (container, { data }) => {
                             ReactAppend(
                                 container,
@@ -186,8 +230,8 @@ const Sliders = () => {
                                         borderRadius: "4px",
                                     }}
                                     onError={(e) =>
-                                        (e.target.src =
-                                            "/api/cover/thumbnail/null")
+                                    (e.target.src =
+                                        "/api/cover/thumbnail/null")
                                     }
                                 />
                             );
@@ -269,10 +313,10 @@ const Sliders = () => {
                         eRef={bgImageRef}
                         label="Selecciona una imagen"
                         col="col-12"
-                      
+
                         required
-                       />
-                   
+                    />
+
 
                     <TextareaFormGroup
                         eRef={nameRef}
@@ -284,14 +328,20 @@ const Sliders = () => {
                     <InputFormGroup
                         eRef={buttonTextRef}
                         label="Subtítulo"
-                        col="col-sm-12"
+                        col="col-sm-6"
+                    />
+                    <InputFormGroup
+                        eRef={orderRef}
+                        label="Orden"
+                        type="number"
+                        col="col-sm-6"
                     />
                     <TextareaFormGroup
                         eRef={descriptionRef}
                         label="Descripción"
                         rows={3}
                     />
-                    
+
                     {/*<InputFormGroup
                         eRef={buttonLinkRef}
                         label="URL botón primario"

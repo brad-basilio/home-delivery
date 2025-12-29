@@ -288,6 +288,7 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/sliders', [AdminSliderController::class, 'save']);
         Route::post('/sliders/paginate', [AdminSliderController::class, 'paginate']);
+        Route::post('/sliders/reorder', [AdminSliderController::class, 'reorder']);
         Route::patch('/sliders/status', [AdminSliderController::class, 'status']);
         Route::patch('/sliders/{field}', [AdminSliderController::class, 'boolean']);
         Route::delete('/sliders/{id}', [AdminSliderController::class, 'delete']);

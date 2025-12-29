@@ -175,6 +175,40 @@ class BasicRest {
         }
     };
 
+    reorder = async (items) => {
+        try {
+            const { status: fetchStatus, result } = await Fetch(
+                `/api/${this.path}/reorder`,
+                {
+                    method: "POST",
+                    body: JSON.stringify({ items }),
+                }
+            );
+            if (!fetchStatus)
+                throw new Error(
+                    result?.message ?? "Ocurrio un error inesperado"
+                );
+
+            Notify.add({
+                icon: "/assets/img/icon.png",
+                title: "Correcto",
+                body: result.message,
+                type: "success",
+            });
+
+            return true;
+        } catch (error) {
+            Notify.add({
+                icon: "/assets/img/icon.png",
+                title: "Error",
+                body: error.message,
+                type: "danger",
+            });
+
+            return false;
+        }
+    };
+
     // Método para obtener datos con soporte para relaciones
     get = async (idOrParams = {}, withRelations = []) => {
         try {

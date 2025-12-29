@@ -1,7 +1,7 @@
 import React from 'react'
 import DataGrid from './DataGrid'
 
-const Table = ({ title, gridRef, rest, columns, toolBar, masterDetail, pageSize, filterValue = [], exportable = false, customizeCell }) => {
+const Table = ({ title, gridRef, rest, columns, toolBar, masterDetail, pageSize, filterValue = [], exportable = false, customizeCell, rowDragging }) => {
   return (<div className="row">
     <div className="col-12">
       <div className="card">
@@ -10,7 +10,7 @@ const Table = ({ title, gridRef, rest, columns, toolBar, masterDetail, pageSize,
             <div id="header-title-options" className="float-end"></div>
             <span id="header-title-prefix"></span> Lista de {title} <span id="header-title-suffix"></span>
           </h4>
-          <DataGrid gridRef={gridRef} rest={rest} columns={columns.filter(Boolean)} toolBar={toolBar} masterDetail={masterDetail} filterValue={filterValue} pageSize={pageSize} exportable={exportable} exportableName={title} customizeCell={customizeCell} />
+          <DataGrid gridRef={gridRef} rest={rest} columns={columns.filter(Boolean)} toolBar={toolBar} masterDetail={masterDetail} filterValue={filterValue} pageSize={pageSize} exportable={exportable} exportableName={title} customizeCell={customizeCell} rowDragging={rowDragging} />
         </div>
       </div>
     </div>

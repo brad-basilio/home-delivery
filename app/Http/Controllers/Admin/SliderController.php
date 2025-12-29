@@ -85,6 +85,7 @@ class SliderController extends BasicController
             }
 
             $jpa = $this->model::find(isset($body['id']) ? $body['id'] : null);
+            $isNew = !$jpa;
 
             if (!$jpa) {
                 $body['slug'] = Crypto::randomUUID();
@@ -111,7 +112,7 @@ class SliderController extends BasicController
                 $jpa->update(['slug' => $slug]);
             }
 
-            $data = $this->afterSave($request, $jpa);
+            $data = $this->afterSave($request, $jpa, $isNew);
             if ($data) {
                 $response->data = $data;
             }

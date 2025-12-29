@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 
-const DataGrid = ({ gridRef: dataGridRef, pageSize = 10, rest, columns, toolBar, masterDetail, filterValue, exportable, exportableName, customizeCell = () => { } }) => {
+const DataGrid = ({ gridRef: dataGridRef, pageSize = 10, rest, columns, toolBar, masterDetail, filterValue, exportable, exportableName, customizeCell = () => { }, rowDragging }) => {
   useEffect(() => {
     DevExpress.localization.locale(navigator.language);
-    $(dataGridRef.current).dxDataGrid({
+    const gridConfig = {
       language: "es",
       dataSource: {
         load: async (params) => {
@@ -121,7 +121,14 @@ const DataGrid = ({ gridRef: dataGridRef, pageSize = 10, rest, columns, toolBar,
 
       //   Local.set('dxSettings', dxSettings)
       // }
-    }).dxDataGrid('instance')
+    };
+
+    // Agregar rowDragging si está configurado
+    if (rowDragging) {
+      gridConfig.rowDragging = rowDragging;
+    }
+
+    $(dataGridRef.current).dxDataGrid(gridConfig).dxDataGrid('instance')
 
     tippy('.dx-button', { arrow: true })
 
