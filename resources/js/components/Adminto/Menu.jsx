@@ -205,6 +205,15 @@ const Menu = ({
                                 >
                                     {t("admin.sidebar.services", "Servicios")}
                                 </MenuItem>
+                                  <MenuItem
+                                    href="/admin/offices"
+                                    icon="mdi mdi-office-building-marker"
+                                >
+                                    {t(
+                                        "admin.sidebar.offices",
+                                        "Oficinas"
+                                    )}
+                                </MenuItem>
                                 <MenuItem
                                     href="/admin/categories"
                                     icon="mdi mdi-clipboard-list-outline"
