@@ -19,6 +19,7 @@ class Aboutus extends Model
         'title',
         'description',
         'image',
+        'video_youtube_id',
         'visible',
         'status'
     ];

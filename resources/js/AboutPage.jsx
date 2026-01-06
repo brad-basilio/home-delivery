@@ -73,14 +73,27 @@ const AboutPage = (props) => {
             variants={fadeInUp}
             className="mt-8 md:mt-12 max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-lg"
           >
-            <img
-              src={sectionOne?.image ? `/api/aboutus/media/${sectionOne.image}` : '/assets/img/about/bg-about.png'}
-              onError={(e) => {
-               e.target.src = '/api/cover/thumbnail/null';
-              }}
-              alt={sectionOne?.title || 'Home Delivery'}
-              className="w-full h-[300px] md:h-[400px] object-cover"
-            />
+            {sectionOne?.video_youtube_id ? (
+              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${sectionOne.video_youtube_id}?rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&color=white`}
+                  title={sectionOne?.title || 'Video Home Delivery'}
+                  className="absolute inset-0 w-full h-full"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <img
+                src={sectionOne?.image ? `/api/aboutus/media/${sectionOne.image}` : '/assets/img/about/bg-about.png'}
+                onError={(e) => {
+                 e.target.src = '/api/cover/thumbnail/null';
+                }}
+                alt={sectionOne?.title || 'Home Delivery'}
+                className="w-full h-[300px] md:h-[400px] object-cover"
+              />
+            )}
           </motion.div>
         </motion.section>
 
@@ -200,18 +213,31 @@ const AboutPage = (props) => {
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
-            className=" py-12 md:py-16 px-[5%] 2xl:max-w-7xl"
+            className=" py-12 md:py-16 px-[5%] 2xl:px-0 2xl:max-w-7xl mx-auto"
           >
             <div className="max-w-7xl mx-auto">
               <motion.div variants={fadeInUp} className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <img
-                  src={sectionThree.image ? `/api/aboutus/media/${sectionThree.image}` : '/api/cover/thumbnail/null'}
-                  onError={(e) => {
-                    e.target.src = '/api/cover/thumbnail/null';
-                  }}
-                  alt={sectionThree.title}
-                  className="w-full h-[300px] md:h-[400px] object-cover rounded-2xl"
-                />
+                {sectionThree.video_youtube_id ? (
+                  <div className="relative w-full rounded-2xl overflow-hidden" style={{ paddingBottom: '56.25%' }}>
+                    <iframe
+                      src={`https://www.youtube-nocookie.com/embed/${sectionThree.video_youtube_id}?rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&color=white`}
+                      title={sectionThree.title}
+                      className="absolute inset-0 w-full h-full"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={sectionThree.image ? `/api/aboutus/media/${sectionThree.image}` : '/api/cover/thumbnail/null'}
+                    onError={(e) => {
+                      e.target.src = '/api/cover/thumbnail/null';
+                    }}
+                    alt={sectionThree.title}
+                    className="w-full h-[300px] md:h-[400px] object-cover rounded-2xl"
+                  />
+                )}
                 <div className="space-y-4 md:space-y-6">
                   <h2 className="text-2xl md:text-4xl font-bold text-hd-onyx-dark">
                     {sectionThree.title}
@@ -249,14 +275,27 @@ const AboutPage = (props) => {
                     }}
                   />
                 </div>
-                <img
-                  src={sectionFour.image ? `/api/aboutus/media/${sectionFour.image}` : '/api/cover/thumbnail/null'}
-                  onError={(e) => {
-                    e.target.src = '/api/cover/thumbnail/null';
-                  }}
-                  alt={sectionFour.title}
-                  className="w-full h-[300px] md:h-[400px] object-cover rounded-2xl order-1 md:order-2"
-                />
+                {sectionFour.video_youtube_id ? (
+                  <div className="relative w-full rounded-2xl overflow-hidden order-1 md:order-2" style={{ paddingBottom: '56.25%' }}>
+                    <iframe
+                      src={`https://www.youtube-nocookie.com/embed/${sectionFour.video_youtube_id}?rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&color=white`}
+                      title={sectionFour.title}
+                      className="absolute inset-0 w-full h-full"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={sectionFour.image ? `/api/aboutus/media/${sectionFour.image}` : '/api/cover/thumbnail/null'}
+                    onError={(e) => {
+                      e.target.src = '/api/cover/thumbnail/null';
+                    }}
+                    alt={sectionFour.title}
+                    className="w-full h-[300px] md:h-[400px] object-cover rounded-2xl order-1 md:order-2"
+                  />
+                )}
               </motion.div>
             </div>
           </motion.section>

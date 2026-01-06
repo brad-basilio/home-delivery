@@ -26,8 +26,35 @@ const About = () => {
   const titleRef = useRef()
   const descriptionRef = useRef()
   const imageRef = useRef()
+  const videoUrlRef = useRef()
 
   const [isEditing, setIsEditing] = useState(false)
+  const [videoPreviewId, setVideoPreviewId] = useState('')
+
+  // Extraer ID de YouTube de cualquier tipo de URL
+  const extractYoutubeId = (url) => {
+    if (!url) return '';
+    const patterns = [
+      /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/,
+      /(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})/,
+      /(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
+      /(?:https?:\/\/)?(?:www\.)?youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
+      /(?:https?:\/\/)?(?:www\.)?youtube\.com\/v\/([a-zA-Z0-9_-]{11})/,
+    ];
+    for (const pattern of patterns) {
+      const match = url.match(pattern);
+      if (match) return match[1];
+    }
+    // Si ya es solo el ID (11 caracteres)
+    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+    return '';
+  };
+
+  const handleVideoUrlChange = (e) => {
+    const url = e.target.value;
+    const videoId = extractYoutubeId(url);
+    setVideoPreviewId(videoId);
+  };
 
   const onModalOpen = (data) => {
     if (data?.id) setIsEditing(true)
@@ -40,6 +67,8 @@ const About = () => {
     descriptionRef.editor.root.innerHTML = data?.description ?? ''
     imageRef.image.src = `/api/aboutus/media/${data?.image}`
     imageRef.current.value = null
+    videoUrlRef.current.value = data?.video_youtube_id ? `https://www.youtube.com/watch?v=${data.video_youtube_id}` : ''
+    setVideoPreviewId(data?.video_youtube_id || '')
 
     $(modalRef.current).modal('show')
   }
@@ -53,6 +82,7 @@ const About = () => {
       name: nameRef.current.value,
       title: titleRef.current.value,
       description: descriptionRef.current.value,
+      video_youtube_id: extractYoutubeId(videoUrlRef.current.value),
     }
 
     const formData = new FormData()
@@ -120,7 +150,7 @@ const About = () => {
         {
           dataField: 'image',
           caption: 'Imagen',
-          width: '80px',
+          width: '100px',
           allowFiltering: false,
           cellTemplate: (container, { data }) => {
             ReactAppend(
@@ -129,7 +159,7 @@ const About = () => {
                 src={`/api/aboutus/media/${data.image}`}
                 onError={(e) => e.target.src = '/api/cover/thumbnail/null'}
                 style={{
-                  width: '60px',
+                  width: '80px',
                   height: '40px',
                   objectFit: 'cover',
                   objectPosition: 'center',
@@ -140,14 +170,41 @@ const About = () => {
           },
         },
         {
+          dataField: 'video_youtube_id',
+          caption: 'Video',
+          width: '100px',
+          allowFiltering: false,
+          cellTemplate: (container, { data }) => {
+            if (data.video_youtube_id) {
+              ReactAppend(
+                container,
+                <a href={`https://www.youtube.com/watch?v=${data.video_youtube_id}`} target='_blank' rel='noopener noreferrer' className='d-flex align-items-center justify-content-center'>
+                  <img
+                    src={`https://img.youtube.com/vi/${data.video_youtube_id}/default.jpg`}
+                    style={{
+                      width: '80px',
+                      height: '40px',
+                      objectFit: 'cover',
+                      borderRadius: '4px',
+                    }}
+                  />
+                  <i className='fab fa-youtube text-danger position-absolute' style={{ fontSize: '20px' }}></i>
+                </a>
+              );
+            } else {
+              ReactAppend(container, <span className='text-muted'>-</span>);
+            }
+          },
+        },
+        {
           dataField: 'name',
           caption: 'Nombre',
-          width: '20%'
+       
         },
         {
           dataField: 'title',
           caption: 'Título',
-          width: '40%'
+        
         },
         {
           dataField: 'visible',
@@ -204,15 +261,48 @@ const About = () => {
       <div className='row' id='about-container'>
         <input ref={idRef} type='hidden' />
         <input ref={correlativeRef} type='hidden' />
+        
+        {/* Datos principales */}
         <InputFormGroup eRef={nameRef} label='Nombre' col='col-md-6' required />
         <InputFormGroup eRef={titleRef} label='Título' col='col-md-6' required />
-        <ImageFormGroup 
-          eRef={imageRef} 
-          label='Imagen (Opcional)' 
-          col='col-md-12'
-          aspect={16/9}
-          fit='cover'
-        />
+        
+        {/* Medios: Imagen y Video */}
+        <div className='col-md-6'>
+          <ImageFormGroup 
+            eRef={imageRef} 
+            label='Imagen (Opcional)' 
+            aspect={16/9}
+            fit='cover'
+          />
+        </div>
+        
+        <div className='col-md-6'>
+          <InputFormGroup 
+            eRef={videoUrlRef} 
+            label='Video YouTube URL (Opcional)' 
+            placeholder='https://www.youtube.com/watch?v=... o short'
+            onChange={handleVideoUrlChange}
+          />
+          {videoPreviewId && (
+            <div className='mt-2'>
+              <div className='ratio ratio-16x9'>
+                <iframe
+                  src={`https://www.youtube.com/embed/${videoPreviewId}`}
+                  title='Vista previa YouTube'
+                  frameBorder='0'
+                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          )}
+          <small className='text-muted d-block mt-2'>
+            <i className='fa fa-info-circle me-1'></i>
+            Si agregas un video, se mostrará en lugar de la imagen.
+          </small>
+        </div>
+        
+        {/* Descripción */}
         <QuillFormGroup eRef={descriptionRef} label='Descripción' col='col-12' />
       </div>
     </Modal>
