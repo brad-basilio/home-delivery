@@ -215,6 +215,12 @@ const Menu = ({
                                     )}
                                 </MenuItem>
                                 <MenuItem
+                                    href="/admin/alliances"
+                                    icon="mdi mdi-handshake"
+                                >
+                                    Alianzas Comerciales
+                                </MenuItem>
+                                <MenuItem
                                     href="/admin/categories"
                                     icon="mdi mdi-clipboard-list-outline"
                                 >

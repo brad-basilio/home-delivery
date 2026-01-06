@@ -64,6 +64,12 @@ class HomeDeliveryController extends BasicController
         $generals = \App\Models\General::where('lang_id', $langId)->get();
         $socials = \App\Models\Social::where('status', true)->where('visible', true)->get();
         
+        // Alianzas comerciales
+        $alliances = \App\Models\Alliance::where('visible', true)
+            ->where('status', true)
+            ->orderBy('order', 'ASC')
+            ->get();
+        
         return [
             'sliders' => $sliders,
             'indicators' => $indicators,
@@ -73,6 +79,7 @@ class HomeDeliveryController extends BasicController
             'posts' => $posts,
             'generals' => $generals,
             'socials' => $socials,
+            'alliances' => $alliances,
         ];
     }
 }

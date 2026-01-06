@@ -19,6 +19,7 @@ composer.lock
 /.fleet
 /.idea
 /.vscode
+/storage/app/images
 /storage/profile
 /storage/public
 /.github

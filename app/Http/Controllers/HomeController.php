@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Aboutus;
 use App\Models\Ad;
+use App\Models\Alliance;
 use App\Models\Faq;
 use App\Models\General;
 use App\Models\Indicator;
@@ -43,8 +44,9 @@ class HomeController extends BasicController
         $generlas = General::where('lang_id', $langId)->get();
         $socials = Social::where('status', true)->where('visible', true)->get();
         $sliders = Slider::where('status', true)->where('visible', true)->orderBy('order', 'ASC')->get();
+        $alliances = Alliance::where('status', true)->where('visible', true)->orderBy('order', 'ASC')->get();
+        
         return [
-
             'indicators' => $indicators,
             'landing' => $landing,
             'benefits' => $benefits,
@@ -55,6 +57,7 @@ class HomeController extends BasicController
             'generals' => $generlas,
             'socials' => $socials,
             'sliders' => $sliders,
+            'alliances' => $alliances,
             // 'languagesSystem' => Lang::where('status', true)->where('visible', true)->get(),
         ];
     }

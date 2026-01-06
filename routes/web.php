@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\LandingHomeController as AdminLandingHomeControll
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\FacilityController as AdminFacilityController;
 use App\Http\Controllers\Admin\OfficeController as AdminOfficeController;
+use App\Http\Controllers\Admin\AllianceController as AdminAllianceController;
 use App\Http\Controllers\Admin\StaffController as AdminStaffController;
 use App\Http\Controllers\Admin\SpecialityController as AdminSpecialityController;
 use App\Http\Controllers\Admin\LangController as AdminLangController;
@@ -150,6 +151,7 @@ Route::middleware(['can:Admin', 'auth'])->prefix('admin')->group(function () {
 
     Route::get('/facilities', [AdminFacilityController::class, 'reactView'])->name('Admin/Facilities.jsx');
     Route::get('/offices', [AdminOfficeController::class, 'reactView'])->name('Admin/Offices.jsx');
+    Route::get('/alliances', [AdminAllianceController::class, 'reactView'])->name('Admin/Alliances.jsx');
     Route::get('/staff', [AdminStaffController::class, 'reactView'])->name('Admin/Staff.jsx');
     Route::get('/specialities', [AdminSpecialityController::class, 'reactView'])->name('Admin/Specialities.jsx');
     Route::get('/langs', [AdminLangController::class, 'reactView'])->name('Admin/Langs.jsx');

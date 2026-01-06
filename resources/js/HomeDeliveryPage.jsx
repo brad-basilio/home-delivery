@@ -12,6 +12,7 @@ import Indicators from './components/HomeDelivery/Indicators';
 import Services from './components/HomeDelivery/Services';
 import Benefits from './components/HomeDelivery/Benefits';
 import Testimonials from './components/HomeDelivery/Testimonials';
+import Alliances from './components/HomeDelivery/Alliances';
 import RecentBlog from './components/HomeDelivery/RecentBlog';
 import Footer from './components/HomeDelivery/Footer';
 import WhatsAppButton from './components/HomeDelivery/WhatsAppButton';
@@ -24,7 +25,7 @@ import WhatsAppButton from './components/HomeDelivery/WhatsAppButton';
  */
 const HomeDeliveryPage = (props) => {
   // Extraer datos dinámicos desde las props que vienen del backend
-  const { sliders = [], indicators = [], services = [], strengths = [], testimonies = [], posts = [], generals = [], socials = [] } = props;
+  const { sliders = [], indicators = [], services = [], strengths = [], testimonies = [], posts = [], generals = [], socials = [], alliances = [] } = props;
 
   // Configurar título y meta descripción
   useEffect(() => {
@@ -47,6 +48,9 @@ const HomeDeliveryPage = (props) => {
 
       {/* Sección Hero con Slider Dinámico */}
       <Hero sliders={sliders} />
+
+      {/* Sección de Alianzas Comerciales */}
+      <Alliances alliances={alliances} />
 
       {/* Sección de Indicadores */}
       <Indicators indicators={indicators} />
