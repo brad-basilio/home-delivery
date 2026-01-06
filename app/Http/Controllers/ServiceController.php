@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\General;
 use App\Models\LandingHome;
 use App\Models\Service;
 use App\Models\Specialty;
@@ -25,16 +26,14 @@ class ServiceController extends BasicController
         ->where('lang_id', $langId)
         ->get();
         $socials = Social::where('status', true)->where('visible', true)->get();
+        $generals = General::where('lang_id', $langId)->get();
+        
         return [
-
-
             'landing' => $landing,
-
             'services' => $services,
-
-           'specialities' => $specialities,
-           'socials' => $socials,
-
+            'specialities' => $specialities,
+            'socials' => $socials,
+            'generals' => $generals,
         ];
     }
 }

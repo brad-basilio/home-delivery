@@ -1,11 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import BaseAdminto from "@Adminto/Base";
 import { createRoot } from "react-dom/client";
 import { renderToString } from "react-dom/server";
 import Swal from "sweetalert2";
+import { GoogleMap, LoadScript, Marker, Autocomplete } from "@react-google-maps/api";
 
 import Modal from "../Components/Adminto/Modal";
 import Table from "../Components/Adminto/Table";
+import Global from "../Utils/Global";
 // import ImageFormGroup from "../Components/Adminto/form/ImageFormGroup";
 import InputFormGroup from "../Components/Adminto/form/InputFormGroup";
 // import SelectFormGroup from "../Components/Adminto/form/SelectFormGroup";
@@ -17,6 +19,9 @@ import ReactAppend from "../Utils/ReactAppend";
 import OfficesRest from "../actions/Admin/OfficesRest";
 
 const officesRest = new OfficesRest();
+
+// Librerías de Google Maps - DEBE estar fuera del componente para evitar re-renders
+const GOOGLE_MAPS_LIBRARIES = ["places"];
 
 const officeTypes = [
     { value: "oficina_principal", label: "Oficina Principal" },
@@ -39,19 +44,19 @@ const Offices = () => {
     const gridRef = useRef();
     const modalRef = useRef();
 
-    // Refs para campos del formulario - Solo campos esenciales
+    // Refs para campos del formulario
     const idRef = useRef();
     const nameRef = useRef();
     const typeRef = useRef();
     const addressRef = useRef();
+    const phoneRef = useRef();
+    const emailRef = useRef();
+    const latitudeRef = useRef();
+    const longitudeRef = useRef();
     
-    // Comentado: Campos no usados actualmente en LibroDeReclamaciones
-    // const phoneRef = useRef();
-    // const emailRef = useRef();
+    // Comentado: Campos no usados actualmente
     // const descriptionRef = useRef();
     // const ubigeoRef = useRef();
-    // const latitudeRef = useRef();
-    // const longitudeRef = useRef();
     // const managerRef = useRef();
     // const capacityRef = useRef();
     // const linkRef = useRef();
@@ -61,6 +66,77 @@ const Offices = () => {
     // Comentado: Estados para business_hours - No se usa actualmente
     // const [businessHours, setBusinessHours] = useState(defaultBusinessHours);
     const [isEditing, setIsEditing] = useState(false);
+    
+    // Estados para el mapa
+    const [mapCenter, setMapCenter] = useState({ lat: -12.0464, lng: -77.0428 }); // Lima por defecto
+    const [markerPosition, setMarkerPosition] = useState(null);
+    const [autocomplete, setAutocomplete] = useState(null);
+    const [mapsLoaded, setMapsLoaded] = useState(false);
+    const searchInputRef = useRef();
+    
+    // Efecto para arreglar el z-index de las sugerencias de Google Maps
+    useEffect(() => {
+        // El dropdown de Google (.pac-container) necesita z-index alto para aparecer sobre el modal
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .pac-container {
+                z-index: 10000 !important;
+            }
+        `;
+        document.head.appendChild(style);
+        return () => {
+            document.head.removeChild(style);
+        };
+    }, []);
+    
+    // Callback cuando se carga el script de Google Maps
+    const onLoadScript = useCallback(() => {
+        console.log("Google Maps script loaded");
+        setMapsLoaded(true);
+    }, []);
+    
+    // Callback cuando se carga el Autocomplete
+    const onAutocompleteLoad = useCallback((autocompleteInstance) => {
+        console.log("Autocomplete loaded:", autocompleteInstance);
+        setAutocomplete(autocompleteInstance);
+    }, []);
+    
+    // Callback cuando se selecciona un lugar del buscador
+    const onPlaceChanged = useCallback(() => {
+        console.log("Place changed, autocomplete:", autocomplete);
+        if (autocomplete) {
+            const place = autocomplete.getPlace();
+            console.log("Selected place:", place);
+            if (place.geometry && place.geometry.location) {
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+                
+                setMapCenter({ lat, lng });
+                setMarkerPosition({ lat, lng });
+                
+                // Actualizar los campos de latitud y longitud
+                if (latitudeRef.current) latitudeRef.current.value = lat;
+                if (longitudeRef.current) longitudeRef.current.value = lng;
+                
+                // Si hay dirección, actualizar el campo de dirección
+                if (place.formatted_address && addressRef.current) {
+                    addressRef.current.value = place.formatted_address;
+                }
+            }
+        }
+    }, [autocomplete]);
+    
+    // Callback cuando se hace clic en el mapa
+    const handleMapClick = useCallback((event) => {
+        const lat = event.latLng.lat();
+        const lng = event.latLng.lng();
+        
+        setMarkerPosition({ lat, lng });
+        
+        // Actualizar los campos de latitud y longitud
+        if (latitudeRef.current) latitudeRef.current.value = lat;
+        if (longitudeRef.current) longitudeRef.current.value = lng;
+    }, []);
 
     // Comentado: Manejo de horarios - No se usa actualmente
     // const updateBusinessHour = (index, field, value) => {
@@ -73,20 +149,37 @@ const Offices = () => {
     const onModalOpen = (data) => {
         setIsEditing(!!data?.id);
 
-        // Resetear formulario - Solo campos esenciales
+        // Resetear formulario
         idRef.current.value = data?.id || "";
         nameRef.current.value = data?.name || "";
         typeRef.current.value = data?.type || "oficina";
         addressRef.current.value = data?.address || "";
+        phoneRef.current.value = data?.phone || "";
+        emailRef.current.value = data?.email || "";
+        latitudeRef.current.value = data?.latitude || "";
+        longitudeRef.current.value = data?.longitude || "";
         visibleRef.current.checked = data?.visible ?? true;
+        
+        // Configurar el mapa si hay coordenadas
+        if (data?.latitude && data?.longitude) {
+            const lat = parseFloat(data.latitude);
+            const lng = parseFloat(data.longitude);
+            setMapCenter({ lat, lng });
+            setMarkerPosition({ lat, lng });
+        } else {
+            // Resetear a Lima por defecto
+            setMapCenter({ lat: -12.0464, lng: -77.0428 });
+            setMarkerPosition(null);
+        }
+        
+        // Limpiar el buscador
+        if (searchInputRef.current) {
+            searchInputRef.current.value = "";
+        }
 
         // Comentado: Campos no usados actualmente
-        // phoneRef.current.value = data?.phone || "";
-        // emailRef.current.value = data?.email || "";
         // descriptionRef.current.value = data?.description || "";
         // ubigeoRef.current.value = data?.ubigeo || "";
-        // latitudeRef.current.value = data?.latitude || "";
-        // longitudeRef.current.value = data?.longitude || "";
         // managerRef.current.value = data?.manager || "";
         // capacityRef.current.value = data?.capacity || "";
         // linkRef.current.value = data?.link || "";
@@ -129,15 +222,15 @@ const Offices = () => {
         formData.append("name", nameRef.current.value);
         formData.append("type", typeRef.current.value);
         formData.append("address", addressRef.current.value);
+        formData.append("phone", phoneRef.current.value);
+        formData.append("email", emailRef.current.value);
+        formData.append("latitude", latitudeRef.current.value);
+        formData.append("longitude", longitudeRef.current.value);
         formData.append("visible", visibleRef.current.checked ? 1 : 0);
 
         // Comentado: Campos no usados actualmente
-        // formData.append("phone", phoneRef.current.value);
-        // formData.append("email", emailRef.current.value);
         // formData.append("description", descriptionRef.current.value);
         // formData.append("ubigeo", ubigeoRef.current.value);
-        // formData.append("latitude", latitudeRef.current.value);
-        // formData.append("longitude", longitudeRef.current.value);
         // formData.append("manager", managerRef.current.value);
         // formData.append("capacity", capacityRef.current.value);
         // formData.append("link", linkRef.current.value);
@@ -349,7 +442,7 @@ const Offices = () => {
                 modalRef={modalRef}
                 title={isEditing ? "Editar Oficina" : "Nueva Oficina"}
                 onSubmit={onModalSubmit}
-                size="md"
+                size="lg"
             >
                 <input ref={idRef} type="hidden" />
 
@@ -385,7 +478,6 @@ const Offices = () => {
                     required
                 />
 
-                {/* Comentado: Campos no usados actualmente en LibroDeReclamaciones
                 <div className="row">
                     <div className="col-md-6">
                         <InputFormGroup eRef={phoneRef} label="Teléfono" />
@@ -395,6 +487,82 @@ const Offices = () => {
                     </div>
                 </div>
 
+                {/* Campos ocultos para latitud y longitud */}
+                <input ref={latitudeRef} type="hidden" />
+                <input ref={longitudeRef} type="hidden" />
+                
+                {/* Mapa con buscador */}
+                <div className="mb-3">
+                    <label className="form-label">
+                        <i className="fa fa-map-marker-alt me-1"></i>
+                        Ubicación en el mapa
+                    </label>
+                    <LoadScript 
+                        googleMapsApiKey={Global.GMAPS_API_KEY} 
+                        libraries={GOOGLE_MAPS_LIBRARIES}
+                        onLoad={onLoadScript}
+                    >
+                        {/* Buscador de direcciones */}
+                        <div className="mb-2">
+                            <Autocomplete
+                                onLoad={onAutocompleteLoad}
+                                onPlaceChanged={onPlaceChanged}
+                            >
+                                <input
+                                    ref={searchInputRef}
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Buscar dirección, lugar o establecimiento..."
+                                    style={{ width: '100%' }}
+                                />
+                            </Autocomplete>
+                        </div>
+                        
+                        {/* Mapa */}
+                        <GoogleMap
+                            mapContainerStyle={{
+                                width: "100%",
+                                height: "300px",
+                                borderRadius: "8px"
+                            }}
+                            center={mapCenter}
+                            zoom={15}
+                            onClick={handleMapClick}
+                            options={{
+                                streetViewControl: false,
+                                mapTypeControl: false,
+                                fullscreenControl: true
+                            }}
+                        >
+                            {markerPosition && (
+                                <Marker 
+                                    position={markerPosition}
+                                    draggable={true}
+                                    onDragEnd={(e) => {
+                                        const lat = e.latLng.lat();
+                                        const lng = e.latLng.lng();
+                                        setMarkerPosition({ lat, lng });
+                                        if (latitudeRef.current) latitudeRef.current.value = lat;
+                                        if (longitudeRef.current) longitudeRef.current.value = lng;
+                                    }}
+                                />
+                            )}
+                        </GoogleMap>
+                    </LoadScript>
+                    <small className="text-muted">
+                        <i className="fa fa-info-circle me-1"></i>
+                        Busca una dirección o haz clic en el mapa para marcar la ubicación. Puedes arrastrar el marcador para ajustar.
+                    </small>
+                    
+                    {/* Mostrar coordenadas seleccionadas */}
+                    {markerPosition && (
+                        <div className="mt-2 p-2 bg-light rounded small">
+                            <strong>Coordenadas:</strong> {markerPosition.lat.toFixed(6)}, {markerPosition.lng.toFixed(6)}
+                        </div>
+                    )}
+                </div>
+
+                {/* Comentado: Campos no usados actualmente
                 <div className="mb-3">
                     <label className="form-label">Descripción</label>
                     <textarea ref={descriptionRef} className="form-control" rows={3} />
@@ -406,15 +574,6 @@ const Offices = () => {
                     </div>
                     <div className="col-md-6">
                         <InputFormGroup eRef={capacityRef} label="Capacidad" type="number" />
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-md-6">
-                        <InputFormGroup eRef={latitudeRef} label="Latitud" type="number" step="any" />
-                    </div>
-                    <div className="col-md-6">
-                        <InputFormGroup eRef={longitudeRef} label="Longitud" type="number" step="any" />
                     </div>
                 </div>
 

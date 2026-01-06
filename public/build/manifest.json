@@ -419,8 +419,8 @@
       "resources/js/components/TrackingPixels.jsx"
     ]
   },
-  "_esm-C6KcuVSV.js": {
-    "file": "assets/esm-C6KcuVSV.js",
+  "_esm-CgCHm6xl.js": {
+    "file": "assets/esm-CgCHm6xl.js",
     "name": "esm",
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
@@ -1218,14 +1218,14 @@
     ]
   },
   "resources/js/Admin/Generals.jsx": {
-    "file": "assets/Generals-YIDwNdNs.js",
+    "file": "assets/Generals-DqOYMW97.js",
     "name": "Generals",
     "src": "resources/js/Admin/Generals.jsx",
     "isEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx",
-      "_esm-C6KcuVSV.js",
+      "_esm-CgCHm6xl.js",
       "_Base-Bjp3VUtJ.js",
       "resources/js/components/Blog/Results.jsx",
       "_CreateReactScript-BEktg6JA.js",
@@ -1527,7 +1527,7 @@
     ]
   },
   "resources/js/Admin/Offices.jsx": {
-    "file": "assets/Offices-BJwcvdX0.js",
+    "file": "assets/Offices-TZ6C1DL8.js",
     "name": "Offices",
     "src": "resources/js/Admin/Offices.jsx",
     "isEntry": true,
@@ -1538,12 +1538,13 @@
       "resources/js/Utils/ReactAppend.jsx",
       "resources/js/components/Adminto/Dx/DxBox.jsx",
       "_sweetalert2.all-C96erxsa.js",
+      "_esm-CgCHm6xl.js",
       "_Modal-CJBbhQ-7.js",
       "_Table-ux6p-2ih.js",
+      "_CreateReactScript-BEktg6JA.js",
       "_InputFormGroup-DDhzlCe_.js",
       "_SwitchFormGroup-COj39dTx.js",
       "_DxButton-CsjWvhyj.js",
-      "_CreateReactScript-BEktg6JA.js",
       "_ReactAppend-Yu2UtNlL.js",
       "resources/js/components/Blog/Results.jsx",
       "_tippy-react.esm-CIcmk6y-.js",
@@ -2408,7 +2409,7 @@
     ]
   },
   "resources/js/ContactoPage.jsx": {
-    "file": "assets/ContactoPage-mZMwv7C5.js",
+    "file": "assets/ContactoPage-CObyMgxk.js",
     "name": "ContactoPage",
     "src": "resources/js/ContactoPage.jsx",
     "isEntry": true,
@@ -2419,7 +2420,7 @@
       "resources/js/components/TrackingPixels.jsx",
       "_WhatsAppButton-9dqyiho0.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
-      "_esm-C6KcuVSV.js",
+      "_esm-CgCHm6xl.js",
       "_MessagesRest-NG1IjeKk.js",
       "_sweetalert2.all-C96erxsa.js",
       "_index-CbrplguO.js",
@@ -2663,7 +2664,7 @@
     ]
   },
   "resources/js/HomeDeliveryPage.jsx": {
-    "file": "assets/HomeDeliveryPage-DEjwY5h0.js",
+    "file": "assets/HomeDeliveryPage-Bvx6PBdP.js",
     "name": "HomeDeliveryPage",
     "src": "resources/js/HomeDeliveryPage.jsx",
     "isEntry": true,
@@ -3094,7 +3095,7 @@
     ]
   },
   "resources/js/ServiciosPage.jsx": {
-    "file": "assets/ServiciosPage-CuWavIK0.js",
+    "file": "assets/ServiciosPage-B4fFfAsL.js",
     "name": "ServiciosPage",
     "src": "resources/js/ServiciosPage.jsx",
     "isEntry": true,
@@ -3523,7 +3524,7 @@
     ]
   },
   "resources/js/components/Adminto/Modal.jsx": {
-    "file": "assets/Modal-COKCz9DG.js",
+    "file": "assets/Modal-BM6_LCjb.js",
     "name": "Modal",
     "src": "resources/js/components/Adminto/Modal.jsx",
     "isEntry": true,
@@ -3633,7 +3634,7 @@
     ]
   },
   "resources/js/components/Adminto/form/SelectFormGroup.jsx": {
-    "file": "assets/SelectFormGroup-BM6_LCjb.js",
+    "file": "assets/SelectFormGroup-COKCz9DG.js",
     "name": "SelectFormGroup",
     "src": "resources/js/components/Adminto/form/SelectFormGroup.jsx",
     "isEntry": true,
@@ -3653,7 +3654,7 @@
     ]
   },
   "resources/js/components/Adminto/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
+    "file": "assets/TextareaFormGroup-COKCz9DG.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/Adminto/form/TextareaFormGroup.jsx",
     "isEntry": true,
@@ -3890,7 +3891,7 @@
     ]
   },
   "resources/js/components/DataGrid.jsx": {
-    "file": "assets/DataGrid-BM6_LCjb.js",
+    "file": "assets/DataGrid-COKCz9DG.js",
     "name": "DataGrid",
     "src": "resources/js/components/DataGrid.jsx",
     "isEntry": true,
@@ -4303,7 +4304,7 @@
     ]
   },
   "resources/js/components/Modal.jsx": {
-    "file": "assets/Modal-BM6_LCjb.js",
+    "file": "assets/Modal-COKCz9DG.js",
     "name": "Modal",
     "src": "resources/js/components/Modal.jsx",
     "isEntry": true,
@@ -4384,7 +4385,7 @@
     ]
   },
   "resources/js/components/Table.jsx": {
-    "file": "assets/Table-BM6_LCjb.js",
+    "file": "assets/Table-COKCz9DG.js",
     "name": "Table",
     "src": "resources/js/components/Table.jsx",
     "isEntry": true,
@@ -4426,7 +4427,7 @@
     ]
   },
   "resources/js/components/Tailwind/DataGrid.jsx": {
-    "file": "assets/DataGrid-COKCz9DG.js",
+    "file": "assets/DataGrid-BM6_LCjb.js",
     "name": "DataGrid",
     "src": "resources/js/components/Tailwind/DataGrid.jsx",
     "isEntry": true,
@@ -4572,7 +4573,7 @@
     ]
   },
   "resources/js/components/Tailwind/Table.jsx": {
-    "file": "assets/Table-COKCz9DG.js",
+    "file": "assets/Table-BM6_LCjb.js",
     "name": "Table",
     "src": "resources/js/components/Tailwind/Table.jsx",
     "isEntry": true,
@@ -4690,10 +4691,10 @@
     ]
   },
   "resources/js/components/Test/Email.jsx": {
-    "file": "assets/Email-Df3ba74_.js",
+    "file": "assets/Email-pmxpX1ze.js",
     "name": "Email",
     "src": "resources/js/components/Test/Email.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx",
@@ -4714,10 +4715,10 @@
     ]
   },
   "resources/js/components/Test/HairGoals.jsx": {
-    "file": "assets/HairGoals-BM6_LCjb.js",
+    "file": "assets/HairGoals-BBuZ8cAp.js",
     "name": "HairGoals",
     "src": "resources/js/components/Test/HairGoals.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx"
@@ -4737,10 +4738,10 @@
     ]
   },
   "resources/js/components/Test/Main.jsx": {
-    "file": "assets/Main-BM6_LCjb.js",
+    "file": "assets/Main-DxSzqHu0.js",
     "name": "Main",
     "src": "resources/js/components/Test/Main.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx"
@@ -4916,7 +4917,7 @@
     ]
   },
   "resources/js/components/form/SelectFormGroup.jsx": {
-    "file": "assets/SelectFormGroup-COKCz9DG.js",
+    "file": "assets/SelectFormGroup-BM6_LCjb.js",
     "name": "SelectFormGroup",
     "src": "resources/js/components/form/SelectFormGroup.jsx",
     "isEntry": true,
@@ -4926,7 +4927,7 @@
     ]
   },
   "resources/js/components/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-COKCz9DG.js",
+    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/form/TextareaFormGroup.jsx",
     "isEntry": true,
