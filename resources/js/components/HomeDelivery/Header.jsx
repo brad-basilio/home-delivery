@@ -1,3 +1,4 @@
+import { Search, User2 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 
 /**
@@ -54,6 +55,27 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
+            {/* Botones Tracking e Ingresar - Unidos con bg-white */}
+            <div className="flex items-center !bg-white rounded-none text-lg  overflow-hidden">
+              <a
+                href="#tracking"
+
+                className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:text-hd-cerise transition-all duration-300 font-medium text-sm tracking-wide font-aeonik  "
+              >
+                <Search className="h-5 w-5" />
+                Tracking
+              </a>
+              <a
+                href="https://homedeliverype.com/auth/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-hd-cerise transition-all duration-300 font-medium text-sm tracking-wide font-aeonik"
+              >
+                <User2 className="h-5 w-5" />
+                Ingresar
+              </a>
+            </div>
+            
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -102,6 +124,27 @@ const Header = () => {
         {isMobileMenuOpen && (
           <nav className="lg:hidden py-6 border-t border-gray-100 animate-fadeIn">
             <div className="flex flex-col space-y-1">
+              {/* Botones Tracking e Ingresar - Mobile Unidos */}
+             <div className="flex items-center justify-around !bg-white rounded-none text-lg  overflow-hidden">
+              <a
+                href="#tracking"
+
+                className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:text-hd-cerise transition-all duration-300 font-medium text-sm tracking-wide font-aeonik  "
+              >
+                <Search className="h-5 w-5" />
+                Tracking
+              </a>
+              <a
+                href="https://homedeliverype.com/auth/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-hd-cerise transition-all duration-300 font-medium text-sm tracking-wide font-aeonik"
+              >
+                <User2 className="h-5 w-5" />
+                Ingresar
+              </a>
+            </div>
+              
               {navLinks.map((link, index) => (
                 <a
                   key={link.href}

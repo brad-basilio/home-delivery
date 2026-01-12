@@ -604,7 +604,9 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                         </div>
 
                         {/* Desktop Navigation */}
-                        <nav className="hidden md:flex space-x-8">
+                        <nav className="hidden md:flex space-x-8 items-center">
+                            <button className="text-gray-700 hover:text-secondary transition-colors duration-300">Tracking</button>
+                            <a href="https://homedeliverype.com/auth/login" className="bg-secondary hover:bg-primary text-white px-4 py-2 rounded-lg font-semibold transition-all duration-300">Ingresar</a>
                             <button onClick={() => smoothScrollTo('inicio')} className="text-gray-700 hover:text-secondary transition-colors duration-300">Inicio</button>
                             <button onClick={() => smoothScrollTo('servicios')} className="text-gray-700 hover:text-secondary transition-colors duration-300">Servicios</button>
                             <button onClick={() => smoothScrollTo('testimonios')} className="text-gray-700 hover:text-secondary transition-colors duration-300">Testimonios</button>
@@ -626,6 +628,8 @@ const Home = ({ services = [], testimonies = [], faqs = [], generals = [], socia
                     {isMobileMenuOpen && (
                         <div className="md:hidden">
                             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                                <button className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300 w-full text-left">Tracking</button>
+                                <a href="https://homedeliverype.com/auth/login" className="block px-3 py-2 bg-secondary hover:bg-primary text-white rounded-lg font-semibold transition-all duration-300 text-center mx-3">Ingresar</a>
                                 <button onClick={() => smoothScrollTo('inicio')} className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300 w-full text-left">Inicio</button>
                                 <button onClick={() => smoothScrollTo('servicios')} className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300 w-full text-left">Servicios</button>
                                 <button onClick={() => smoothScrollTo('testimonios')} className="block px-3 py-2 text-gray-700 hover:text-secondary transition-colors duration-300 w-full text-left">Testimonios</button>

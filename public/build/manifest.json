@@ -341,12 +341,13 @@
     "file": "WhatsAppButton.css",
     "src": "_WhatsAppButton-!~{03R}~.js"
   },
-  "_WhatsAppButton-9dqyiho0.js": {
-    "file": "assets/WhatsAppButton-9dqyiho0.js",
+  "_WhatsAppButton-BaTJn6vB.js": {
+    "file": "assets/WhatsAppButton-BaTJn6vB.js",
     "name": "WhatsAppButton",
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
-      "resources/js/components/TrackingPixels.jsx"
+      "resources/js/components/TrackingPixels.jsx",
+      "_createLucideIcon-B31oCQao.js"
     ],
     "css": [
       "WhatsAppButton.css"
@@ -563,7 +564,7 @@
     ]
   },
   "node_modules/canvg/lib/index.es.js": {
-    "file": "assets/index.es-BPXTzdJc.js",
+    "file": "assets/index.es-CEMz0p_g.js",
     "name": "index.es",
     "src": "node_modules/canvg/lib/index.es.js",
     "isDynamicEntry": true,
@@ -592,7 +593,7 @@
       "_x-DwxZ1MqR.js",
       "_createLucideIcon-B31oCQao.js",
       "_circle-check-big-BVVUljRo.js",
-      "_WhatsAppButton-9dqyiho0.js",
+      "_WhatsAppButton-BaTJn6vB.js",
       "_preload-helper-CZZ3Qsu7.js",
       "_shield-B6hPKWks.js",
       "_phone-DVOwdTS_.js"
@@ -665,7 +666,7 @@
     ]
   },
   "resources/js/AboutPage.jsx": {
-    "file": "assets/AboutPage-DsEu9830.js",
+    "file": "assets/AboutPage-ClUkghQs.js",
     "name": "AboutPage",
     "src": "resources/js/AboutPage.jsx",
     "isEntry": true,
@@ -674,7 +675,7 @@
       "resources/js/Utils/ReactAppend.jsx",
       "_CreateReactScript-BEktg6JA.js",
       "resources/js/components/TrackingPixels.jsx",
-      "_WhatsAppButton-9dqyiho0.js",
+      "_WhatsAppButton-BaTJn6vB.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "_proxy-Ci5QcTMU.js",
       "_index-CbrplguO.js",
@@ -682,6 +683,7 @@
       "_axios-B4uVmeYG.js",
       "____vite-browser-external_commonjs-proxy-DjIx6Adb.js",
       "_main-D1ujSG59.js",
+      "_createLucideIcon-B31oCQao.js",
       "_index-DkSDNEBT.js",
       "_index-CZSDX33M.js",
       "_HtmlContent-C_QQVIf4.js",
@@ -690,7 +692,6 @@
       "_SubscriptionsRest-CSuYoVKK.js",
       "_index-DJI-j85T.js",
       "_x-DwxZ1MqR.js",
-      "_createLucideIcon-B31oCQao.js",
       "_circle-check-big-BVVUljRo.js"
     ],
     "css": [
@@ -2190,7 +2191,7 @@
     ]
   },
   "resources/js/Blog.jsx": {
-    "file": "assets/Blog-BKjTplt4.js",
+    "file": "assets/Blog-YogYtWit.js",
     "name": "Blog",
     "src": "resources/js/Blog.jsx",
     "isEntry": true,
@@ -2204,7 +2205,7 @@
       "_useTranslation-BOupZ7-X.js",
       "_PostCard-0hC8CleO.js",
       "resources/js/components/Blog/Results.jsx",
-      "_WhatsAppButton-9dqyiho0.js",
+      "_WhatsAppButton-BaTJn6vB.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "resources/js/components/Tailwind/DetailProduct/Detail.jsx",
       "_MaintenancePage-CcccXo4t.js",
@@ -2216,13 +2217,13 @@
       "_main-D1ujSG59.js",
       "_index-CbrplguO.js",
       "resources/js/components/Blog/Filter.jsx",
+      "_createLucideIcon-B31oCQao.js",
       "_index-DkSDNEBT.js",
       "_index-CZSDX33M.js",
       "_GeneralRest-ChNBqrtq.js",
       "_SubscriptionsRest-CSuYoVKK.js",
       "_index-DJI-j85T.js",
       "_x-DwxZ1MqR.js",
-      "_createLucideIcon-B31oCQao.js",
       "_circle-check-big-BVVUljRo.js",
       "_proxy-Ci5QcTMU.js"
     ],
@@ -2232,7 +2233,7 @@
     ]
   },
   "resources/js/BlogArticle.jsx": {
-    "file": "assets/BlogArticle-C81f5tOn.js",
+    "file": "assets/BlogArticle-BL_R23gV.js",
     "name": "BlogArticle",
     "src": "resources/js/BlogArticle.jsx",
     "isEntry": true,
@@ -2244,7 +2245,7 @@
       "_Base-TKSHZItW.js",
       "_HtmlContent-C_QQVIf4.js",
       "_tippy-react.esm-CIcmk6y-.js",
-      "_WhatsAppButton-9dqyiho0.js",
+      "_WhatsAppButton-BaTJn6vB.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "resources/js/components/Tailwind/DetailProduct/Detail.jsx",
       "_PostCard-0hC8CleO.js",
@@ -2446,7 +2447,7 @@
     ]
   },
   "resources/js/ContactoPage.jsx": {
-    "file": "assets/ContactoPage-CObyMgxk.js",
+    "file": "assets/ContactoPage-ZOgEwYVE.js",
     "name": "ContactoPage",
     "src": "resources/js/ContactoPage.jsx",
     "isEntry": true,
@@ -2455,7 +2456,7 @@
       "resources/js/Utils/ReactAppend.jsx",
       "_CreateReactScript-BEktg6JA.js",
       "resources/js/components/TrackingPixels.jsx",
-      "_WhatsAppButton-9dqyiho0.js",
+      "_WhatsAppButton-BaTJn6vB.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "_esm-CgCHm6xl.js",
       "_MessagesRest-NG1IjeKk.js",
@@ -2465,6 +2466,7 @@
       "_axios-B4uVmeYG.js",
       "____vite-browser-external_commonjs-proxy-DjIx6Adb.js",
       "_main-D1ujSG59.js",
+      "_createLucideIcon-B31oCQao.js",
       "_index-DkSDNEBT.js",
       "_index-CZSDX33M.js",
       "_HtmlContent-C_QQVIf4.js",
@@ -2473,7 +2475,6 @@
       "_SubscriptionsRest-CSuYoVKK.js",
       "_index-DJI-j85T.js",
       "_x-DwxZ1MqR.js",
-      "_createLucideIcon-B31oCQao.js",
       "_circle-check-big-BVVUljRo.js"
     ],
     "css": [
@@ -2658,7 +2659,7 @@
     ]
   },
   "resources/js/Home.jsx": {
-    "file": "assets/Home-CbNVk43C.js",
+    "file": "assets/Home-CKgdlUhm.js",
     "name": "Home",
     "src": "resources/js/Home.jsx",
     "isEntry": true,
@@ -2701,7 +2702,7 @@
     ]
   },
   "resources/js/HomeDeliveryPage.jsx": {
-    "file": "assets/HomeDeliveryPage-BeqG9Bno.js",
+    "file": "assets/HomeDeliveryPage-DGFxz3nl.js",
     "name": "HomeDeliveryPage",
     "src": "resources/js/HomeDeliveryPage.jsx",
     "isEntry": true,
@@ -2710,13 +2711,14 @@
       "resources/js/Utils/ReactAppend.jsx",
       "_CreateReactScript-BEktg6JA.js",
       "resources/js/components/TrackingPixels.jsx",
-      "_WhatsAppButton-9dqyiho0.js",
+      "_WhatsAppButton-BaTJn6vB.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "_index-CbrplguO.js",
       "_index.esm-Duzu12F9.js",
       "_axios-B4uVmeYG.js",
       "____vite-browser-external_commonjs-proxy-DjIx6Adb.js",
       "_main-D1ujSG59.js",
+      "_createLucideIcon-B31oCQao.js",
       "_index-DkSDNEBT.js",
       "_index-CZSDX33M.js",
       "_HtmlContent-C_QQVIf4.js",
@@ -2725,7 +2727,6 @@
       "_SubscriptionsRest-CSuYoVKK.js",
       "_index-DJI-j85T.js",
       "_x-DwxZ1MqR.js",
-      "_createLucideIcon-B31oCQao.js",
       "_circle-check-big-BVVUljRo.js"
     ],
     "css": [
@@ -2856,7 +2857,7 @@
     ]
   },
   "resources/js/LibroDeReclamaciones.jsx": {
-    "file": "assets/LibroDeReclamaciones-C6IzHXvS.js",
+    "file": "assets/LibroDeReclamaciones-Ck5oLOYq.js",
     "name": "LibroDeReclamaciones",
     "src": "resources/js/LibroDeReclamaciones.jsx",
     "isEntry": true,
@@ -2868,7 +2869,7 @@
       "_CreateReactScript-BEktg6JA.js",
       "resources/js/Utils/ReactAppend.jsx",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
-      "_WhatsAppButton-9dqyiho0.js",
+      "_WhatsAppButton-BaTJn6vB.js",
       "_main-D1ujSG59.js",
       "_preload-helper-CZZ3Qsu7.js",
       "_HtmlContent-C_QQVIf4.js",
@@ -3132,7 +3133,7 @@
     ]
   },
   "resources/js/ServiciosPage.jsx": {
-    "file": "assets/ServiciosPage-B4fFfAsL.js",
+    "file": "assets/ServiciosPage-D-wX7xRF.js",
     "name": "ServiciosPage",
     "src": "resources/js/ServiciosPage.jsx",
     "isEntry": true,
@@ -3141,13 +3142,14 @@
       "resources/js/Utils/ReactAppend.jsx",
       "_CreateReactScript-BEktg6JA.js",
       "resources/js/components/TrackingPixels.jsx",
-      "_WhatsAppButton-9dqyiho0.js",
+      "_WhatsAppButton-BaTJn6vB.js",
       "resources/js/components/HomeDelivery/HomeDeliveryPage.jsx",
       "_index-CbrplguO.js",
       "_index.esm-Duzu12F9.js",
       "_axios-B4uVmeYG.js",
       "____vite-browser-external_commonjs-proxy-DjIx6Adb.js",
       "_main-D1ujSG59.js",
+      "_createLucideIcon-B31oCQao.js",
       "_index-DkSDNEBT.js",
       "_index-CZSDX33M.js",
       "_HtmlContent-C_QQVIf4.js",
@@ -3156,7 +3158,6 @@
       "_SubscriptionsRest-CSuYoVKK.js",
       "_index-DJI-j85T.js",
       "_x-DwxZ1MqR.js",
-      "_createLucideIcon-B31oCQao.js",
       "_circle-check-big-BVVUljRo.js"
     ],
     "css": [
@@ -3561,7 +3562,7 @@
     ]
   },
   "resources/js/components/Adminto/Modal.jsx": {
-    "file": "assets/Modal-COKCz9DG.js",
+    "file": "assets/Modal-BM6_LCjb.js",
     "name": "Modal",
     "src": "resources/js/components/Adminto/Modal.jsx",
     "isEntry": true,
@@ -3639,7 +3640,7 @@
     ]
   },
   "resources/js/components/Adminto/form/PasswordFormGroup.jsx": {
-    "file": "assets/PasswordFormGroup-BM6_LCjb.js",
+    "file": "assets/PasswordFormGroup-COKCz9DG.js",
     "name": "PasswordFormGroup",
     "src": "resources/js/components/Adminto/form/PasswordFormGroup.jsx",
     "isEntry": true,
@@ -3659,7 +3660,7 @@
     ]
   },
   "resources/js/components/Adminto/form/SelectAPIFormGroup.jsx": {
-    "file": "assets/SelectAPIFormGroup-CIDz38r0.js",
+    "file": "assets/SelectAPIFormGroup-DGjR4AiH.js",
     "name": "SelectAPIFormGroup",
     "src": "resources/js/components/Adminto/form/SelectAPIFormGroup.jsx",
     "isEntry": true,
@@ -3671,7 +3672,7 @@
     ]
   },
   "resources/js/components/Adminto/form/SelectFormGroup.jsx": {
-    "file": "assets/SelectFormGroup-BM6_LCjb.js",
+    "file": "assets/SelectFormGroup-COKCz9DG.js",
     "name": "SelectFormGroup",
     "src": "resources/js/components/Adminto/form/SelectFormGroup.jsx",
     "isEntry": true,
@@ -3691,7 +3692,7 @@
     ]
   },
   "resources/js/components/Adminto/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
+    "file": "assets/TextareaFormGroup-COKCz9DG.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/Adminto/form/TextareaFormGroup.jsx",
     "isEntry": true,
@@ -3928,7 +3929,7 @@
     ]
   },
   "resources/js/components/DataGrid.jsx": {
-    "file": "assets/DataGrid-COKCz9DG.js",
+    "file": "assets/DataGrid-BM6_LCjb.js",
     "name": "DataGrid",
     "src": "resources/js/components/DataGrid.jsx",
     "isEntry": true,
@@ -4351,7 +4352,7 @@
     ]
   },
   "resources/js/components/Modal.jsx": {
-    "file": "assets/Modal-BM6_LCjb.js",
+    "file": "assets/Modal-COKCz9DG.js",
     "name": "Modal",
     "src": "resources/js/components/Modal.jsx",
     "isEntry": true,
@@ -4432,7 +4433,7 @@
     ]
   },
   "resources/js/components/Table.jsx": {
-    "file": "assets/Table-COKCz9DG.js",
+    "file": "assets/Table-BM6_LCjb.js",
     "name": "Table",
     "src": "resources/js/components/Table.jsx",
     "isEntry": true,
@@ -4474,7 +4475,7 @@
     ]
   },
   "resources/js/components/Tailwind/DataGrid.jsx": {
-    "file": "assets/DataGrid-BM6_LCjb.js",
+    "file": "assets/DataGrid-COKCz9DG.js",
     "name": "DataGrid",
     "src": "resources/js/components/Tailwind/DataGrid.jsx",
     "isEntry": true,
@@ -4620,7 +4621,7 @@
     ]
   },
   "resources/js/components/Tailwind/Table.jsx": {
-    "file": "assets/Table-BM6_LCjb.js",
+    "file": "assets/Table-COKCz9DG.js",
     "name": "Table",
     "src": "resources/js/components/Tailwind/Table.jsx",
     "isEntry": true,
@@ -4738,10 +4739,10 @@
     ]
   },
   "resources/js/components/Test/Email.jsx": {
-    "file": "assets/Email-Df3ba74_.js",
+    "file": "assets/Email-pmxpX1ze.js",
     "name": "Email",
     "src": "resources/js/components/Test/Email.jsx",
-    "isEntry": true,
+    "isDynamicEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx",
@@ -4752,15 +4753,13 @@
     ]
   },
   "resources/js/components/Test/Fragrance.jsx": {
-    "file": "assets/Fragrance-Cf-yCqdy.js",
+    "file": "assets/Fragrance-BM6_LCjb.js",
     "name": "Fragrance",
     "src": "resources/js/components/Test/Fragrance.jsx",
-    "isDynamicEntry": true,
+    "isEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
-      "_tippy-react.esm-CIcmk6y-.js",
-      "resources/js/components/TrackingPixels.jsx",
-      "_index-CbrplguO.js"
+      "resources/js/components/TrackingPixels.jsx"
     ]
   },
   "resources/js/components/Test/HairGoals.jsx": {
@@ -4787,10 +4786,10 @@
     ]
   },
   "resources/js/components/Test/Main.jsx": {
-    "file": "assets/Main-DxSzqHu0.js",
+    "file": "assets/Main-BM6_LCjb.js",
     "name": "Main",
     "src": "resources/js/components/Test/Main.jsx",
-    "isDynamicEntry": true,
+    "isEntry": true,
     "imports": [
       "resources/js/Admin/FileViewer.jsx",
       "resources/js/components/TrackingPixels.jsx"
@@ -4934,7 +4933,7 @@
     ]
   },
   "resources/js/components/form/PasswordFormGroup.jsx": {
-    "file": "assets/PasswordFormGroup-COKCz9DG.js",
+    "file": "assets/PasswordFormGroup-BM6_LCjb.js",
     "name": "PasswordFormGroup",
     "src": "resources/js/components/form/PasswordFormGroup.jsx",
     "isEntry": true,
@@ -4954,7 +4953,7 @@
     ]
   },
   "resources/js/components/form/SelectAPIFormGroup.jsx": {
-    "file": "assets/SelectAPIFormGroup-DGjR4AiH.js",
+    "file": "assets/SelectAPIFormGroup-CIDz38r0.js",
     "name": "SelectAPIFormGroup",
     "src": "resources/js/components/form/SelectAPIFormGroup.jsx",
     "isEntry": true,
@@ -4966,7 +4965,7 @@
     ]
   },
   "resources/js/components/form/SelectFormGroup.jsx": {
-    "file": "assets/SelectFormGroup-COKCz9DG.js",
+    "file": "assets/SelectFormGroup-BM6_LCjb.js",
     "name": "SelectFormGroup",
     "src": "resources/js/components/form/SelectFormGroup.jsx",
     "isEntry": true,
@@ -4976,7 +4975,7 @@
     ]
   },
   "resources/js/components/form/TextareaFormGroup.jsx": {
-    "file": "assets/TextareaFormGroup-COKCz9DG.js",
+    "file": "assets/TextareaFormGroup-BM6_LCjb.js",
     "name": "TextareaFormGroup",
     "src": "resources/js/components/form/TextareaFormGroup.jsx",
     "isEntry": true,

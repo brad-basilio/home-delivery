@@ -266,7 +266,7 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
                         </svg>
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg font-bold text-gray-900 mb-2">Oficina Principal</h3>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">Sede central</h3>
                         <p className="text-gray-600 leading-relaxed">{oficinaPrincipal.address}</p>
                       </div>
                     </div>
@@ -283,7 +283,7 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
                         </svg>
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg font-bold text-gray-900 mb-2">Email de Soporte</h3>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">Correo de Contacto</h3>
                         <a href={`mailto:${emailSoporte}`} className="text-hd-cerulean hover:text-hd-android transition-colors duration-300 font-medium">
                           {emailSoporte}
                         </a>
@@ -292,7 +292,7 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
                   </div>
                 )}
 
-                {/* Card - Teléfono de Soporte */}
+                {/* Card - Teléfono de Contacto */}
                 {telefonoSoporte && (
                   <div className="bg-gradient-to-br from-gray-50 to-white p-6 md:p-8 rounded-2xl border border-gray-100 hover:shadow-lg transition-all duration-300">
                     <div className="flex items-start gap-4">
@@ -302,7 +302,7 @@ Ubicación: ${formData.ubicacion === 'lima' ? 'Lima' : 'Provincia'}
                         </svg>
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg font-bold text-gray-900 mb-2">Teléfono de Soporte</h3>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">Teléfono de Contacto</h3>
                         <a href={`tel:${telefonoSoporte}`} className="text-hd-cerise hover:text-hd-android transition-colors duration-300 font-medium text-xl">
                           {telefonoSoporte}
                         </a>
