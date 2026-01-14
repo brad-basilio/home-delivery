@@ -55,7 +55,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            {/* Botones Tracking e Ingresar - Unidos con bg-white */}
+            {/* Botones Tracking e Ingresar - Unidos con bg-white 
             <div className="flex items-center !bg-white rounded-none text-lg  overflow-hidden">
               <a
                 href="#tracking"
@@ -74,13 +74,33 @@ const Header = () => {
                 <User2 className="h-5 w-5" />
                 Ingresar
               </a>
-            </div>
-            
+            </div>*/}
+              <a
+                href="#tracking"
+                className="text-gray-700 flex gap-2 items-center hover:text-hd-cerise font-medium transition-all duration-300 relative group text-lg tracking-wide font-aeonik"
+
+              >
+                <Search className="h-5 w-5" />
+                Tracking
+                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-hd-cerise to-hd-android group-hover:w-full transition-all duration-300 ease-out"></span>
+              </a>
+              <a
+                href="https://homedeliverype.com/auth/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-700 flex gap-2 items-center hover:text-hd-cerise font-medium transition-all duration-300 relative group text-lg tracking-wide font-aeonik"
+
+              >
+                <User2 className="h-5 w-5" />
+                Ingresar
+                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-hd-cerise to-hd-android group-hover:w-full transition-all duration-300 ease-out"></span>
+              </a>
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 className="text-gray-700 hover:text-hd-cerise font-medium transition-all duration-300 relative group text-lg tracking-wide font-aeonik"
+
               >
                 {link.label}
                 {/* Underline animado más elegante */}
@@ -124,7 +144,7 @@ const Header = () => {
         {isMobileMenuOpen && (
           <nav className="lg:hidden py-6 border-t border-gray-100 animate-fadeIn">
             <div className="flex flex-col space-y-1">
-              {/* Botones Tracking e Ingresar - Mobile Unidos */}
+              {/* Botones Tracking e Ingresar - Mobile Unidos 
              <div className="flex items-center justify-around !bg-white rounded-none text-lg  overflow-hidden">
               <a
                 href="#tracking"
@@ -143,13 +163,32 @@ const Header = () => {
                 <User2 className="h-5 w-5" />
                 Ingresar
               </a>
-            </div>
+            </div>*/}
+             <a
+                href="#tracking"
+                  className="text-left flex gap-2 items-center  px-4 py-3.5 text-gray-700 hover:text-hd-cerise hover:bg-hd-cerise/5 rounded-xl transition-all duration-300 font-medium tracking-wide transform hover:translate-x-1"
+
+              >
+                <Search className="h-5 w-5" />
+                Tracking
+              </a>
+              <a
+                href="https://homedeliverype.com/auth/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                  className="text-left flex gap-2 items-center  px-4 py-3.5 text-gray-700 hover:text-hd-cerise hover:bg-hd-cerise/5 rounded-xl transition-all duration-300 font-medium tracking-wide transform hover:translate-x-1"
+
+              >
+                <User2 className="h-5 w-5" />
+                Ingresar
+              </a>
               
               {navLinks.map((link, index) => (
                 <a
                   key={link.href}
                   href={link.href}
                   className="text-left  px-4 py-3.5 text-gray-700 hover:text-hd-cerise hover:bg-hd-cerise/5 rounded-xl transition-all duration-300 font-medium tracking-wide transform hover:translate-x-1"
+
                   style={{ 
                     animationDelay: `${index * 50}ms`,
                     animation: 'fadeIn 0.3s ease-out forwards'
