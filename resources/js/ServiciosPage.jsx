@@ -54,21 +54,22 @@ const ServiciosPage = (props) => {
                 <span className="text-hd-cerulean font-bold text-sm uppercase tracking-wider">Nuestros Servicios</span>
               </div>
               
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-                Soluciones Logísticas{' '}
-                <span 
-                  className="bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
-                  }}
-                >
-                  Integrales
-                </span>
-              </h1>
-              
-              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Impulsamos el crecimiento de tu negocio con tecnología de punta y un equipo comprometido
-              </p>
+             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            Logística a gran escala 
+           {' '}
+            <span 
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage: 'linear-gradient(135deg, #8FBD44 0%, #2354B8 50%, #DE3464 100%)'
+              }}
+            >
+             para tu empresa en todo el Perú
+            </span>
+          </h2>
+          
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+           Tecnología y compromiso para el crecimiento de tu negocio. Como parte del <strong>Grupo Falabella</strong>, somos expertos en soluciones de entrega corporativa diseñadas para llegar más lejos.
+          </p>
             </div>
           </div>
         </section>
