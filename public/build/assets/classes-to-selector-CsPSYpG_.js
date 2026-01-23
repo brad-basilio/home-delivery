@@ -1,0 +1,1 @@
+import{d as i,f as r}from"./swiper-react-B0nIfG9T.js";function m(e,a,l,f){return e.params.createElements&&Object.keys(f).forEach(t=>{if(!l[t]&&l.auto===!0){let n=i(e.el,`.${f[t]}`)[0];n||(n=r("div",f[t]),n.className=f[t],e.el.append(n)),l[t]=n,a[t]=n}}),l}function d(e){return e===void 0&&(e=""),`.${e.trim().replace(/([\.:!+\/])/g,"\\$1").replace(/ /g,".")}`}export{m as a,d as c};

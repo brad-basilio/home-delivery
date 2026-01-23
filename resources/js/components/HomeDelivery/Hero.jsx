@@ -8,6 +8,8 @@ import React, { useState, useEffect } from 'react';
 const Hero = ({ sliders = [] }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -55,6 +57,33 @@ const Hero = ({ sliders = [] }) => {
     setTimeout(() => setIsAnimating(false), 800);
   };
 
+  // Touch handlers para mobile
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const minSwipeDistance = 50;
+    
+    if (distance > minSwipeDistance) {
+      // Swipe left - next slide
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      // Swipe right - previous slide
+      handlePrev();
+    }
+    
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
   // Si no hay sliders, mostrar versión estática
   if (!sliders || sliders.length === 0) {
     return (
@@ -87,7 +116,12 @@ const Hero = ({ sliders = [] }) => {
   return (
     <section className="relative w-full overflow-hidden bg-gray-900 pt-20">
       {/* Slides Container */}
-      <div className="relative h-[calc(100vh-80px)] min-h-[600px] max-h-[800px]">
+      <div 
+        className="relative h-[calc(100vh-80px)] min-h-[600px] max-h-[800px]"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         {sliders.map((slide, index) => (
           <div
             key={slide.id}
@@ -191,7 +225,7 @@ const Hero = ({ sliders = [] }) => {
         <>
           <button
             onClick={handlePrev}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white p-3 md:p-4 rounded-full transition-all duration-300 group hover:scale-110"
+            className="hidden lg:block absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white p-3 md:p-4 rounded-full transition-all duration-300 group hover:scale-110"
             aria-label="Slide anterior"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -201,7 +235,7 @@ const Hero = ({ sliders = [] }) => {
 
           <button
             onClick={handleNext}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white p-3 md:p-4 rounded-full transition-all duration-300 group hover:scale-110"
+            className="hidden lg:block absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white p-3 md:p-4 rounded-full transition-all duration-300 group hover:scale-110"
             aria-label="Siguiente slide"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
